@@ -78,6 +78,7 @@ const jsonLd = {
 
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
+import { Analytics } from "@vercel/analytics/next";
 
 export default function RootLayout({ children }) {
   return (
@@ -92,6 +93,7 @@ export default function RootLayout({ children }) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        <Analytics />
       </body>
     </html>
   );
