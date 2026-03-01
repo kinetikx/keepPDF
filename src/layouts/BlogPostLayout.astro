@@ -1,0 +1,95 @@
+---
+import '../styles/globals.css';
+import Footer from '../components/layout/Footer.astro';
+
+const { lang, dict, post, translations } = Astro.props;
+const currentPath = Astro.url.pathname;
+
+// Article JSON-LD
+const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": post.data.title,
+    "description": post.data.description,
+    "datePublished": post.data.date.toISOString(),
+    "author": {
+        "@type": "Person",
+        "name": post.data.author
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "KeepPDF",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://keeppdf.com/brand-logo.svg"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": `https://keeppdf.com${currentPath}`
+    }
+};
+
+if (post.data.image) {
+    articleJsonLd.image = `https://keeppdf.com${post.data.image}`;
+}
+---
+
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{post.data.title}</title>
+    <meta name="description" content={post.data.description} />
+    <meta name="keywords" content={post.data.tags?.join(', ')} />
+    <meta name="author" content={post.data.author} />
+    <link rel="icon" href="/brand-logo.svg" />
+    <link rel="canonical" href={`https://keeppdf.com${currentPath}`} />
+
+    <!-- hreflang for translations -->
+    {translations && translations.map(t => (
+      <link rel="alternate" hreflang={t.lang} href={`https://keeppdf.com/${t.lang}/blog/${t.slug}`} />
+    ))}
+    <link rel="alternate" hreflang={lang} href={`https://keeppdf.com${currentPath}`} />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={post.data.title} />
+    <meta property="og:description" content={post.data.description} />
+    <meta property="og:url" content={`https://keeppdf.com${currentPath}`} />
+    <meta property="og:site_name" content="KeepPDF" />
+    <meta property="og:locale" content={lang === 'tr' ? 'tr_TR' : 'en_US'} />
+    <meta property="og:type" content="article" />
+    {post.data.image && <meta property="og:image" content={`https://keeppdf.com${post.data.image}`} />}
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={post.data.title} />
+    <meta name="twitter:description" content={post.data.description} />
+    {post.data.image && <meta name="twitter:image" content={`https://keeppdf.com${post.data.image}`} />}
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VY5X32BG7G"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-VY5X32BG7G');
+    </script>
+
+    <!-- JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify(articleJsonLd)} />
+  </head>
+  <body class="antialiased min-h-screen flex flex-col font-sans text-slate-900 bg-white">
+    <slot name="navbar" />
+    <main class="flex-grow pt-20">
+      <slot />
+    </main>
+    <Footer lang={lang} dict={dict} />
+    <slot name="cookie-banner" />
+  </body>
+</html>

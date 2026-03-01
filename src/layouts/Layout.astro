@@ -1,0 +1,99 @@
+---
+import '../styles/globals.css';
+import Footer from '../components/layout/Footer.astro';
+
+const { lang, dict } = Astro.props;
+const currentPath = Astro.url.pathname;
+const cleanPath = currentPath.replace(new RegExp(`^/${lang}`), '') || '';
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "KeepPDF",
+    "image": "https://keeppdf.com/og-image.png",
+    "description": dict.hero.description,
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "KeepPDF",
+    "url": "https://keeppdf.com/",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://keeppdf.com/{search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+];
+
+const title = Astro.props.title || dict.metadata.title;
+const description = Astro.props.description || dict.metadata.description;
+---
+
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content="PDF, merge, split, compress, convert, tools, online, free" />
+    <meta name="author" content="KeepPDF Team" />
+    <link rel="icon" href="/brand-logo.svg" />
+    <link rel="apple-touch-icon" href="/brand-logo.svg" />
+    <link rel="canonical" href={`https://keeppdf.com${currentPath}`} />
+    <link rel="alternate" hreflang="en" href={`https://keeppdf.com/en${cleanPath}`} />
+    <link rel="alternate" hreflang="tr" href={`https://keeppdf.com/tr${cleanPath}`} />
+    <link rel="alternate" hreflang="sq" href={`https://keeppdf.com/sq${cleanPath}`} />
+    <link rel="alternate" hreflang="x-default" href={`https://keeppdf.com/en${cleanPath}`} />
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={`https://keeppdf.com/${lang}${cleanPath}`} />
+    <meta property="og:site_name" content="KeepPDF" />
+    <meta property="og:locale" content={lang === 'tr' ? 'tr_TR' : lang === 'sq' ? 'sq_AL' : 'en_US'} />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://keeppdf.com/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="https://keeppdf.com/og-image.png" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VY5X32BG7G"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-VY5X32BG7G');
+    </script>
+
+    <!-- JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body class="antialiased min-h-screen flex flex-col font-sans text-slate-900 bg-white">
+    <slot name="navbar" />
+    <main class="flex-grow pt-20">
+      <slot />
+    </main>
+    <Footer lang={lang} dict={dict} />
+    <slot name="cookie-banner" />
+  </body>
+</html>
