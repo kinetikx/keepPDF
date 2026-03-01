@@ -1,0 +1,104 @@
+{
+	"version": 3,
+	"routes": [
+		{
+			"handle": "filesystem"
+		},
+		{
+			"src": "^/_astro/(.*)$",
+			"headers": {
+				"cache-control": "public, max-age=31536000, immutable"
+			},
+			"continue": true
+		},
+		{
+			"src": "^/_server-islands/([^/]+?)/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/_image/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/404/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/admin/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/([^/]+?)/blog/([^/]+?)/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/([^/]+?)/blog/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/([^/]+?)/compress/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/([^/]+?)/edit-pdf/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/([^/]+?)/image-to-pdf/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/([^/]+?)/merge-pdf/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/([^/]+?)/ocr-pdf/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/([^/]+?)/organize/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/([^/]+?)/pdf-to-excel/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/([^/]+?)/pdf-to-image/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/([^/]+?)/pdf-to-txt/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/([^/]+?)/pdf-to-word/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/([^/]+?)/sign-pdf/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/([^/]+?)/split/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/([^/]+?)/word-to-pdf/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/.*$",
+			"dest": "_render",
+			"status": 404
+		}
+	]
+}

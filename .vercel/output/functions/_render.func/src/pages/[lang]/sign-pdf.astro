@@ -1,0 +1,24 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getDictionary, locales } from '../../i18n/dictionary';
+import Navbar from '../../components/landing/Navbar';
+import CookieBanner from '../../components/landing/CookieBanner';
+import ComingSoon from '../../components/ui/ComingSoon';
+import HowToSection from "../../components/tools/HowToSection";
+import UseCaseSection from '../../components/tools/UseCaseSection';
+
+export function getStaticPaths() {
+  return locales.map(lang => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params;
+const dict = getDictionary(lang);
+---
+
+<Layout lang={lang} dict={dict} title={dict.metadata.signPdf.title} description={dict.metadata.signPdf.description}>
+  <Navbar client:load lang={lang} dict={dict} slot="navbar" />
+  <ComingSoon client:load title={dict.tools.sign.title} description={lang === 'tr' ? 'Elektronik imza özelliği çok yakında geliyor.' : 'Electronic signature feature coming very soon.'} lang={lang} />
+  <HowToSection client:visible slug="sign-pdf" lang={lang} />
+  <UseCaseSection client:visible slug="sign-pdf" lang={lang} />
+  <CookieBanner client:load dict={dict} slot="cookie-banner" />
+</Layout>

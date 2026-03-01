@@ -1,0 +1,26 @@
+---
+// Root index page - detect browser language and redirect to appropriate locale
+const acceptLanguage = Astro.request.headers.get('accept-language') || '';
+const supportedLocales = ['en', 'tr', 'sq'];
+
+// Parse accept-language header to find the best matching locale
+function getPreferredLocale(header) {
+  const languages = header
+    .split(',')
+    .map(lang => {
+      const [code, quality] = lang.trim().split(';q=');
+      return { code: code.split('-')[0].toLowerCase(), quality: quality ? parseFloat(quality) : 1 };
+    })
+    .sort((a, b) => b.quality - a.quality);
+
+  for (const lang of languages) {
+    if (supportedLocales.includes(lang.code)) {
+      return lang.code;
+    }
+  }
+  return 'en'; // default fallback
+}
+
+const locale = getPreferredLocale(acceptLanguage);
+return Astro.redirect(`/${locale}`);
+---

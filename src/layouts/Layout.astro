@@ -11,7 +11,7 @@ const jsonLd = [
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     "name": "KeepPDF",
-    "image": "https://keeppdf.com/og-image.png",
+    "image": "https://keep-pdf.com/og-image.png",
     "description": dict.hero.description,
     "applicationCategory": "UtilitiesApplication",
     "operatingSystem": "Any",
@@ -25,10 +25,10 @@ const jsonLd = [
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "KeepPDF",
-    "url": "https://keeppdf.com/",
+    "url": "https://keep-pdf.com/",
     "potentialAction": {
       "@type": "SearchAction",
-      "target": "https://keeppdf.com/{search_term_string}",
+      "target": "https://keep-pdf.com/{search_term_string}",
       "query-input": "required name=search_term_string"
     }
   }
@@ -48,20 +48,20 @@ const description = Astro.props.description || dict.metadata.description;
     <meta name="author" content="KeepPDF Team" />
     <link rel="icon" href="/brand-logo.svg" />
     <link rel="apple-touch-icon" href="/brand-logo.svg" />
-    <link rel="canonical" href={`https://keeppdf.com${currentPath}`} />
-    <link rel="alternate" hreflang="en" href={`https://keeppdf.com/en${cleanPath}`} />
-    <link rel="alternate" hreflang="tr" href={`https://keeppdf.com/tr${cleanPath}`} />
-    <link rel="alternate" hreflang="sq" href={`https://keeppdf.com/sq${cleanPath}`} />
-    <link rel="alternate" hreflang="x-default" href={`https://keeppdf.com/en${cleanPath}`} />
+    <link rel="canonical" href={`https://keep-pdf.com${currentPath}`} />
+    <link rel="alternate" hreflang="en" href={`https://keep-pdf.com/en${cleanPath}`} />
+    <link rel="alternate" hreflang="tr" href={`https://keep-pdf.com/tr${cleanPath}`} />
+    <link rel="alternate" hreflang="sq" href={`https://keep-pdf.com/sq${cleanPath}`} />
+    <link rel="alternate" hreflang="x-default" href={`https://keep-pdf.com/en${cleanPath}`} />
     
     <!-- Open Graph -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={`https://keeppdf.com/${lang}${cleanPath}`} />
+    <meta property="og:url" content={`https://keep-pdf.com/${lang}${cleanPath}`} />
     <meta property="og:site_name" content="KeepPDF" />
     <meta property="og:locale" content={lang === 'tr' ? 'tr_TR' : lang === 'sq' ? 'sq_AL' : 'en_US'} />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://keeppdf.com/og-image.png" />
+    <meta property="og:image" content="https://keep-pdf.com/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     
@@ -69,7 +69,7 @@ const description = Astro.props.description || dict.metadata.description;
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content="https://keeppdf.com/og-image.png" />
+    <meta name="twitter:image" content="https://keep-pdf.com/og-image.png" />
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://keeppdf.com/sitemap-index.xml
+Sitemap: https://keep-pdf.com/sitemap-index.xml
