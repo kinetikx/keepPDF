@@ -4,4 +4,4 @@ Disallow: /admin
 Disallow: /admin/
 
 # Sitemap
-Sitemap: https://keep-pdf.vercel.app/sitemap.xml
+Sitemap: https://keep-pdf.vercel.app/sitemap-index.xml
