@@ -8,32 +8,7 @@ import vercel from '@astrojs/vercel';
 const allLocales = ['en', 'tr', 'sq', 'et', 'lv'];
 const site = 'https://keep-pdf.com';
 
-// Tool slugs used in [lang]/[tool].astro pages
-const toolSlugs = [
-    'merge-pdf', 'split', 'compress', 'organize',
-    'image-to-pdf', 'pdf-to-word', 'word-to-pdf', 'pdf-to-image',
-    'edit-pdf', 'sign-pdf', 'pdf-to-excel', 'pdf-to-txt', 'ocr-pdf', 'blog'
-];
-
-// Build customPages dynamically for all locales + tools
-const customPages = [
-    ...allLocales.map(l => `${site}/${l}`),
-    ...toolSlugs.flatMap(slug => allLocales.map(l => `${site}/${l}/${slug}`)),
-    // Keyword landing pages
-    `${site}/sq/bashko-pdf-falas`,
-    `${site}/sq/pdf-bashko-online`,
-    `${site}/sq/ndaj-pdf-falas-online`,
-    `${site}/sq/kompriso-pdf-pa-regjistrim`,
-    `${site}/sq/redakto-pdf-online-falas`,
-    `${site}/et/uhenda-pdf-tasuta`,
-    `${site}/et/tukkelda-pdf-tasuta`,
-    `${site}/et/tihenda-pdf-tasuta`,
-    `${site}/et/muuda-pdf-veebi-tasuta`,
-    `${site}/lv/apvienot-pdf-bezmaksas`,
-    `${site}/lv/sadalit-pdf-bezmaksas`,
-    `${site}/lv/saspiest-pdf-bezmaksas`,
-    `${site}/lv/rediget-pdf-tiesaiste`,
-];
+// We no longer need customPages since Astro automatically detects all static routes in src/pages.
 
 export default defineConfig({
     site,
@@ -46,7 +21,14 @@ export default defineConfig({
                 defaultLocale: 'en',
                 locales: Object.fromEntries(allLocales.map(l => [l, l])),
             },
-            customPages,
+            filter: (page) => !page.includes('/admin'),
+            serialize(item) {
+                // Ensure sitemap URLs exactly match our canonical URLs (no trailing slash)
+                if (item.url !== site + '/' && item.url.endsWith('/')) {
+                    item.url = item.url.slice(0, -1);
+                }
+                return item;
+            }
         })
     ],
     vite: {
