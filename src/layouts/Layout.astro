@@ -10,10 +10,10 @@ const cleanPath = currentPath.replace(new RegExp(`^/${lang}`), '') || '';
 // Breadcrumb JSON-LD
 const pathSegments = currentPath.split('/').filter(Boolean);
 const breadcrumbItems = [
-  { name: 'KeepPDF', url: 'https://keep-pdf.com/' },
+  { name: 'KeepPDF', url: 'https://keep-pdf.vercel.app/' },
   ...pathSegments.map((seg, i) => ({
     name: seg.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
-    url: `https://keep-pdf.com/${pathSegments.slice(0, i + 1).join('/')}`
+    url: `https://keep-pdf.vercel.app/${pathSegments.slice(0, i + 1).join('/')}`
   }))
 ];
 const breadcrumbSchema = {
@@ -32,7 +32,7 @@ const jsonLd = [
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     "name": "KeepPDF",
-    "image": "https://keep-pdf.com/og-image.png",
+    "image": "https://keep-pdf.vercel.app/og-image.png",
     "description": dict.hero.description,
     "applicationCategory": "UtilitiesApplication",
     "operatingSystem": "Any",
@@ -52,10 +52,10 @@ const jsonLd = [
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "KeepPDF",
-    "url": "https://keep-pdf.com/",
+    "url": "https://keep-pdf.vercel.app/",
     "potentialAction": {
       "@type": "SearchAction",
-      "target": "https://keep-pdf.com/{search_term_string}",
+      "target": "https://keep-pdf.vercel.app/{search_term_string}",
       "query-input": "required name=search_term_string"
     }
   },
@@ -63,8 +63,8 @@ const jsonLd = [
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "KeepPDF",
-    "url": "https://keep-pdf.com",
-    "logo": "https://keep-pdf.com/brand-logo.svg",
+    "url": "https://keep-pdf.vercel.app",
+    "logo": "https://keep-pdf.vercel.app/brand-logo.svg",
     "sameAs": []
   }
 ];
@@ -84,20 +84,20 @@ const howToSchema = Astro.props.howToSchema;
     <meta name="author" content="KeepPDF Team" />
     <link rel="icon" href="/brand-logo.svg" />
     <link rel="apple-touch-icon" href="/brand-logo.svg" />
-    <link rel="canonical" href={`https://keep-pdf.com${currentPath}`} />
+    <link rel="canonical" href={`https://keep-pdf.vercel.app${currentPath}`} />
     {locales.map(loc => (
-      <link rel="alternate" hreflang={loc} href={`https://keep-pdf.com/${loc}${cleanPath}`} />
+      <link rel="alternate" hreflang={loc} href={`https://keep-pdf.vercel.app/${loc}${cleanPath}`} />
     ))}
-    <link rel="alternate" hreflang="x-default" href={`https://keep-pdf.com/en${cleanPath}`} />
+    <link rel="alternate" hreflang="x-default" href={`https://keep-pdf.vercel.app/en${cleanPath}`} />
     
     <!-- Open Graph -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={`https://keep-pdf.com/${lang}${cleanPath}`} />
+    <meta property="og:url" content={`https://keep-pdf.vercel.app/${lang}${cleanPath}`} />
     <meta property="og:site_name" content="KeepPDF" />
     <meta property="og:locale" content={getOgLocale(lang)} />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://keep-pdf.com/og-image.png" />
+    <meta property="og:image" content="https://keep-pdf.vercel.app/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     
@@ -105,7 +105,7 @@ const howToSchema = Astro.props.howToSchema;
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content="https://keep-pdf.com/og-image.png" />
+    <meta name="twitter:image" content="https://keep-pdf.vercel.app/og-image.png" />
 
     <!-- Google Fonts (optimized: preload + swap) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
