@@ -6,6 +6,7 @@ import Navbar from '../../components/landing/Navbar';
 import CookieBanner from '../../components/landing/CookieBanner';
 import ImageToPdfClient from '../../components/tools/ImageToPdfClient';
 import HowToSection from "../../components/tools/HowToSection";
+import { buildHowToSchema } from '../../data/howTo';
 import UseCaseSection from '../../components/tools/UseCaseSection';
 
 export function getStaticPaths() {
@@ -14,9 +15,10 @@ export function getStaticPaths() {
 
 const { lang } = Astro.params;
 const dict = getDictionary(lang);
+const howToSchema = buildHowToSchema('image-to-pdf', lang);
 ---
 
-<Layout lang={lang} dict={dict} title={dict.metadata.imageToPdf.title} description={dict.metadata.imageToPdf.description}>
+<Layout lang={lang} dict={dict} title={dict.metadata.imageToPdf.title} description={dict.metadata.imageToPdf.description} howToSchema={howToSchema}>
   <Navbar client:load lang={lang} dict={dict} slot="navbar" />
   <ImageToPdfClient client:load dict={dict} />
   <HowToSection client:visible slug="image-to-pdf" lang={lang} />

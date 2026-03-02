@@ -1,0 +1,233 @@
+---
+export const prerender = true;
+import Layout from '../../layouts/Layout.astro';
+import { getDictionary } from '../../i18n/dictionary';
+import Navbar from '../../components/landing/Navbar';
+import CookieBanner from '../../components/landing/CookieBanner';
+import SplitClient from '../../components/tools/SplitClient';
+
+const lang = 'sq';
+const dict = getDictionary(lang);
+
+const seoTitle = "Ndaj PDF Falas Online — Nxirr Faqe pa Ngarkim në Server | KeepPDF";
+const seoDescription = "Ndaj PDF falas online. Nxirrni faqe specifike ose vargje faqesh pa regjistrim, pa instalim — 100% në shfletuesin tuaj. Shpejt dhe sigurt.";
+
+const howToSchema = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "Si të Ndash PDF Falas në 3 Hapa",
+    "description": "Ndaj PDF falas me KeepPDF — pa nevojë për njohuri teknike.",
+    "step": [
+        {
+            "@type": "HowToStep",
+            "position": 1,
+            "name": "Ngarkoni Skedarin PDF",
+            "text": "Zgjidhni ose zvarritni skedarin PDF që dëshironi të ndani."
+        },
+        {
+            "@type": "HowToStep",
+            "position": 2,
+            "name": "Zgjidhni Faqet",
+            "text": "Klikoni mbi faqet që dëshironi të nxirrni ose shkruani numrat e faqeve."
+        },
+        {
+            "@type": "HowToStep",
+            "position": 3,
+            "name": "Shkarkoni",
+            "text": "Klikoni \"Nxirr\" dhe shkarkoni faqet e zgjedhura si PDF të ri — falas!"
+        }
+    ]
+};
+
+const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "A është vërtet falas të ndash PDF me KeepPDF?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Po! Ndaj PDF falas me KeepPDF pa kufizime, pa tarifa, pa abonime."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "A janë të sigurta skedarët kur ndaj PDF online?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Absolutisht! Gjithçka përpunohet në shfletuesin tuaj — asnjë skedar nuk ngarkohet në server."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Sa faqe mund të nxjerr nga një PDF?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Sa të dëshironi! Mund të zgjidhni 1 faqe, disa faqe ose vargje faqesh."
+            }
+        }
+    ]
+};
+---
+
+<Layout lang={lang} dict={dict} title={seoTitle} description={seoDescription}>
+    <Navbar client:load lang={lang} dict={dict} slot="navbar" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+    <!-- Hreflang -->
+    <link rel="alternate" hreflang="en" href={"https://keep-pdf.com/en/split"} />
+    <link rel="alternate" hreflang="tr" href={"https://keep-pdf.com/tr/split"} />
+    <link rel="alternate" hreflang="sq" href={"https://keep-pdf.com/sq/ndaj-pdf-falas-online"} />
+    <link rel="alternate" hreflang="et" href={"https://keep-pdf.com/et/tukkelda-pdf-tasuta"} />
+    <link rel="alternate" hreflang="lv" href={"https://keep-pdf.com/lv/sadalit-pdf-bezmaksas"} />
+    <link rel="alternate" hreflang="x-default" href={"https://keep-pdf.com/en/split"} />
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden pt-24 pb-16" style="background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4338ca 100%);">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-20 left-10 w-72 h-72 bg-purple-400 rounded-full filter blur-3xl animate-pulse"></div>
+            <div class="absolute bottom-10 right-20 w-96 h-96 bg-indigo-400 rounded-full filter blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
+        </div>
+        <div class="container-custom max-w-4xl mx-auto relative z-10 text-center px-4">
+            <span class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white/90 text-sm font-medium px-4 py-2 rounded-full border border-white/20 mb-6">
+                🔒 100% private — skedarët nuk largohen nga shfletuesi juaj
+            </span>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-6" style="letter-spacing: -0.03em;">
+                Ndaj PDF Falas Online
+                <span class="block text-indigo-300 text-2xl md:text-3xl font-semibold mt-3">Pa Ngarkim në Server — Nxirr Faqet që Dëshironi</span>
+            </h1>
+            <div class="flex flex-wrap justify-center gap-4 mb-8">
+                <div class="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-xl text-white/80 text-sm">
+                    <span class="text-green-400">✓</span> Falas përgjithmonë
+                </div>
+                <div class="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-xl text-white/80 text-sm">
+                    <span class="text-green-400">✓</span> Pa regjistrim
+                </div>
+                <div class="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-xl text-white/80 text-sm">
+                    <span class="text-green-400">✓</span> Pa ngarkim në server
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool -->
+    <section class="py-12 bg-slate-50">
+        <div class="container-custom max-w-4xl mx-auto px-4">
+    <SplitClient client:load dict={dict} />
+        </div>
+    </section>
+
+    <!-- How To Section -->
+    <section class="py-20 bg-white">
+        <div class="container-custom max-w-5xl mx-auto px-4">
+            <div class="text-center mb-14">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Si të Ndash PDF Falas në 3 Hapa</h2>
+                <p class="text-lg text-slate-500 max-w-2xl mx-auto">Ndaj PDF falas me KeepPDF — pa nevojë për njohuri teknike.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="relative bg-gradient-to-br from-indigo-50 to-white rounded-2xl p-8 border border-indigo-100 shadow-sm hover:shadow-lg transition-shadow">
+                    <div class="absolute -top-4 -left-4 w-12 h-12 bg-indigo-600 text-white rounded-xl flex items-center justify-center text-lg font-bold shadow-lg">1</div>
+                    <div class="text-4xl mb-4 mt-2">📂</div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Ngarkoni Skedarin PDF</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">Zgjidhni ose zvarritni skedarin PDF që dëshironi të ndani.</p>
+                </div>
+                <div class="relative bg-gradient-to-br from-purple-50 to-white rounded-2xl p-8 border border-purple-100 shadow-sm hover:shadow-lg transition-shadow">
+                    <div class="absolute -top-4 -left-4 w-12 h-12 bg-purple-600 text-white rounded-xl flex items-center justify-center text-lg font-bold shadow-lg">2</div>
+                    <div class="text-4xl mb-4 mt-2">✂️</div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Zgjidhni Faqet</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">Klikoni mbi faqet që dëshironi të nxirrni ose shkruani numrat e faqeve.</p>
+                </div>
+                <div class="relative bg-gradient-to-br from-emerald-50 to-white rounded-2xl p-8 border border-emerald-100 shadow-sm hover:shadow-lg transition-shadow">
+                    <div class="absolute -top-4 -left-4 w-12 h-12 bg-emerald-600 text-white rounded-xl flex items-center justify-center text-lg font-bold shadow-lg">3</div>
+                    <div class="text-4xl mb-4 mt-2">⬇️</div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Shkarkoni</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">Klikoni "Nxirr" dhe shkarkoni faqet e zgjedhura si PDF të ri — falas!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Section -->
+    <section class="py-20 bg-slate-50">
+        <div class="container-custom max-w-5xl mx-auto px-4">
+            <div class="text-center mb-14">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Pse të Zgjidhni KeepPDF për të Ndarë PDF?</h2>
+                <p class="text-lg text-slate-500 max-w-2xl mx-auto">Arsyet pse mijëra përdoruesve ndajnë PDF me KeepPDF</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition-shadow text-center">
+                    <div class="text-3xl mb-3">🔒</div>
+                    <h3 class="font-bold text-slate-900 mb-2">100% Privat</h3>
+                    <p class="text-sm text-slate-500">Skedarët nuk largohen kurrë nga shfletuesi. Ndaj PDF falas me privatësi totale.</p>
+                </div>
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition-shadow text-center">
+                    <div class="text-3xl mb-3">⚡</div>
+                    <h3 class="font-bold text-slate-900 mb-2">Shumë i Shpejtë</h3>
+                    <p class="text-sm text-slate-500">Ndaj PDF në sekonda, jo minuta.</p>
+                </div>
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition-shadow text-center">
+                    <div class="text-3xl mb-3">💰</div>
+                    <h3 class="font-bold text-slate-900 mb-2">Plotësisht Falas</h3>
+                    <p class="text-sm text-slate-500">Pa tarifa, pa abonime, pa kufizime.</p>
+                </div>
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition-shadow text-center">
+                    <div class="text-3xl mb-3">📱</div>
+                    <h3 class="font-bold text-slate-900 mb-2">Punon Kudo</h3>
+                    <p class="text-sm text-slate-500">Kompjuter, telefon, tablet — ndaj PDF online nga çdo pajisje.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-20 bg-white">
+        <div class="container-custom max-w-3xl mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 text-center mb-12">Si të Ndash PDF Falas në FAQ</h2>
+            <div class="space-y-4">
+                <details class="group bg-slate-50 rounded-xl border border-slate-200 overflow-hidden">
+                    <summary class="flex items-center justify-between p-6 cursor-pointer font-semibold text-slate-900 hover:bg-slate-100 transition-colors">
+                        A është vërtet falas të ndash PDF me KeepPDF?
+                        <span class="text-indigo-500 group-open:rotate-45 transition-transform text-xl">+</span>
+                    </summary>
+                    <div class="px-6 pb-6 text-slate-600 leading-relaxed">Po! Ndaj PDF falas me KeepPDF pa kufizime, pa tarifa, pa abonime.</div>
+                </details>
+                <details class="group bg-slate-50 rounded-xl border border-slate-200 overflow-hidden">
+                    <summary class="flex items-center justify-between p-6 cursor-pointer font-semibold text-slate-900 hover:bg-slate-100 transition-colors">
+                        A janë të sigurta skedarët kur ndaj PDF online?
+                        <span class="text-indigo-500 group-open:rotate-45 transition-transform text-xl">+</span>
+                    </summary>
+                    <div class="px-6 pb-6 text-slate-600 leading-relaxed">Absolutisht! Gjithçka përpunohet në shfletuesin tuaj — asnjë skedar nuk ngarkohet në server.</div>
+                </details>
+                <details class="group bg-slate-50 rounded-xl border border-slate-200 overflow-hidden">
+                    <summary class="flex items-center justify-between p-6 cursor-pointer font-semibold text-slate-900 hover:bg-slate-100 transition-colors">
+                        Sa faqe mund të nxjerr nga një PDF?
+                        <span class="text-indigo-500 group-open:rotate-45 transition-transform text-xl">+</span>
+                    </summary>
+                    <div class="px-6 pb-6 text-slate-600 leading-relaxed">Sa të dëshironi! Mund të zgjidhni 1 faqe, disa faqe ose vargje faqesh.</div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Internal Links -->
+    <section class="py-16 bg-indigo-50">
+        <div class="container-custom max-w-4xl mx-auto px-4 text-center">
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="/sq/bashko-pdf-falas" class="inline-flex items-center gap-2 bg-white text-indigo-700 font-semibold px-6 py-3 rounded-xl border border-indigo-200 hover:border-indigo-400 hover:shadow-md transition-all text-sm">
+                    🔗 Bashko PDF Falas
+                </a>
+                <a href="/sq/kompriso-pdf-pa-regjistrim" class="inline-flex items-center gap-2 bg-white text-indigo-700 font-semibold px-6 py-3 rounded-xl border border-indigo-200 hover:border-indigo-400 hover:shadow-md transition-all text-sm">
+                    📦 Kompriso PDF
+                </a>
+                <a href="/sq/merge-pdf" class="inline-flex items-center gap-2 bg-white text-indigo-700 font-semibold px-6 py-3 rounded-xl border border-indigo-200 hover:border-indigo-400 hover:shadow-md transition-all text-sm">
+                    🔧 Mjeti i Bashkimit
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <CookieBanner client:load dict={dict} slot="cookie-banner" />
+</Layout>

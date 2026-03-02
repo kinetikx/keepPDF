@@ -1,0 +1,200 @@
+---
+export const prerender = true;
+import Layout from '../../layouts/Layout.astro';
+import { getDictionary } from '../../i18n/dictionary';
+import Navbar from '../../components/landing/Navbar';
+import CookieBanner from '../../components/landing/CookieBanner';
+import MergeClient from '../../components/tools/MergeClient';
+
+const lang = 'sq';
+const dict = getDictionary(lang);
+
+const seoTitle = "PDF Bashko Online — Mjet Falas për Bashkimin e PDF pa Instalim | KeepPDF";
+const seoDescription = "PDF bashko online pa instalim dhe pa regjistrim. Ngarkoni, rirenditni dhe bashkoni skedarë PDF direkt në shfletues — falas, i sigurt dhe i shpejtë.";
+---
+
+<Layout lang={lang} dict={dict} title={seoTitle} description={seoDescription}>
+    <Navbar client:load lang={lang} dict={dict} slot="navbar" />
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden pt-24 pb-16" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-10 right-20 w-80 h-80 bg-blue-400 rounded-full filter blur-3xl animate-pulse"></div>
+            <div class="absolute bottom-20 left-10 w-64 h-64 bg-cyan-400 rounded-full filter blur-3xl animate-pulse" style="animation-delay: 1.5s;"></div>
+        </div>
+        <div class="container-custom max-w-4xl mx-auto relative z-10 text-center px-4">
+            <span class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white/90 text-sm font-medium px-4 py-2 rounded-full border border-white/20 mb-6">
+                🌐 Punon direkt në shfletues — pa nevojë për softuer
+            </span>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-6" style="letter-spacing: -0.03em;">
+                PDF Bashko Online
+                <span class="block text-blue-300 text-2xl md:text-3xl font-semibold mt-3">Falas dhe pa Instalim</span>
+            </h1>
+            <p class="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto mb-8 leading-relaxed">
+                PDF bashko online me KeepPDF — mënyra më e shpejtë dhe e sigurt për të kombinuar skedarë PDF. 
+                Pa shkarkime, pa instalime, pa regjistrime. Thjesht hapni shfletuesin dhe filloni.
+            </p>
+            <a href="#tool" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-4 rounded-xl text-lg transition-colors shadow-lg hover:shadow-xl">
+                ▶ Filloni Bashkimin Tani
+            </a>
+        </div>
+    </section>
+
+    <!-- Merge Tool -->
+    <section id="tool" class="py-12 bg-slate-50">
+        <div class="container-custom max-w-4xl mx-auto px-4">
+            <MergeClient client:load dict={dict} />
+        </div>
+    </section>
+
+    <!-- Online Advantages -->
+    <section class="py-20 bg-white">
+        <div class="container-custom max-w-5xl mx-auto px-4">
+            <div class="text-center mb-14">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Pse PDF Bashko Online dhe jo Softuer Desktop?</h2>
+                <p class="text-lg text-slate-500 max-w-2xl mx-auto">
+                    PDF bashko online ka shumë përparësi ndaj softuerëve tradicionale
+                </p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-gradient-to-br from-blue-50 to-white rounded-2xl p-8 border border-blue-100">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-2xl flex-shrink-0">💻</div>
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-900 mb-2">Pa Instalim</h3>
+                            <p class="text-slate-500 text-sm leading-relaxed">PDF bashko online pa nevojën e ndonjë softueri. Nuk keni nevojë të shkarkoni Adobe Acrobat apo programe të tjera të rënda. Thjesht hapni shfletuesin.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gradient-to-br from-green-50 to-white rounded-2xl p-8 border border-green-100">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center text-2xl flex-shrink-0">🔄</div>
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-900 mb-2">Gjithmonë i Përditësuar</h3>
+                            <p class="text-slate-500 text-sm leading-relaxed">Kur PDF bashko online, gjithmonë përdorni versionin më të fundit. Asnjë përditësim manual, asnjë version i vjetëruar.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gradient-to-br from-purple-50 to-white rounded-2xl p-8 border border-purple-100">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center text-2xl flex-shrink-0">📱</div>
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-900 mb-2">Çdo Pajisje</h3>
+                            <p class="text-slate-500 text-sm leading-relaxed">PDF bashko online nga kompjuteri, telefoni ose tableti juaj — kudo ku keni shfletues interneti.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gradient-to-br from-amber-50 to-white rounded-2xl p-8 border border-amber-100">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center text-2xl flex-shrink-0">🛡️</div>
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-900 mb-2">Siguri Maksimale</h3>
+                            <p class="text-slate-500 text-sm leading-relaxed">Për dallim nga mjetet cloud, PDF bashko online me KeepPDF e përpunon gjithçka brenda shfletuesit. Skedarët tuaj nuk ngarkohen askund.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Table -->
+    <section class="py-20 bg-slate-50">
+        <div class="container-custom max-w-4xl mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 text-center mb-12">Krahasimi: KeepPDF vs Mjete të Tjera</h2>
+            <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+                <table class="w-full">
+                    <thead>
+                        <tr class="bg-slate-50 border-b border-slate-200">
+                            <th class="text-left p-4 text-sm font-bold text-slate-700">Veçori</th>
+                            <th class="p-4 text-sm font-bold text-indigo-700 bg-indigo-50">KeepPDF</th>
+                            <th class="p-4 text-sm font-bold text-slate-500">Mjete të tjera</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-slate-100">
+                            <td class="p-4 text-sm text-slate-700 font-medium">Çmimi</td>
+                            <td class="p-4 text-center"><span class="bg-green-100 text-green-700 font-bold px-3 py-1 rounded-full text-xs">FALAS</span></td>
+                            <td class="p-4 text-center text-sm text-slate-500">$10-20/muaj</td>
+                        </tr>
+                        <tr class="border-b border-slate-100">
+                            <td class="p-4 text-sm text-slate-700 font-medium">Regjistrim i nevojshëm</td>
+                            <td class="p-4 text-center text-green-600 font-bold">❌ Jo</td>
+                            <td class="p-4 text-center text-red-500 font-bold">✓ Po</td>
+                        </tr>
+                        <tr class="border-b border-slate-100">
+                            <td class="p-4 text-sm text-slate-700 font-medium">Ngarkim në server</td>
+                            <td class="p-4 text-center text-green-600 font-bold">❌ Asnjëherë</td>
+                            <td class="p-4 text-center text-red-500 font-bold">✓ Po</td>
+                        </tr>
+                        <tr class="border-b border-slate-100">
+                            <td class="p-4 text-sm text-slate-700 font-medium">Instalim softueri</td>
+                            <td class="p-4 text-center text-green-600 font-bold">❌ Jo</td>
+                            <td class="p-4 text-center text-red-500 font-bold">✓ Disa</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 text-sm text-slate-700 font-medium">Privatësia</td>
+                            <td class="p-4 text-center"><span class="bg-green-100 text-green-700 font-bold px-3 py-1 rounded-full text-xs">100%</span></td>
+                            <td class="p-4 text-center text-sm text-slate-500">E kufizuar</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-20 bg-white">
+        <div class="container-custom max-w-3xl mx-auto px-4">
+            <h2 class="text-3xl font-extrabold text-slate-900 text-center mb-12">Pyetje të Shpeshta për PDF Bashko Online</h2>
+            <div class="space-y-4">
+                <details class="group bg-slate-50 rounded-xl border border-slate-200 overflow-hidden">
+                    <summary class="flex items-center justify-between p-6 cursor-pointer font-semibold text-slate-900 hover:bg-slate-100 transition-colors">
+                        Si mund të bashkoj PDF online pa softuer?
+                        <span class="text-indigo-500 group-open:rotate-45 transition-transform text-xl">+</span>
+                    </summary>
+                    <div class="px-6 pb-6 text-slate-600 leading-relaxed">
+                        Me KeepPDF mund të PDF bashko online direkt në shfletuesin tuaj. Thjesht vizitoni faqen, ngarkoni skedarët PDF dhe klikoni "Bashko". Nuk nevojitet asnjë softuer ose instalim.
+                    </div>
+                </details>
+                <details class="group bg-slate-50 rounded-xl border border-slate-200 overflow-hidden">
+                    <summary class="flex items-center justify-between p-6 cursor-pointer font-semibold text-slate-900 hover:bg-slate-100 transition-colors">
+                        A funksionon PDF bashko online në telefon?
+                        <span class="text-indigo-500 group-open:rotate-45 transition-transform text-xl">+</span>
+                    </summary>
+                    <div class="px-6 pb-6 text-slate-600 leading-relaxed">
+                        Po! KeepPDF funksionon në çdo pajisje me shfletues interneti — kompjuter, telefon ose tablet. Interfejsi adaptohet automatikisht me pajisjen tuaj.
+                    </div>
+                </details>
+                <details class="group bg-slate-50 rounded-xl border border-slate-200 overflow-hidden">
+                    <summary class="flex items-center justify-between p-6 cursor-pointer font-semibold text-slate-900 hover:bg-slate-100 transition-colors">
+                        Cilat janë kufizimet e PDF bashko online?
+                        <span class="text-indigo-500 group-open:rotate-45 transition-transform text-xl">+</span>
+                    </summary>
+                    <div class="px-6 pb-6 text-slate-600 leading-relaxed">
+                        KeepPDF nuk ka kufizime në numrin e skedarëve. Limiti i vetëm është madhësia maksimale: çdo skedar duhet të jetë nën 50MB. Mund të bashkoni sa PDF të dëshironi!
+                    </div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Internal Links -->
+    <section class="py-16 bg-slate-50">
+        <div class="container-custom max-w-4xl mx-auto px-4 text-center">
+            <h2 class="text-2xl font-bold text-slate-900 mb-6">Lexoni Gjithashtu</h2>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="/sq/bashko-pdf-falas" class="inline-flex items-center gap-2 bg-white text-indigo-700 font-semibold px-6 py-3 rounded-xl border border-indigo-200 hover:border-indigo-400 hover:shadow-md transition-all text-sm">
+                    🟢 Bashko PDF Falas
+                </a>
+                <a href="/sq/blog/si-bashko-pdf" class="inline-flex items-center gap-2 bg-white text-indigo-700 font-semibold px-6 py-3 rounded-xl border border-indigo-200 hover:border-indigo-400 hover:shadow-md transition-all text-sm">
+                    📖 Si Bashko PDF — Udhëzuesi
+                </a>
+                <a href="/sq/merge-pdf" class="inline-flex items-center gap-2 bg-white text-indigo-700 font-semibold px-6 py-3 rounded-xl border border-indigo-200 hover:border-indigo-400 hover:shadow-md transition-all text-sm">
+                    🔧 Mjeti i Bashkimit
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <CookieBanner client:load dict={dict} slot="cookie-banner" />
+</Layout>

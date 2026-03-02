@@ -8,15 +8,17 @@ import SplitClient from '../../components/tools/SplitClient';
 import UseCaseSection from '../../components/tools/UseCaseSection';
 import HowToSection from '../../components/tools/HowToSection';
 
+import { buildHowToSchema } from '../../data/howTo';
 export function getStaticPaths() {
   return locales.map(lang => ({ params: { lang } }));
 }
 
 const { lang } = Astro.params;
 const dict = getDictionary(lang);
+const howToSchema = buildHowToSchema('split', lang);
 ---
 
-<Layout lang={lang} dict={dict} title={dict.metadata.split.title} description={dict.metadata.split.description}>
+<Layout lang={lang} dict={dict} title={dict.metadata.split.title} description={dict.metadata.split.description} howToSchema={howToSchema}>
   <Navbar client:load lang={lang} dict={dict} slot="navbar" />
   <SplitClient client:load dict={dict} />
   <HowToSection client:visible slug="split" lang={lang} />

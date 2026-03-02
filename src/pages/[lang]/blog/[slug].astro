@@ -1,7 +1,7 @@
 ---
 export const prerender = true;
 import BlogPostLayout from '../../../layouts/BlogPostLayout.astro';
-import { getDictionary, locales } from '../../../i18n/dictionary';
+import { getDictionary, locales, languageRegistry } from '../../../i18n/dictionary';
 import { getCollection, render } from 'astro:content';
 import Navbar from '../../../components/landing/Navbar';
 import CookieBanner from '../../../components/landing/CookieBanner';
@@ -141,7 +141,7 @@ const relatedPosts = allPosts
             {translations && translations.length > 0 && (
                 <div class="mt-6 p-4 bg-indigo-50/50 rounded-xl border border-indigo-100">
                     <span class="text-sm text-indigo-600 font-medium">
-                        🌐 {lang === 'tr' ? 'Bu yazı başka dillerde de mevcut:' : 'This post is also available in:'}
+                        🌐 {dict.blog.translationAvailable || 'This post is also available in:'}
                     </span>
                     <div class="flex gap-3 mt-2">
                         {translations.map(t => (
@@ -149,7 +149,7 @@ const relatedPosts = allPosts
                                 href={`/${t.lang}/blog/${t.slug}`}
                                 class="text-sm font-semibold text-indigo-600 hover:text-indigo-800 bg-white px-3 py-1.5 rounded-lg border border-indigo-200 hover:border-indigo-300 transition-colors"
                             >
-                                {t.lang === 'en' ? '🇬🇧 English' : t.lang === 'tr' ? '🇹🇷 Türkçe' : t.lang.toUpperCase()}
+                                {languageRegistry[t.lang]?.flag || ''} {languageRegistry[t.lang]?.name || t.lang.toUpperCase()}
                             </a>
                         ))}
                     </div>

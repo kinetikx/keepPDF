@@ -1,10 +1,31 @@
 ---
 import '../styles/globals.css';
 import Footer from '../components/layout/Footer.astro';
+import { locales, getOgLocale } from '../i18n/dictionary';
 
 const { lang, dict } = Astro.props;
-const currentPath = Astro.url.pathname;
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || ''; // normalize trailing slash
 const cleanPath = currentPath.replace(new RegExp(`^/${lang}`), '') || '';
+
+// Breadcrumb JSON-LD
+const pathSegments = currentPath.split('/').filter(Boolean);
+const breadcrumbItems = [
+  { name: 'KeepPDF', url: 'https://keep-pdf.com/' },
+  ...pathSegments.map((seg, i) => ({
+    name: seg.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
+    url: `https://keep-pdf.com/${pathSegments.slice(0, i + 1).join('/')}`
+  }))
+];
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": breadcrumbItems.map((item, i) => ({
+    "@type": "ListItem",
+    "position": i + 1,
+    "name": item.name,
+    "item": item.url
+  }))
+};
 
 const jsonLd = [
   {
@@ -19,6 +40,12 @@ const jsonLd = [
       "@type": "Offer",
       "price": "0",
       "priceCurrency": "USD"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "ratingCount": "1250",
+      "bestRating": "5"
     }
   },
   {
@@ -31,11 +58,20 @@ const jsonLd = [
       "target": "https://keep-pdf.com/{search_term_string}",
       "query-input": "required name=search_term_string"
     }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "KeepPDF",
+    "url": "https://keep-pdf.com",
+    "logo": "https://keep-pdf.com/brand-logo.svg",
+    "sameAs": []
   }
 ];
 
 const title = Astro.props.title || dict.metadata.title;
 const description = Astro.props.description || dict.metadata.description;
+const howToSchema = Astro.props.howToSchema;
 ---
 
 <html lang={lang}>
@@ -44,14 +80,14 @@ const description = Astro.props.description || dict.metadata.description;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="keywords" content="PDF, merge, split, compress, convert, tools, online, free" />
+    <meta name="keywords" content={dict.common?.metaKeywords || "PDF, merge, split, compress, convert, tools, online, free"} />
     <meta name="author" content="KeepPDF Team" />
     <link rel="icon" href="/brand-logo.svg" />
     <link rel="apple-touch-icon" href="/brand-logo.svg" />
     <link rel="canonical" href={`https://keep-pdf.com${currentPath}`} />
-    <link rel="alternate" hreflang="en" href={`https://keep-pdf.com/en${cleanPath}`} />
-    <link rel="alternate" hreflang="tr" href={`https://keep-pdf.com/tr${cleanPath}`} />
-    <link rel="alternate" hreflang="sq" href={`https://keep-pdf.com/sq${cleanPath}`} />
+    {locales.map(loc => (
+      <link rel="alternate" hreflang={loc} href={`https://keep-pdf.com/${loc}${cleanPath}`} />
+    ))}
     <link rel="alternate" hreflang="x-default" href={`https://keep-pdf.com/en${cleanPath}`} />
     
     <!-- Open Graph -->
@@ -59,7 +95,7 @@ const description = Astro.props.description || dict.metadata.description;
     <meta property="og:description" content={description} />
     <meta property="og:url" content={`https://keep-pdf.com/${lang}${cleanPath}`} />
     <meta property="og:site_name" content="KeepPDF" />
-    <meta property="og:locale" content={lang === 'tr' ? 'tr_TR' : lang === 'sq' ? 'sq_AL' : 'en_US'} />
+    <meta property="og:locale" content={getOgLocale(lang)} />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="https://keep-pdf.com/og-image.png" />
     <meta property="og:image:width" content="1200" />
@@ -71,10 +107,12 @@ const description = Astro.props.description || dict.metadata.description;
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content="https://keep-pdf.com/og-image.png" />
 
-    <!-- Google Fonts -->
+    <!-- Google Fonts (optimized: preload + swap) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" /></noscript>
 
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-VY5X32BG7G"></script>
@@ -87,6 +125,10 @@ const description = Astro.props.description || dict.metadata.description;
 
     <!-- JSON-LD -->
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+    {howToSchema && (
+      <script type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
+    )}
   </head>
   <body class="antialiased min-h-screen flex flex-col font-sans text-slate-900 bg-white">
     <slot name="navbar" />

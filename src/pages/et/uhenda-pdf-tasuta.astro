@@ -1,0 +1,233 @@
+---
+export const prerender = true;
+import Layout from '../../layouts/Layout.astro';
+import { getDictionary } from '../../i18n/dictionary';
+import Navbar from '../../components/landing/Navbar';
+import CookieBanner from '../../components/landing/CookieBanner';
+import MergeClient from '../../components/tools/MergeClient';
+
+const lang = 'et';
+const dict = getDictionary(lang);
+
+const seoTitle = "Ühenda PDF Tasuta — Kombineeri PDF-faile Ilma Serverisse Laadimata | KeepPDF";
+const seoDescription = "Ühenda PDF tasuta veebis. Kombineeri mitu PDF-faili üheks dokumendiks — registreerimata, serverisse laadimata, 100% brauseris.";
+
+const howToSchema = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "Kuidas Ühendada PDF Tasuta 3 Sammuga",
+    "description": "Ühenda PDF tasuta KeepPDF-iga.",
+    "step": [
+        {
+            "@type": "HowToStep",
+            "position": 1,
+            "name": "Laadi Failid Üles",
+            "text": "Vali või lohista PDF-failid, mida soovid ühendada."
+        },
+        {
+            "@type": "HowToStep",
+            "position": 2,
+            "name": "Järjesta Ümber",
+            "text": "Lohista failid soovitud järjekorda."
+        },
+        {
+            "@type": "HowToStep",
+            "position": 3,
+            "name": "Laadi Alla",
+            "text": "Klõpsa \"Ühenda\" ja laadi kombineeritud PDF kohe alla — tasuta!"
+        }
+    ]
+};
+
+const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "Kas PDF-ide ühendamine on tõesti tasuta?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Jah! Ühenda PDF tasuta KeepPDF-iga — piiranguteta."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Kas mu failid on turvalised?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Absoluutselt! Kõik töödeldakse brauseris."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Mitu PDF-faili saan ühendada?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Piirangut pole! 2, 5, 10 või enam."
+            }
+        }
+    ]
+};
+---
+
+<Layout lang={lang} dict={dict} title={seoTitle} description={seoDescription}>
+    <Navbar client:load lang={lang} dict={dict} slot="navbar" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+    <!-- Hreflang -->
+    <link rel="alternate" hreflang="en" href={"https://keep-pdf.com/en/merge-pdf"} />
+    <link rel="alternate" hreflang="tr" href={"https://keep-pdf.com/tr/merge-pdf"} />
+    <link rel="alternate" hreflang="sq" href={"https://keep-pdf.com/sq/bashko-pdf-falas"} />
+    <link rel="alternate" hreflang="et" href={"https://keep-pdf.com/et/uhenda-pdf-tasuta"} />
+    <link rel="alternate" hreflang="lv" href={"https://keep-pdf.com/lv/apvienot-pdf-bezmaksas"} />
+    <link rel="alternate" hreflang="x-default" href={"https://keep-pdf.com/en/merge-pdf"} />
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden pt-24 pb-16" style="background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4338ca 100%);">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-20 left-10 w-72 h-72 bg-purple-400 rounded-full filter blur-3xl animate-pulse"></div>
+            <div class="absolute bottom-10 right-20 w-96 h-96 bg-indigo-400 rounded-full filter blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
+        </div>
+        <div class="container-custom max-w-4xl mx-auto relative z-10 text-center px-4">
+            <span class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white/90 text-sm font-medium px-4 py-2 rounded-full border border-white/20 mb-6">
+                🔒 100% privaatne — failid ei lahku sinu brauserist
+            </span>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-6" style="letter-spacing: -0.03em;">
+                Ühenda PDF Tasuta ja Kiiresti
+                <span class="block text-indigo-300 text-2xl md:text-3xl font-semibold mt-3">Ilma Serverisse Laadimata — Sinu Failid ei Lahku Brauserist</span>
+            </h1>
+            <div class="flex flex-wrap justify-center gap-4 mb-8">
+                <div class="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-xl text-white/80 text-sm">
+                    <span class="text-green-400">✓</span> Alati tasuta
+                </div>
+                <div class="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-xl text-white/80 text-sm">
+                    <span class="text-green-400">✓</span> Registreerimata
+                </div>
+                <div class="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-xl text-white/80 text-sm">
+                    <span class="text-green-400">✓</span> Serverisse laadimata
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool -->
+    <section class="py-12 bg-slate-50">
+        <div class="container-custom max-w-4xl mx-auto px-4">
+    <MergeClient client:load dict={dict} />
+        </div>
+    </section>
+
+    <!-- How To Section -->
+    <section class="py-20 bg-white">
+        <div class="container-custom max-w-5xl mx-auto px-4">
+            <div class="text-center mb-14">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Kuidas Ühendada PDF Tasuta 3 Sammuga</h2>
+                <p class="text-lg text-slate-500 max-w-2xl mx-auto">Ühenda PDF tasuta KeepPDF-iga.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="relative bg-gradient-to-br from-indigo-50 to-white rounded-2xl p-8 border border-indigo-100 shadow-sm hover:shadow-lg transition-shadow">
+                    <div class="absolute -top-4 -left-4 w-12 h-12 bg-indigo-600 text-white rounded-xl flex items-center justify-center text-lg font-bold shadow-lg">1</div>
+                    <div class="text-4xl mb-4 mt-2">📂</div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Laadi Failid Üles</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">Vali või lohista PDF-failid, mida soovid ühendada.</p>
+                </div>
+                <div class="relative bg-gradient-to-br from-purple-50 to-white rounded-2xl p-8 border border-purple-100 shadow-sm hover:shadow-lg transition-shadow">
+                    <div class="absolute -top-4 -left-4 w-12 h-12 bg-purple-600 text-white rounded-xl flex items-center justify-center text-lg font-bold shadow-lg">2</div>
+                    <div class="text-4xl mb-4 mt-2">🔀</div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Järjesta Ümber</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">Lohista failid soovitud järjekorda.</p>
+                </div>
+                <div class="relative bg-gradient-to-br from-emerald-50 to-white rounded-2xl p-8 border border-emerald-100 shadow-sm hover:shadow-lg transition-shadow">
+                    <div class="absolute -top-4 -left-4 w-12 h-12 bg-emerald-600 text-white rounded-xl flex items-center justify-center text-lg font-bold shadow-lg">3</div>
+                    <div class="text-4xl mb-4 mt-2">⬇️</div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Laadi Alla</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">Klõpsa "Ühenda" ja laadi kombineeritud PDF kohe alla — tasuta!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Section -->
+    <section class="py-20 bg-slate-50">
+        <div class="container-custom max-w-5xl mx-auto px-4">
+            <div class="text-center mb-14">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Miks Valida KeepPDF PDF-ide Ühendamiseks?</h2>
+                <p class="text-lg text-slate-500 max-w-2xl mx-auto">Põhjused, miks tuhanded kasutajad usaldavad KeepPDF-i</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition-shadow text-center">
+                    <div class="text-3xl mb-3">🔒</div>
+                    <h3 class="font-bold text-slate-900 mb-2">100% Privaatne</h3>
+                    <p class="text-sm text-slate-500">Failid ei lahku kunagi brauserist.</p>
+                </div>
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition-shadow text-center">
+                    <div class="text-3xl mb-3">⚡</div>
+                    <h3 class="font-bold text-slate-900 mb-2">Ülikiire</h3>
+                    <p class="text-sm text-slate-500">Ühenda PDF-e sekunditega.</p>
+                </div>
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition-shadow text-center">
+                    <div class="text-3xl mb-3">💰</div>
+                    <h3 class="font-bold text-slate-900 mb-2">Täiesti Tasuta</h3>
+                    <p class="text-sm text-slate-500">Peidetud tasusid pole.</p>
+                </div>
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition-shadow text-center">
+                    <div class="text-3xl mb-3">📱</div>
+                    <h3 class="font-bold text-slate-900 mb-2">Töötab Igal Pool</h3>
+                    <p class="text-sm text-slate-500">Arvuti, telefon, tahvel.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-20 bg-white">
+        <div class="container-custom max-w-3xl mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 text-center mb-12">Kuidas Ühendada PDF Tasuta FAQ</h2>
+            <div class="space-y-4">
+                <details class="group bg-slate-50 rounded-xl border border-slate-200 overflow-hidden">
+                    <summary class="flex items-center justify-between p-6 cursor-pointer font-semibold text-slate-900 hover:bg-slate-100 transition-colors">
+                        Kas PDF-ide ühendamine on tõesti tasuta?
+                        <span class="text-indigo-500 group-open:rotate-45 transition-transform text-xl">+</span>
+                    </summary>
+                    <div class="px-6 pb-6 text-slate-600 leading-relaxed">Jah! Ühenda PDF tasuta KeepPDF-iga — piiranguteta.</div>
+                </details>
+                <details class="group bg-slate-50 rounded-xl border border-slate-200 overflow-hidden">
+                    <summary class="flex items-center justify-between p-6 cursor-pointer font-semibold text-slate-900 hover:bg-slate-100 transition-colors">
+                        Kas mu failid on turvalised?
+                        <span class="text-indigo-500 group-open:rotate-45 transition-transform text-xl">+</span>
+                    </summary>
+                    <div class="px-6 pb-6 text-slate-600 leading-relaxed">Absoluutselt! Kõik töödeldakse brauseris.</div>
+                </details>
+                <details class="group bg-slate-50 rounded-xl border border-slate-200 overflow-hidden">
+                    <summary class="flex items-center justify-between p-6 cursor-pointer font-semibold text-slate-900 hover:bg-slate-100 transition-colors">
+                        Mitu PDF-faili saan ühendada?
+                        <span class="text-indigo-500 group-open:rotate-45 transition-transform text-xl">+</span>
+                    </summary>
+                    <div class="px-6 pb-6 text-slate-600 leading-relaxed">Piirangut pole! 2, 5, 10 või enam.</div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Internal Links -->
+    <section class="py-16 bg-indigo-50">
+        <div class="container-custom max-w-4xl mx-auto px-4 text-center">
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="/et/tukkelda-pdf-tasuta" class="inline-flex items-center gap-2 bg-white text-indigo-700 font-semibold px-6 py-3 rounded-xl border border-indigo-200 hover:border-indigo-400 hover:shadow-md transition-all text-sm">
+                    ✂️ Tükelda PDF Tasuta
+                </a>
+                <a href="/et/tihenda-pdf-tasuta" class="inline-flex items-center gap-2 bg-white text-indigo-700 font-semibold px-6 py-3 rounded-xl border border-indigo-200 hover:border-indigo-400 hover:shadow-md transition-all text-sm">
+                    📦 Tihenda PDF Tasuta
+                </a>
+                <a href="/et/merge-pdf" class="inline-flex items-center gap-2 bg-white text-indigo-700 font-semibold px-6 py-3 rounded-xl border border-indigo-200 hover:border-indigo-400 hover:shadow-md transition-all text-sm">
+                    🔧 PDF Ühendamise Tööriist
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <CookieBanner client:load dict={dict} slot="cookie-banner" />
+</Layout>

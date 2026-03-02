@@ -1,4 +1,9 @@
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /_astro/
+Disallow: /*.json$
 
+# Sitemap
 Sitemap: https://keep-pdf.com/sitemap-index.xml

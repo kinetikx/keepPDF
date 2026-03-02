@@ -1,15 +1,16 @@
 import { Globe, Check } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
+import { languageRegistry } from "../i18n/dictionary";
 
 export default function LanguageSwitcher({ lang }) {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
 
-    const languages = [
-        { code: "en", label: "English", flag: "🇺🇸" },
-        { code: "tr", label: "Türkçe", flag: "🇹🇷" },
-        { code: "sq", label: "Shqip", flag: "🇦🇱" },
-    ];
+    const languages = Object.entries(languageRegistry).map(([code, info]) => ({
+        code,
+        label: info.name,
+        flag: info.flag,
+    }));
 
     const handleSwitch = (newLang) => {
         if (newLang === lang) {

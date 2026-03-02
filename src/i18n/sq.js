@@ -269,6 +269,7 @@ export const sq = {
         dragDropImages: "Lëshoni imazhet JPG, PNG, ose WebP këtu, ose klikoni për të zgjedhur skedarët.",
         addImages: "Shto Imazhe",
         convertToPdf: "Konverto në PDF",
+        metaKeywords: "PDF, bashko PDF, ndaj PDF, komprimo PDF, konverto PDF, mjete PDF falas, redaktues PDF online",
         cookieBanner: {
             text: "Ky sit përdor cookies për të përmirësuar përvojën tuaj.",
             accept: "Prano"
@@ -286,6 +287,7 @@ export const sq = {
         minRead: "min lexim",
         relatedPosts: "Postime të Ngjashme",
         allPosts: "Të gjitha Postimet",
+        translationAvailable: "Ky artikull është i disponueshëm edhe në:",
         categories: {
             all: "Të gjitha",
             guides: "Udhëzues",

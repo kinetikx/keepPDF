@@ -269,6 +269,7 @@ export const tr = {
         dragDropImages: "JPG, PNG veya WebP resimlerini buraya sürükleyin veya seçmek için tıklayın.",
         addImages: "Resim Ekle",
         convertToPdf: "PDF'e Dönüştür",
+        metaKeywords: "PDF, PDF birleştirme, PDF bölme, PDF sıkıştırma, PDF dönüştürme, ücretsiz PDF araçları, çevrimiçi PDF düzenleyici",
         cookieBanner: {
             text: "Bu site deneyiminizi geliştirmek için çerezler kullanır.",
             accept: "Kabul Et"
@@ -286,6 +287,7 @@ export const tr = {
         minRead: "dk okuma",
         relatedPosts: "İlgili Yazılar",
         allPosts: "Tüm Yazılar",
+        translationAvailable: "Bu yazı başka dillerde de mevcut:",
         categories: {
             all: "Tümü",
             guides: "Rehberler",

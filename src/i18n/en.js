@@ -269,6 +269,7 @@ export const en = {
         dragDropImages: "Drag & drop JPG, PNG, or WebP images here, or click to select files.",
         addImages: "Add Images",
         convertToPdf: "Convert to PDF",
+        metaKeywords: "PDF, merge PDF, split PDF, compress PDF, convert PDF, online PDF tools, free PDF editor, image to PDF, PDF to Word",
         cookieBanner: {
             text: "This site uses cookies to enhance your experience.",
             accept: "Accept"
@@ -286,6 +287,7 @@ export const en = {
         minRead: "min read",
         relatedPosts: "Related Posts",
         allPosts: "All Posts",
+        translationAvailable: "This post is also available in:",
         categories: {
             all: "All",
             guides: "Guides",

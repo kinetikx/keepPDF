@@ -19,14 +19,32 @@ export const howTo = {
             ]
         },
         sq: {
-                  "title": "Si të ndash një PDF",
-                  "subtitle": "Ndani një faqe ose një grup të tërë për konvertim të lehtë në skedarë PDF të pavarur.",
-                  "steps": [
-                            "Zgjidhni dokumentin PDF që dëshironi të ndani ose zvarriteni në kutinë e ngarkimit.",
-                            "Zgjidhni të nxirrni faqe specifike, t'i ndani sipas vargjeve të faqeve ose t'i ndani në pjesë të barabarta.",
-                            "Klikoni butonin e ndarjes dhe shkarkoni menjëherë skedarët tuaj të rinj PDF të optimizuar."
-                  ]
-                }
+            title: "Si të ndash një PDF",
+            subtitle: "Ndani një faqe ose një grup të tërë për konvertim të lehtë në skedarë PDF të pavarur.",
+            steps: [
+                "Zgjidhni dokumentin PDF që dëshironi të ndani ose zvarriteni në kutinë e ngarkimit.",
+                "Zgjidhni të nxirrni faqe specifike, t'i ndani sipas vargjeve të faqeve ose t'i ndani në pjesë të barabarta.",
+                "Klikoni butonin e ndarjes dhe shkarkoni menjëherë skedarët tuaj të rinj PDF të optimizuar."
+            ]
+        },
+        et: {
+            title: "Kuidas PDF-i tükeldada",
+            subtitle: "Eraldage üks lehekülg või terve komplekt sõltumatuteks PDF-failideks.",
+            steps: [
+                "Valige PDF-dokument, mida soovite tükeldada, või lohistage see üleslaadimise kasti.",
+                "Valige konkreetsete lehekülgede eraldamine, leheküljevahemike järgi jagamine või võrdseteks osadeks jagamine.",
+                "Klõpsake tükeldamisnuppu ja laadige oma uued optimeeritud PDF-failid koheselt alla."
+            ]
+        },
+        lv: {
+            title: "Kā sadalīt PDF",
+            subtitle: "Atdaliet vienu lapu vai visu komplektu vieglai konvertēšanai neatkarīgos PDF failos.",
+            steps: [
+                "Atlasiet PDF dokumentu, kuru vēlaties sadalīt, vai velciet un nometiet to augšupielādes lodziņā.",
+                "Izvēlieties izvilkt konkrētas lapas, sadalīt pēc lapu diapazoniem vai sadalīt vienādās daļās.",
+                "Noklikšķiniet uz sadalīšanas pogas un lejupielādējiet savus jaunos optimizētos PDF failus uzreiz."
+            ]
+        }
     },
     "merge-pdf": {
         en: {
@@ -48,14 +66,32 @@ export const howTo = {
             ]
         },
         sq: {
-                  "title": "Si të bashkosh skedarët PDF",
-                  "subtitle": "Kombinoni dy ose më shumë PDF në një dokument të vetëm, shumë të organizuar.",
-                  "steps": [
-                            "Ngarkoni skedarët PDF që dëshironi të kombinoni përmes një lidhjeje të sigurt të enkriptuar.",
-                            "Drag & drop ikonat e skedarëve për t'i rirenditur saktësisht ashtu siç ju duhen.",
-                            "Klikoni butonin e bashkimit dhe PDF-ja juaj e sapo kombinuar do të jetë gati në sekonda."
-                  ]
-                }
+            title: "Si të bashkosh skedarët PDF",
+            subtitle: "Kombinoni dy ose më shumë PDF në një dokument të vetëm, shumë të organizuar.",
+            steps: [
+                "Ngarkoni skedarët PDF që dëshironi të kombinoni përmes një lidhjeje të sigurt të enkriptuar.",
+                "Drag & drop ikonat e skedarëve për t'i rirenditur saktësisht ashtu siç ju duhen.",
+                "Klikoni butonin e bashkimit dhe PDF-ja juaj e sapo kombinuar do të jetë gati në sekonda."
+            ]
+        },
+        et: {
+            title: "Kuidas PDF-faile ühendada",
+            subtitle: "Kombineerige kaks või enam PDF-i üheks hästi organiseeritud dokumendiks.",
+            steps: [
+                "Laadige üles PDF-failid, mida soovite kombineerida — turvaliselt ja krüpteeritult.",
+                "Lohistage failide pisipilte, et järjestada need täpselt nii, nagu vajate.",
+                "Klõpsake ühendamisnuppu ja teie uus kombineeritud PDF on valmis sekunditega."
+            ]
+        },
+        lv: {
+            title: "Kā apvienot PDF failus",
+            subtitle: "Kombinējiet divus vai vairākus PDF vienā labi organizētā dokumentā.",
+            steps: [
+                "Augšupielādējiet PDF failus, kurus vēlaties kombinēt — droši un šifrēti.",
+                "Velciet un nometiet failu sīktēlus, lai tos pārkārtotu tieši tā, kā jums nepieciešams.",
+                "Noklikšķiniet uz apvienošanas pogas, un jūsu jaunais kombinētais PDF būs gatavs dažās sekundēs."
+            ]
+        }
     },
     compress: {
         en: {
@@ -77,14 +113,32 @@ export const howTo = {
             ]
         },
         sq: {
-                  "title": "Si të kompresosh një PDF",
-                  "subtitle": "Zvogëloni madhësinë e skedarit ndjeshëm duke ruajtur cilësinin më të lartë të mundshme.",
-                  "steps": [
-                            "Zgjidhni dokumentin e madh PDF që dëshironi të zvogëloni nga diskun tuaj lokal.",
-                            "Prisni disa sekonda ndërsa motori ynë analizon dhe aplikon kompresim të avancuar.",
-                            "Shkarkoni skedarin tuaj PDF më të lehtë, gati për email, pa humbur cilësinë vizuale."
-                  ]
-                }
+            title: "Si të kompresosh një PDF",
+            subtitle: "Zvogëloni madhësinë e skedarit ndjeshëm duke ruajtur cilësinin më të lartë të mundshme.",
+            steps: [
+                "Zgjidhni dokumentin e madh PDF që dëshironi të zvogëloni nga diskun tuaj lokal.",
+                "Prisni disa sekonda ndërsa motori ynë analizon dhe aplikon kompresim të avancuar.",
+                "Shkarkoni skedarin tuaj PDF më të lehtë, gati për email, pa humbur cilësinë vizuale."
+            ]
+        },
+        et: {
+            title: "Kuidas PDF-i tihendada",
+            subtitle: "Vähendage faili suurust oluliselt, säilitades kõrgeima võimaliku kvaliteedi.",
+            steps: [
+                "Valige kohalikust kettast suur PDF-dokument, mida soovite väiksemaks muuta.",
+                "Oodake mõni sekund, kuni meie mootor analüüsib ja rakendab täiustatud tihendust.",
+                "Laadige alla oma kergem, e-kirjaks valmis PDF-fail ilma visuaalset kvaliteeti kaotamata."
+            ]
+        },
+        lv: {
+            title: "Kā saspiest PDF",
+            subtitle: "Ievērojami samaziniet faila izmēru, saglabājot augstāko iespējamo kvalitāti.",
+            steps: [
+                "Izvēlieties lielo PDF dokumentu, kuru vēlaties samazināt, no sava lokālā diska.",
+                "Uzgaidiet dažas sekundes, kamēr mūsu dzinējs analizē un piemēro uzlabotu saspiešanu.",
+                "Lejupielādējiet savu vieglāku, e-pastam gatavu PDF failu, nezaudējot vizuālo kvalitāti."
+            ]
+        }
     },
     organize: {
         en: {
@@ -106,14 +160,32 @@ export const howTo = {
             ]
         },
         sq: {
-                  "title": "Si të organizosh faqet e PDF-së",
-                  "subtitle": "Renditni, shtoni, fshini dhe menaxhoni radhën e saktë të faqeve brenda PDF-së tuaj.",
-                  "steps": [
-                            "Ngarkoni dokumentin tuaj PDF me shumë faqe për ta hapur në vizualizuesin e faqeve.",
-                            "Drag & drop faqet për t'i rirenditur, ose kaloni mausin mbi faqe për të fshirë ato të padëshiruara.",
-                            "Ruani dhe shkarkoni dokumentin tuaj PDF të sapostrukturuar menjëherë."
-                  ]
-                }
+            title: "Si të organizosh faqet e PDF-së",
+            subtitle: "Renditni, shtoni, fshini dhe menaxhoni radhën e saktë të faqeve brenda PDF-së tuaj.",
+            steps: [
+                "Ngarkoni dokumentin tuaj PDF me shumë faqe për ta hapur në vizualizuesin e faqeve.",
+                "Drag & drop faqet për t'i rirenditur, ose kaloni mausin mbi faqe për të fshirë ato të padëshiruara.",
+                "Ruani dhe shkarkoni dokumentin tuaj PDF të sapostrukturuar menjëherë."
+            ]
+        },
+        et: {
+            title: "Kuidas PDF-lehekülgi korraldada",
+            subtitle: "Sorteerige, lisage, kustutage ja hallake lehekülgede täpset järjekorda oma PDF-is.",
+            steps: [
+                "Laadige üles oma mitmeleheline PDF-dokument, et see leheküljevaaturis avada.",
+                "Lohistage lehekülgi ümberjärjestamiseks või hõljuge lehekülgede kohal soovimatute kustutamiseks.",
+                "Salvestage ja laadige oma uuesti struktureeritud PDF-dokument koheselt alla."
+            ]
+        },
+        lv: {
+            title: "Kā sakārtot PDF lapas",
+            subtitle: "Kārtojiet, pievienojiet, dzēsiet un pārvaldiet precīzu lapu secību savā PDF.",
+            steps: [
+                "Augšupielādējiet savu daudzlapu PDF dokumentu, lai ielādētu to lapu vizualizētājā.",
+                "Velciet un nometiet lapas pārkārtošanai vai virziet kursoru uz lapām, lai dzēstu nevēlamās.",
+                "Saglabājiet un lejupielādējiet savu jauno strukturēto PDF dokumentu nekavējoties."
+            ]
+        }
     },
     "image-to-pdf": {
         en: {
@@ -135,14 +207,32 @@ export const howTo = {
             ]
         },
         sq: {
-                  "title": "Si të konvertosh JPG në PDF",
-                  "subtitle": "Kthejeni imazhet në një dokument të vetëm PDF të lëmuar me vetëm pak klikime.",
-                  "steps": [
-                            "Zgjidhni skedarët tuaj JPG, PNG ose imazhe të tjera për të filluar procesin e konvertimit.",
-                            "Rregulloni margjinat, orientimin e faqes dhe rirenditni imazhet lirisht në parashikim.",
-                            "Klikoni konverto dhe shkarkoni në mënyrë të sigurt skedarin tuaj të ri PDF të kombinuar."
-                  ]
-                }
+            title: "Si të konvertosh JPG në PDF",
+            subtitle: "Kthejeni imazhet në një dokument të vetëm PDF të lëmuar me vetëm pak klikime.",
+            steps: [
+                "Zgjidhni skedarët tuaj JPG, PNG ose imazhe të tjera për të filluar procesin e konvertimit.",
+                "Rregulloni margjinat, orientimin e faqes dhe rirenditni imazhet lirisht në parashikim.",
+                "Klikoni konverto dhe shkarkoni në mënyrë të sigurt skedarin tuaj të ri PDF të kombinuar."
+            ]
+        },
+        et: {
+            title: "Kuidas JPG-d PDF-iks teisendada",
+            subtitle: "Muutke pildid vaid mõne klõpsuga üheks viimistletud PDF-dokumendiks.",
+            steps: [
+                "Valige oma JPG, PNG või muud pildifailid, et alustada teisendamisprotsessi.",
+                "Reguleerige veeriseid, lehe paigutust ja järjestage pilte eelvaates vabalt ümber.",
+                "Klõpsake teisenda ja laadige oma uhiuus kombineeritud PDF-fail turvaliselt alla."
+            ]
+        },
+        lv: {
+            title: "Kā konvertēt JPG uz PDF",
+            subtitle: "Pārvērtiet attēlus vienā noslīpētā PDF dokumentā tikai ar dažiem klikšķiem.",
+            steps: [
+                "Atlasiet savus JPG, PNG vai citus attēlu failus, lai sāktu konvertēšanas procesu.",
+                "Pielāgojiet piemales, lapas orientāciju un brīvi pārkārtojiet attēlus priekšskatījumā.",
+                "Noklikšķiniet konvertēt un droši lejupielādējiet savu pilnīgi jauno kombinēto PDF failu."
+            ]
+        }
     },
     "pdf-to-word": {
         en: {
@@ -164,14 +254,32 @@ export const howTo = {
             ]
         },
         sq: {
-                  "title": "Si të konvertosh PDF në Word",
-                  "subtitle": "Nxirrni tekstin dhe faqosjet nga dokumentet në skedarë Word plotësisht të redaktueshëm.",
-                  "steps": [
-                            "Ngarkoni dokumentin tuaj PDF që është vetëm për lexim në zonën e konvertimit.",
-                            "Motori ynë i fuqishëm OCR do të përpunojë tekstin, fontet dhe imazhet me kujdes.",
-                            "Shkarkoni skedarin plotësisht të redaktueshëm DOCX dhe filloni të bëni ndryshime në Microsoft Word."
-                  ]
-                }
+            title: "Si të konvertosh PDF në Word",
+            subtitle: "Nxirrni tekstin dhe faqosjet nga dokumentet në skedarë Word plotësisht të redaktueshëm.",
+            steps: [
+                "Ngarkoni dokumentin tuaj PDF që është vetëm për lexim në zonën e konvertimit.",
+                "Motori ynë i fuqishëm OCR do të përpunojë tekstin, fontet dhe imazhet me kujdes.",
+                "Shkarkoni skedarin plotësisht të redaktueshëm DOCX dhe filloni të bëni ndryshime në Microsoft Word."
+            ]
+        },
+        et: {
+            title: "Kuidas PDF-i Wordiks teisendada",
+            subtitle: "Eraldage dokumentidest tekst ja paigutused täielikult redigeeritavateks Wordi failideks.",
+            steps: [
+                "Laadige oma kirjutuskaitsega PDF-dokument üles teisendamise alale.",
+                "Meie tugev OCR-mootor töötleb teksti, fonte ja pilte hoolikalt.",
+                "Laadige alla täielikult redigeeritav DOCX-fail ja alustage muudatuste tegemist Microsoft Wordis."
+            ]
+        },
+        lv: {
+            title: "Kā konvertēt PDF uz Word",
+            subtitle: "Izvelciet tekstu un izkārtojumu no dokumentiem pilnībā rediģējamos Word failos.",
+            steps: [
+                "Augšupielādējiet savu tikai lasāmo PDF dokumentu konvertēšanas zonā.",
+                "Mūsu spēcīgais OCR dzinējs rūpīgi apstrādās tekstu, fontus un attēlus.",
+                "Lejupielādējiet pilnībā rediģējamo DOCX failu un sāciet veikt izmaiņas Microsoft Word."
+            ]
+        }
     },
     "word-to-pdf": {
         en: {
@@ -193,14 +301,32 @@ export const howTo = {
             ]
         },
         sq: {
-                  "title": "Si të konvertosh Word në PDF",
-                  "subtitle": "Kyçni formatimin dhe finalizoni dokumentet tuaja të tekstit në formatin universal PDF.",
-                  "steps": [
-                            "Zgjidhni dokumentin Microsoft Word (DOC ose DOCX) që dëshironi të ngrini.",
-                            "Serveri do të përpunojë dokumentin tuaj për të ruajtur saktësisht faqosjen dhe fontet.",
-                            "Shkarkoni skedarin PDF të gatshëm për ndarje, printim ose arkivim të sigurt."
-                  ]
-                }
+            title: "Si të konvertosh Word në PDF",
+            subtitle: "Kyçni formatimin dhe finalizoni dokumentet tuaja të tekstit në formatin universal PDF.",
+            steps: [
+                "Zgjidhni dokumentin Microsoft Word (DOC ose DOCX) që dëshironi të ngrini.",
+                "Serveri do të përpunojë dokumentin tuaj për të ruajtur saktësisht faqosjen dhe fontet.",
+                "Shkarkoni skedarin PDF të gatshëm për ndarje, printim ose arkivim të sigurt."
+            ]
+        },
+        et: {
+            title: "Kuidas Wordi PDF-iks teisendada",
+            subtitle: "Lukustage vormindus ja viimistlege oma tekstidokumendid universaalsesse PDF-formaati.",
+            steps: [
+                "Valige Microsoft Wordi dokument (DOC või DOCX), mille soovite külmutada.",
+                "Server töötleb teie dokumenti, et paigutus ja fondid täpselt säiliks.",
+                "Laadige alla PDF-fail, mis on valmis jagamiseks, printimiseks või turvaliseks arhiveerimiseks."
+            ]
+        },
+        lv: {
+            title: "Kā konvertēt Word uz PDF",
+            subtitle: "Fiksējiet formatējumu un pabeidziet savus teksta dokumentus universālā PDF formātā.",
+            steps: [
+                "Izvēlieties Microsoft Word dokumentu (DOC vai DOCX), kuru vēlaties iesaldēt.",
+                "Serveris apstrādās jūsu dokumentu, lai precīzi saglabātu izkārtojumu un fontus.",
+                "Lejupielādējiet PDF failu, kas ir gatavs kopīgošanai, drukāšanai vai drošai arhivēšanai."
+            ]
+        }
     },
     "pdf-to-image": {
         en: {
@@ -222,14 +348,32 @@ export const howTo = {
             ]
         },
         sq: {
-                  "title": "Si të nxjerrësh imazhet nga PDF",
-                  "subtitle": "Konvertoni faqe të tëra në JPG ose nxirrni imazhet e integruara brenda skedarit.",
-                  "steps": [
-                            "Ngarkoni dokumentin PDF nga i cili dëshironi të nxirrni asetet vizuale.",
-                            "Zgjidhni nëse dëshironi të konvertoni faqe të tëra në imazhe ose të nxirrni grafika individuale.",
-                            "Shkarkoni një dosje ZIP që përmban të gjitha JPG-të tuaja të nxjerra me cilësi të lartë."
-                  ]
-                }
+            title: "Si të nxjerrësh imazhet nga PDF",
+            subtitle: "Konvertoni faqe të tëra në JPG ose nxirrni imazhet e integruara brenda skedarit.",
+            steps: [
+                "Ngarkoni dokumentin PDF nga i cili dëshironi të nxirrni asetet vizuale.",
+                "Zgjidhni nëse dëshironi të konvertoni faqe të tëra në imazhe ose të nxirrni grafika individuale.",
+                "Shkarkoni një dosje ZIP që përmban të gjitha JPG-të tuaja të nxjerra me cilësi të lartë."
+            ]
+        },
+        et: {
+            title: "Kuidas PDF-ist pilte eraldada",
+            subtitle: "Teisendage tervikleheküljed JPG-deks või eraldage failis manustatud pilte.",
+            steps: [
+                "Laadige üles PDF-dokument, millest soovite visuaalseid varasid eraldada.",
+                "Valige, kas teisendada terveid lehekülgi piltideks või eraldada üksikuid graafikuid.",
+                "Laadige alla ZIP-kaust, mis sisaldab kõiki teie eraldatud kvaliteetseid JPG-sid."
+            ]
+        },
+        lv: {
+            title: "Kā izvilkt attēlus no PDF",
+            subtitle: "Konvertējiet veselas lapas JPG formātā vai izvelciet failā iegultos attēlus.",
+            steps: [
+                "Augšupielādējiet PDF dokumentu, no kura vēlaties izvilkt vizuālos materiālus.",
+                "Izvēlieties, vai konvertēt veselas lapas attēlos vai izvilkt atsevišķas grafikas.",
+                "Lejupielādējiet ZIP mapi, kas satur visus jūsu izvilktos augstas kvalitātes JPG."
+            ]
+        }
     },
     "sign-pdf": {
         en: {
@@ -251,14 +395,32 @@ export const howTo = {
             ]
         },
         sq: {
-                  "title": "Si të nënshkruash një PDF",
-                  "subtitle": "Ngarkoni dhe nënshkruani PDF-të tuaja lehtësisht pa printuar asnjë faqe të vetme.",
-                  "steps": [
-                            "Zgjidhni një dokument dhe ngarkojeni atë përmes një lidhjeje të sigurt në serverin tonë.",
-                            "Nënshkruani dokumentin tuaj duke përdorur mausin, duke shkruar tekst, duke futur një imazh ose duke vizatuar në ekranin me prekje.",
-                            "Ruani nënshkrimin tuaj dhe shkarkoni në mënyrë të sigurt skedarin PDF të nënshkruar."
-                  ]
-                }
+            title: "Si të nënshkruash një PDF",
+            subtitle: "Ngarkoni dhe nënshkruani PDF-të tuaja lehtësisht pa printuar asnjë faqe të vetme.",
+            steps: [
+                "Zgjidhni një dokument dhe ngarkojeni atë përmes një lidhjeje të sigurt në serverin tonë.",
+                "Nënshkruani dokumentin tuaj duke përdorur mausin, duke shkruar tekst, duke futur një imazh ose duke vizatuar në ekranin me prekje.",
+                "Ruani nënshkrimin tuaj dhe shkarkoni në mënyrë të sigurt skedarin PDF të nënshkruar."
+            ]
+        },
+        et: {
+            title: "Kuidas PDF-i allkirjastada",
+            subtitle: "Laadige üles ja allkirjastage oma PDF-id hõlpsalt ilma ühtegi lehte printimata.",
+            steps: [
+                "Valige dokument ja laadige see turvalise ühenduse kaudu üles.",
+                "Allkirjastage oma dokument hiire abil, teksti tippides, pildi sisestades või puuteekraanil joonistades.",
+                "Salvestage oma allkiri ja laadige allkirjastatud PDF-fail turvaliselt alla."
+            ]
+        },
+        lv: {
+            title: "Kā parakstīt PDF",
+            subtitle: "Augšupielādējiet un parakstiet savus PDF viegli, nedrukājot nevienu lapu.",
+            steps: [
+                "Izvēlieties dokumentu un augšupielādējiet to, izmantojot drošu savienojumu.",
+                "Parakstiet savu dokumentu, izmantojot peli, ievadot tekstu, ievietojot attēlu vai zīmējot uz skārienekrāna.",
+                "Saglabājiet savu parakstu un droši lejupielādējiet parakstīto PDF failu."
+            ]
+        }
     },
     "edit-pdf": {
         en: {
@@ -280,14 +442,32 @@ export const howTo = {
             ]
         },
         sq: {
-                  "title": "Si të redaktosh një PDF",
-                  "subtitle": "Shtoni tekst, zona të nënvizuara, forma ose imazhe direkt në faqet tuaja PDF.",
-                  "steps": [
-                            "Zgjidhni një skedar PDF dhe hapeni atë në redaktuesin tonë të fuqishëm të dokumenteve online.",
-                            "Përdorni shiritin e mjetit për të futur kuti teksti dinamike, forma ose për të fshehur të dhënat sensitive.",
-                            "Aplikoni të gjitha redaktimet tuaja vizuale dhe shkarkoni menjëherë PDF-në e përditësuar."
-                  ]
-                }
+            title: "Si të redaktosh një PDF",
+            subtitle: "Shtoni tekst, zona të nënvizuara, forma ose imazhe direkt në faqet tuaja PDF.",
+            steps: [
+                "Zgjidhni një skedar PDF dhe hapeni atë në redaktuesin tonë të fuqishëm të dokumenteve online.",
+                "Përdorni shiritin e mjetit për të futur kuti teksti dinamike, forma ose për të fshehur të dhënat sensitive.",
+                "Aplikoni të gjitha redaktimet tuaja vizuale dhe shkarkoni menjëherë PDF-në e përditësuar."
+            ]
+        },
+        et: {
+            title: "Kuidas PDF-i redigeerida",
+            subtitle: "Lisage teksti, esiletõstmisi, kujundeid või pilte otse oma PDF-lehekülgedele.",
+            steps: [
+                "Valige PDF-fail ja avage see meie tugevas veebipõhises dokumentiredaktoris.",
+                "Kasutage tööriistariba dünaamiliste tekstikastide, kujundite sisestamiseks või tundlike andmete peitmiseks.",
+                "Rakendage kõik oma visuaalsed muudatused ja laadige uuendatud PDF koheselt alla."
+            ]
+        },
+        lv: {
+            title: "Kā rediģēt PDF",
+            subtitle: "Pievienojiet tekstu, izceltas zonas, formas vai attēlus tieši savām PDF lapām.",
+            steps: [
+                "Atlasiet PDF failu un atveriet to mūsu spēcīgajā tiešsaistes dokumentu redaktorā.",
+                "Izmantojiet rīkjoslu, lai ievietotu dinamiskus teksta lodziņus, formas vai paslēptu sensitīvus datus.",
+                "Piemērojiet visus savus vizuālos labojumus un nekavējoties lejupielādējiet atjaunināto PDF."
+            ]
+        }
     },
     "pdf-to-txt": {
         en: {
@@ -309,14 +489,32 @@ export const howTo = {
             ]
         },
         sq: {
-                  "title": "Si të konvertosh PDF në TXT",
-                  "subtitle": "Hiqni të gjithë formatimin dhe nxirrni tekst të thjeshtë e të pastër nga dokumentet tuaja.",
-                  "steps": [
-                            "Ngarkoni dokumentin tuaj PDF med shumë tekst në konvertuesin e tekstit të thjeshtë.",
-                            "Sistemi ynë do të heqë stilin, imazhet dhe blloqet e faqosjes.",
-                            "Shkarkoni skedarin tuaj të papërpunuar TXT menjëherë për thjeshtësi dhe transportueshmëri ekstreme."
-                  ]
-                }
+            title: "Si të konvertosh PDF në TXT",
+            subtitle: "Hiqni të gjithë formatimin dhe nxirrni tekst të thjeshtë e të pastër nga dokumentet tuaja.",
+            steps: [
+                "Ngarkoni dokumentin tuaj PDF med shumë tekst në konvertuesin e tekstit të thjeshtë.",
+                "Sistemi ynë do të heqë stilin, imazhet dhe blloqet e faqosjes.",
+                "Shkarkoni skedarin tuaj të papërpunuar TXT menjëherë për thjeshtësi dhe transportueshmëri ekstreme."
+            ]
+        },
+        et: {
+            title: "Kuidas PDF-i TXT-ks teisendada",
+            subtitle: "Eemaldage kogu vormindus ja eraldage oma dokumentidest puhas lihttekst.",
+            steps: [
+                "Laadige oma tekstirohke PDF-dokument üles lihtteksti teisendajasse.",
+                "Meie süsteem eemaldab stiilid, pildid ja paigutusplokid.",
+                "Laadige oma töötlemata TXT-fail koheselt alla ülima lihtsuse ja kaasaskantavuse jaoks."
+            ]
+        },
+        lv: {
+            title: "Kā konvertēt PDF uz TXT",
+            subtitle: "Noņemiet visu formatējumu un izvelciet tīru vienkāršu tekstu no saviem dokumentiem.",
+            steps: [
+                "Augšupielādējiet savu teksta ietilpīgo PDF dokumentu vienkāršā teksta konvertētājā.",
+                "Mūsu sistēma noņems stilizējumu, attēlus un izkārtojuma blokus.",
+                "Uzreiz lejupielādējiet savu neapstrādāto TXT failu ārkārtējai vienkāršībai un pārnesamībai."
+            ]
+        }
     },
     "pdf-to-excel": {
         en: {
@@ -338,14 +536,32 @@ export const howTo = {
             ]
         },
         sq: {
-                  "title": "Si të konvertosh PDF në Excel",
-                  "subtitle": "Nxirrni tabelat dhe të dhënat tabelare në mënyrë perfekte në tabela të redaktueshme.",
-                  "steps": [
-                            "Zgjidhni PDF-në që përmban grafikët ose tabelat që dëshironi të digjitalizoni.",
-                            "Algoritmet tona të avancuara do të zbulogens kolonat, rreshtat dhe të dhënat e strukturuara.",
-                            "Shkarkoni skedarin XLSX dhe hapeni atë pa probleme me Microsoft Excel."
-                  ]
-                }
+            title: "Si të konvertosh PDF në Excel",
+            subtitle: "Nxirrni tabelat dhe të dhënat tabelare në mënyrë perfekte në tabela të redaktueshme.",
+            steps: [
+                "Zgjidhni PDF-në që përmban grafikët ose tabelat që dëshironi të digjitalizoni.",
+                "Algoritmet tona të avancuara do të zbulogens kolonat, rreshtat dhe të dhënat e strukturuara.",
+                "Shkarkoni skedarin XLSX dhe hapeni atë pa probleme me Microsoft Excel."
+            ]
+        },
+        et: {
+            title: "Kuidas PDF-i Exceliks teisendada",
+            subtitle: "Eraldage tabeleid ja tabeliandmeid täiuslikult redigeeritavatesse arvutustabelitesse.",
+            steps: [
+                "Valige PDF, mis sisaldab diagramme või tabeleid, mida soovite digiteerida.",
+                "Meie täiustatud algoritmid tuvastavad veerge, ridu ja struktureeritud andmeid.",
+                "Laadige alla XLSX-fail ja avage see sujuvalt Microsoft Excelis."
+            ]
+        },
+        lv: {
+            title: "Kā konvertēt PDF uz Excel",
+            subtitle: "Izvelciet tabulas un tabulāros datus nevainojami rediģējamās izklājlapās.",
+            steps: [
+                "Atlasiet PDF, kas satur diagrammas vai tabulas, kuras vēlaties digitalizēt.",
+                "Mūsu uzlabotie algoritmi noteiks kolonnas, rindas un strukturētus datus.",
+                "Lejupielādējiet XLSX failu un nemanāmi atveriet to ar Microsoft Excel."
+            ]
+        }
     },
     "ocr-pdf": {
         en: {
@@ -367,13 +583,53 @@ export const howTo = {
             ]
         },
         sq: {
-                  "title": "Si të përdorësh OCR në një PDF",
-                  "subtitle": "Bëni tekstin në PDF-të e skanuara dhe imazhet ligjërisht të selektueshëm dhe të kërkueshëm.",
-                  "steps": [
-                            "Ngarkoni një PDF të skanuar ose që përmban vetëm imazhe në motorin OCR.",
-                            "Zgjidhni gjuhën e zbulimit dhe prisni ndërsa ai lexon dokumentin.",
-                            "Shkarkoni një PDF plotësisht të kërkueshëm me tekst të selektueshëm të shtresuar poshtë tij."
-                  ]
-                }
+            title: "Si të përdorësh OCR në një PDF",
+            subtitle: "Bëni tekstin në PDF-të e skanuara dhe imazhet ligjërisht të selektueshëm dhe të kërkueshëm.",
+            steps: [
+                "Ngarkoni një PDF të skanuar ose që përmban vetëm imazhe në motorin OCR.",
+                "Zgjidhni gjuhën e zbulimit dhe prisni ndërsa ai lexon dokumentin.",
+                "Shkarkoni një PDF plotësisht të kërkueshëm me tekst të selektueshëm të shtresuar poshtë tij."
+            ]
+        },
+        et: {
+            title: "Kuidas kasutada OCR-i PDF-il",
+            subtitle: "Muutke skanneeritud PDF-ide ja piltide tekst valitavaks ja otsitavaks.",
+            steps: [
+                "Laadige skanneeritud, lamedat või ainult piltidega PDF üles OCR-mootorisse.",
+                "Valige tuvastamise keel ja oodake, kuni see dokumenti loeb.",
+                "Laadige alla täielikult otsitav PDF valitava tekstikihiga all."
+            ]
+        },
+        lv: {
+            title: "Kā izmantot OCR PDF failam",
+            subtitle: "Padariet tekstu skenētos PDF un attēlos atlasāmu un meklējamu.",
+            steps: [
+                "Augšupielādējiet skenētu, saplacinātu vai tikai attēlu PDF OCR dzinējā.",
+                "Izvēlieties noteikšanas valodu un uzgaidiet, kamēr tas nolasa dokumentu.",
+                "Lejupielādējiet pilnībā meklējamu PDF ar atlasāmu teksta slāni apakšā."
+            ]
+        }
     }
 };
+
+/**
+ * Build a Schema.org HowTo JSON-LD object for a given tool slug and language.
+ * Returns null if data is not available for that combination.
+ */
+export function buildHowToSchema(slug, lang) {
+    const toolData = howTo[slug]?.[lang];
+    if (!toolData) return null;
+
+    return {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": toolData.title,
+        "description": toolData.subtitle,
+        "step": toolData.steps.map((text, i) => ({
+            "@type": "HowToStep",
+            "position": i + 1,
+            "name": `Step ${i + 1}`,
+            "text": text
+        }))
+    };
+}

@@ -1,6 +1,5 @@
 import { useState, useMemo } from "react";
-import { en } from "../../i18n/en";
-import { tr } from "../../i18n/tr";
+import { languageRegistry } from "../../i18n/dictionary";
 import { useCases } from "../../data/useCases";
 import { howTo } from "../../data/howTo";
 
@@ -17,6 +16,11 @@ const SECTIONS = {
     howTo: { label: "📖 How To Steps", desc: "Step by step instructions for tools" },
     blog: { label: "📝 Blog", desc: "Blog page UI labels and categories" },
 };
+
+// All available languages from the registry (except en which is always the reference)
+const availableLangs = Object.entries(languageRegistry)
+    .filter(([code]) => code !== 'en')
+    .map(([code, meta]) => ({ code, flag: meta.flag, name: meta.name }));
 
 function flattenObj(obj, prefix = "") {
     const result = [];
@@ -61,29 +65,34 @@ export default function TranslationManager() {
     const [activeSection, setActiveSection] = useState("all");
     const [showMissing, setShowMissing] = useState(false);
     const [copiedKey, setCopiedKey] = useState(null);
+    const [targetLang, setTargetLang] = useState(availableLangs[0]?.code || 'tr');
+
+    const targetMeta = languageRegistry[targetLang] || languageRegistry.tr;
+    const enDict = languageRegistry.en.dict;
+    const targetDict = targetMeta.dict;
 
     const allKeys = useMemo(() => {
-        const combinedEn = { ...en, useCases: {}, howTo: {} };
-        const combinedTr = { ...tr, useCases: {}, howTo: {} };
+        const combinedEn = { ...enDict, useCases: {}, howTo: {} };
+        const combinedTarget = { ...targetDict, useCases: {}, howTo: {} };
 
         for (const [toolSlug, toolData] of Object.entries(useCases)) {
             if (toolData.en) combinedEn.useCases[toolSlug] = toolData.en;
-            if (toolData.tr) combinedTr.useCases[toolSlug] = toolData.tr;
+            if (toolData[targetLang]) combinedTarget.useCases[toolSlug] = toolData[targetLang];
         }
 
         for (const [toolSlug, toolData] of Object.entries(howTo)) {
             if (toolData.en) combinedEn.howTo[toolSlug] = toolData.en;
-            if (toolData.tr) combinedTr.howTo[toolSlug] = toolData.tr;
+            if (toolData[targetLang]) combinedTarget.howTo[toolSlug] = toolData[targetLang];
         }
 
         const flat = flattenObj(combinedEn);
         return flat.map((item) => ({
             key: item.key,
             en: item.value,
-            tr: getNestedValue(combinedTr, item.key),
+            target: getNestedValue(combinedTarget, item.key),
             section: getSection(item.key),
         }));
-    }, []);
+    }, [targetLang, enDict, targetDict]);
 
     const sections = useMemo(() => {
         const s = new Set(allKeys.map((k) => k.section));
@@ -93,13 +102,13 @@ export default function TranslationManager() {
     const filtered = useMemo(() => {
         return allKeys.filter((item) => {
             if (activeSection !== "all" && item.section !== activeSection) return false;
-            if (showMissing && item.tr && item.tr.length > 0) return false;
+            if (showMissing && item.target && item.target.length > 0) return false;
             if (search) {
                 const q = search.toLowerCase();
                 return (
                     item.key.toLowerCase().includes(q) ||
                     item.en.toLowerCase().includes(q) ||
-                    item.tr.toLowerCase().includes(q)
+                    item.target.toLowerCase().includes(q)
                 );
             }
             return true;
@@ -108,7 +117,7 @@ export default function TranslationManager() {
 
     const stats = useMemo(() => {
         const total = allKeys.length;
-        const translated = allKeys.filter((k) => k.tr && k.tr.length > 0).length;
+        const translated = allKeys.filter((k) => k.target && k.target.length > 0).length;
         const missing = total - translated;
         return { total, translated, missing };
     }, [allKeys]);
@@ -122,13 +131,13 @@ export default function TranslationManager() {
     const exportJSON = () => {
         const grouped = {};
         allKeys.forEach((item) => {
-            grouped[item.key] = { en: item.en, tr: item.tr };
+            grouped[item.key] = { en: item.en, [targetLang]: item.target };
         });
         const blob = new Blob([JSON.stringify(grouped, null, 2)], { type: "application/json" });
         const url = URL.createObjectURL(blob);
         const link = document.createElement("a");
         link.href = url;
-        link.download = "translations.json";
+        link.download = `translations-${targetLang}.json`;
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -151,9 +160,35 @@ export default function TranslationManager() {
                                 All text strings used across KeepPDF — organized for easy translation
                             </p>
                         </div>
-                        <button onClick={exportJSON} style={{ background: "rgba(255,255,255,0.15)", border: "1px solid rgba(255,255,255,0.2)", color: "white", padding: "10px 20px", borderRadius: 10, cursor: "pointer", fontWeight: 600, fontSize: 14, backdropFilter: "blur(8px)", display: "flex", alignItems: "center", gap: 8 }}>
-                            📥 Export JSON
-                        </button>
+                        <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
+                            {/* Language Selector */}
+                            <select
+                                value={targetLang}
+                                onChange={(e) => setTargetLang(e.target.value)}
+                                style={{
+                                    background: "rgba(255,255,255,0.15)",
+                                    border: "1px solid rgba(255,255,255,0.3)",
+                                    color: "white",
+                                    padding: "10px 16px",
+                                    borderRadius: 10,
+                                    cursor: "pointer",
+                                    fontWeight: 600,
+                                    fontSize: 14,
+                                    backdropFilter: "blur(8px)",
+                                    appearance: "none",
+                                    minWidth: 180,
+                                }}
+                            >
+                                {availableLangs.map(l => (
+                                    <option key={l.code} value={l.code} style={{ color: "#1e1b4b", background: "white" }}>
+                                        {l.flag} {l.name} ({l.code.toUpperCase()})
+                                    </option>
+                                ))}
+                            </select>
+                            <button onClick={exportJSON} style={{ background: "rgba(255,255,255,0.15)", border: "1px solid rgba(255,255,255,0.2)", color: "white", padding: "10px 20px", borderRadius: 10, cursor: "pointer", fontWeight: 600, fontSize: 14, backdropFilter: "blur(8px)", display: "flex", alignItems: "center", gap: 8 }}>
+                                📥 Export JSON
+                            </button>
+                        </div>
                     </div>
                     {/* Stats */}
                     <div style={{ display: "flex", gap: 16, marginTop: 24, flexWrap: "wrap" }}>
@@ -163,11 +198,33 @@ export default function TranslationManager() {
                         </div>
                         <div style={{ background: "rgba(34,197,94,0.15)", borderRadius: 12, padding: "14px 20px", border: "1px solid rgba(34,197,94,0.2)", minWidth: 140 }}>
                             <div style={{ fontSize: 24, fontWeight: 800, color: "#4ade80" }}>{stats.translated}</div>
-                            <div style={{ fontSize: 12, opacity: 0.7, fontWeight: 500 }}>Translated (TR)</div>
+                            <div style={{ fontSize: 12, opacity: 0.7, fontWeight: 500 }}>Translated ({targetMeta.flag} {targetLang.toUpperCase()})</div>
                         </div>
                         <div style={{ background: "rgba(239,68,68,0.15)", borderRadius: 12, padding: "14px 20px", border: "1px solid rgba(239,68,68,0.2)", minWidth: 140 }}>
                             <div style={{ fontSize: 24, fontWeight: 800, color: "#f87171" }}>{stats.missing}</div>
                             <div style={{ fontSize: 12, opacity: 0.7, fontWeight: 500 }}>Missing</div>
+                        </div>
+                        {/* Language quick-switch pills */}
+                        <div style={{ display: "flex", alignItems: "center", gap: 8, marginLeft: "auto" }}>
+                            {availableLangs.map(l => (
+                                <button
+                                    key={l.code}
+                                    onClick={() => setTargetLang(l.code)}
+                                    style={{
+                                        background: targetLang === l.code ? "rgba(255,255,255,0.25)" : "rgba(255,255,255,0.08)",
+                                        border: targetLang === l.code ? "1px solid rgba(255,255,255,0.4)" : "1px solid rgba(255,255,255,0.1)",
+                                        color: "white",
+                                        padding: "8px 14px",
+                                        borderRadius: 8,
+                                        cursor: "pointer",
+                                        fontSize: 13,
+                                        fontWeight: 600,
+                                        transition: "all 0.15s"
+                                    }}
+                                >
+                                    {l.flag}
+                                </button>
+                            ))}
                         </div>
                     </div>
                 </div>
@@ -179,7 +236,7 @@ export default function TranslationManager() {
                     <div style={{ flex: 1, minWidth: 280, position: "relative" }}>
                         <input
                             type="text"
-                            placeholder="Search keys, EN or TR text..."
+                            placeholder={`Search keys, EN or ${targetLang.toUpperCase()} text...`}
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
                             style={{ width: "100%", padding: "12px 16px 12px 44px", borderRadius: 12, border: "1px solid #e2e8f0", fontSize: 14, outline: "none", background: "white", boxShadow: "0 1px 3px rgba(0,0,0,0.05)" }}
@@ -228,7 +285,7 @@ export default function TranslationManager() {
                     <div style={{ display: "grid", gridTemplateColumns: "280px 1fr 1fr 50px", gap: 0, padding: "14px 20px", background: "#f8fafc", borderBottom: "1px solid #e2e8f0", fontSize: 11, fontWeight: 700, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.05em" }}>
                         <div>Key</div>
                         <div>🇬🇧 English</div>
-                        <div>🇹🇷 Turkish</div>
+                        <div>{targetMeta.flag} {targetMeta.name}</div>
                         <div></div>
                     </div>
                     {/* Rows */}
@@ -241,7 +298,7 @@ export default function TranslationManager() {
                     ) : (
                         filtered.map((item, idx) => {
                             const isLong = item.en.length > 80;
-                            const isMissing = !item.tr || item.tr.length === 0;
+                            const isMissing = !item.target || item.target.length === 0;
                             return (
                                 <div
                                     key={item.key}
@@ -274,7 +331,7 @@ export default function TranslationManager() {
                                             <span style={{ background: "#fee2e2", color: "#dc2626", padding: "2px 8px", borderRadius: 6, fontSize: 11, fontWeight: 600 }}>
                                                 ⚠ NOT TRANSLATED
                                             </span>
-                                        ) : item.tr}
+                                        ) : item.target}
                                     </div>
                                     <div style={{ display: "flex", justifyContent: "center" }}>
                                         <button

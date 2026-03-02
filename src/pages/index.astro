@@ -1,5 +1,19 @@
 ---
-// Root index page - detect browser language and redirect to appropriate locale
-const locale = Astro.preferredLocale || 'en';
+// Root index page - detect language and redirect to appropriate locale
+// Priority: 1) Vercel geo-IP country → 2) Browser Accept-Language → 3) default 'en'
+
+// Country code → locale mapping (Vercel injects x-vercel-ip-country header in production)
+const countryToLocale = {
+    'TR': 'tr',  // Turkey → Turkish
+    'AL': 'sq',  // Albania → Albanian
+    'XK': 'sq',  // Kosovo → Albanian
+    'EE': 'et',  // Estonia → Estonian
+    'LV': 'lv',  // Latvia → Latvian
+};
+
+const country = Astro.request.headers.get('x-vercel-ip-country');
+const geoLocale = country ? countryToLocale[country] : null;
+
+const locale = geoLocale || Astro.preferredLocale || 'en';
 return Astro.redirect(`/${locale}`);
 ---

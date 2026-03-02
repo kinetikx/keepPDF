@@ -1,13 +1,14 @@
 ---
 // Admin page - standalone, no site layout
 import TranslationManager from '../components/admin/TranslationManager';
+import KeywordPagesDashboard from '../components/admin/KeywordPagesDashboard';
 ---
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin - Translation Manager | KeepPDF</title>
+    <title>Admin Dashboard | KeepPDF</title>
     <meta name="robots" content="noindex, nofollow" />
     <link rel="icon" type="image/png" href="/icon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -15,10 +16,72 @@ import TranslationManager from '../components/admin/TranslationManager';
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; }
+        body { font-family: 'Inter', sans-serif; background: #f8fafc; }
+        .admin-tabs {
+            display: flex;
+            gap: 0;
+            background: #1e1b4b;
+            padding: 0 24px;
+            border-bottom: 2px solid #312e81;
+        }
+        .admin-tab {
+            padding: 14px 24px;
+            color: rgba(255,255,255,0.5);
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            border-bottom: 3px solid transparent;
+            transition: all 0.15s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .admin-tab:hover {
+            color: rgba(255,255,255,0.8);
+        }
+        .admin-tab.active {
+            color: white;
+            border-bottom-color: #818cf8;
+            background: rgba(255,255,255,0.05);
+        }
+        .tab-panel {
+            display: none;
+        }
+        .tab-panel.active {
+            display: block;
+        }
     </style>
 </head>
 <body>
-    <TranslationManager client:only="react" />
+    <!-- Tab Navigation -->
+    <div class="admin-tabs" id="admin-tabs">
+        <button class="admin-tab active" data-tab="translations" onclick="switchTab('translations')">
+            🌍 Translations
+        </button>
+        <button class="admin-tab" data-tab="keywords" onclick="switchTab('keywords')">
+            🎯 Keyword Pages
+        </button>
+    </div>
+
+    <!-- Tab Panels -->
+    <div id="tab-translations" class="tab-panel active">
+        <TranslationManager client:only="react" />
+    </div>
+    <div id="tab-keywords" class="tab-panel">
+        <KeywordPagesDashboard client:only="react" />
+    </div>
+
+    <script is:inline>
+        function switchTab(tab) {
+            // Remove active from all tabs and panels
+            document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+            // Activate selected
+            document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+            document.getElementById(`tab-${tab}`).classList.add('active');
+        }
+    </script>
 </body>
 </html>

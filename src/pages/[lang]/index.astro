@@ -7,7 +7,8 @@ import MergeInterface from '../../components/landing/MergeInterface';
 import FAQSection from '../../components/landing/FAQSection';
 import CookieBanner from '../../components/landing/CookieBanner';
 import TrustBanner from '../../components/landing/TrustBanner';
-import { Shield, Zap, Gift, FileText, Scissors, Minimize2, Image, FileType, PenTool, ScanLine, FileSpreadsheet, Files } from 'lucide-react';
+import { Shield, Zap, Gift, FileText, Scissors, Minimize2, Image, FileType, PenTool, ScanLine, FileSpreadsheet, Files, ArrowRight } from 'lucide-react';
+import { getPagesByLang } from '../../data/keywordPages';
 
 export function getStaticPaths() {
   return locales.map(lang => ({ params: { lang } }));
@@ -37,6 +38,8 @@ const whyFeatures = [
   { icon: 'Zap', title: dict.why.fast.title, desc: dict.why.fast.description, color: 'text-amber-500' },
   { icon: 'Gift', title: dict.why.free.title, desc: dict.why.free.description, color: 'text-green-500' },
 ];
+
+const keywordPages = getPagesByLang(lang).filter(p => p.status === 'live');
 ---
 
 <Layout 
@@ -128,6 +131,38 @@ const whyFeatures = [
       </div>
     </div>
   </section>
+
+  <!-- Popular Links Section (SEO Booster) -->
+  {keywordPages.length > 0 && (
+    <section class="py-16 bg-white border-t border-slate-100">
+      <div class="container-custom">
+        <div class="flex flex-col md:flex-row items-center justify-between mb-8">
+          <div>
+            <h2 class="text-2xl font-bold text-slate-900 mb-2">Popular PDF Tools {lang === 'sq' ? 'në Shqip' : lang === 'et' ? 'Eestis' : lang === 'lv' ? 'Latvijā' : ''}</h2>
+            <p class="text-slate-500">Fast and free tools highly requested in your region.</p>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {keywordPages.map((page) => (
+            <a href={page.url} class="group flex items-start gap-4 p-4 rounded-xl border border-slate-100 bg-slate-50/50 hover:bg-white hover:border-brand-200 hover:shadow-md transition-all">
+              <div class="w-10 h-10 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  {page.tool === 'merge' && <><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></>}
+                  {page.tool === 'split' && <><rect width="18" height="7" x="3" y="3" rx="1"/><rect width="9" height="7" x="3" y="14" rx="1"/><rect width="5" height="7" x="16" y="14" rx="1"/></>}
+                  {page.tool === 'compress' && <><polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/><line x1="14" y1="10" x2="21" y2="3"/><line x1="3" y1="21" x2="10" y2="14"/></>}
+                  {page.tool === 'edit' && <><path d="m12 19 7-7 3 3-7 7-3-3z"/><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="m2 2 7.586 7.586"/><circle cx="11" cy="11" r="2"/></>}
+                </svg>
+              </div>
+              <div class="flex-grow">
+                <h4 class="font-bold text-slate-900 group-hover:text-brand-600 transition-colors mb-1 text-sm line-clamp-1">{page.title.split('—')[0].trim()}</h4>
+                <p class="text-xs text-slate-500 line-clamp-2">{page.description}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
 
   <!-- FAQ Section -->
   <FAQSection client:visible dict={dict} />

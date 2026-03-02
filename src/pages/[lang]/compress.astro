@@ -6,6 +6,7 @@ import Navbar from '../../components/landing/Navbar';
 import CookieBanner from '../../components/landing/CookieBanner';
 import CompressClient from '../../components/tools/CompressClient';
 import HowToSection from "../../components/tools/HowToSection";
+import { buildHowToSchema } from '../../data/howTo';
 import UseCaseSection from '../../components/tools/UseCaseSection';
 
 export function getStaticPaths() {
@@ -14,9 +15,10 @@ export function getStaticPaths() {
 
 const { lang } = Astro.params;
 const dict = getDictionary(lang);
+const howToSchema = buildHowToSchema('compress', lang);
 ---
 
-<Layout lang={lang} dict={dict} title={dict.metadata.compress.title} description={dict.metadata.compress.description}>
+<Layout lang={lang} dict={dict} title={dict.metadata.compress.title} description={dict.metadata.compress.description} howToSchema={howToSchema}>
   <Navbar client:load lang={lang} dict={dict} slot="navbar" />
   <CompressClient client:load dict={dict} />
   <HowToSection client:visible slug="compress" lang={lang} />
