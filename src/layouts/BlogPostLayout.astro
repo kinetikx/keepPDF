@@ -22,17 +22,17 @@ const articleJsonLd = {
         "name": "KeepPDF",
         "logo": {
             "@type": "ImageObject",
-            "url": "https://keep-pdf.com/brand-logo.svg"
+            "url": "https://keep-pdf.online/brand-logo.svg"
         }
     },
     "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": `https://keep-pdf.com${currentPath}`
+        "@id": `https://keep-pdf.online${currentPath}`
     }
 };
 
 if (post.data.image) {
-    articleJsonLd.image = `https://keep-pdf.com${post.data.image}`;
+    articleJsonLd.image = `https://keep-pdf.online${post.data.image}`;
 }
 ---
 
@@ -45,28 +45,28 @@ if (post.data.image) {
     <meta name="keywords" content={post.data.tags?.join(', ')} />
     <meta name="author" content={post.data.author} />
     <link rel="icon" href="/brand-logo.svg" />
-    <link rel="canonical" href={`https://keep-pdf.com${currentPath}`} />
+    <link rel="canonical" href={`https://keep-pdf.online${currentPath}`} />
 
     <!-- hreflang for translations -->
     {translations && translations.map(t => (
-      <link rel="alternate" hreflang={t.lang} href={`https://keep-pdf.com/${t.lang}/blog/${t.slug}`} />
+      <link rel="alternate" hreflang={t.lang} href={`https://keep-pdf.online/${t.lang}/blog/${t.slug}`} />
     ))}
-    <link rel="alternate" hreflang={lang} href={`https://keep-pdf.com${currentPath}`} />
+    <link rel="alternate" hreflang={lang} href={`https://keep-pdf.online${currentPath}`} />
 
     <!-- Open Graph -->
     <meta property="og:title" content={post.data.title} />
     <meta property="og:description" content={post.data.description} />
-    <meta property="og:url" content={`https://keep-pdf.com${currentPath}`} />
+    <meta property="og:url" content={`https://keep-pdf.online${currentPath}`} />
     <meta property="og:site_name" content="KeepPDF" />
     <meta property="og:locale" content={getOgLocale(lang)} />
     <meta property="og:type" content="article" />
-    {post.data.image && <meta property="og:image" content={`https://keep-pdf.com${post.data.image}`} />}
+    {post.data.image && <meta property="og:image" content={`https://keep-pdf.online${post.data.image}`} />}
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={post.data.title} />
     <meta name="twitter:description" content={post.data.description} />
-    {post.data.image && <meta name="twitter:image" content={`https://keep-pdf.com${post.data.image}`} />}
+    {post.data.image && <meta name="twitter:image" content={`https://keep-pdf.online${post.data.image}`} />}
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

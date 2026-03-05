@@ -9,7 +9,7 @@ Disallow: /_astro/
 Disallow: /*.json$
 
 # Sitemap
-Sitemap: ${new URL('sitemap-index.xml', 'https://keep-pdf.vercel.app').href}
+Sitemap: ${new URL('sitemap-index.xml', 'https://keep-pdf.online').href}
 `.trim();
 
 export const GET: APIRoute = () => {

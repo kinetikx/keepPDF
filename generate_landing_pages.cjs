@@ -185,9 +185,9 @@ function buildHreflangTags(tool) {
     const group = hreflangGroups[tool];
     if (!group) return '';
     const lines = Object.entries(group).map(([lang, url]) =>
-        `    <link rel="alternate" hreflang="${lang}" href={"https://keep-pdf.com${url}"} />`
+        `    <link rel="alternate" hreflang="${lang}" href={"https://keep-pdf.online${url}"} />`
     );
-    lines.push(`    <link rel="alternate" hreflang="x-default" href={"https://keep-pdf.com${group.en}"} />`);
+    lines.push(`    <link rel="alternate" hreflang="x-default" href={"https://keep-pdf.online${group.en}"} />`);
     return lines.join('\n');
 }
 
