@@ -12,6 +12,7 @@ const site = 'https://keep-pdf.vercel.app';
 
 export default defineConfig({
     site,
+    trailingSlash: 'never',
     output: 'server',
     adapter: vercel(),
     integrations: [
@@ -27,6 +28,13 @@ export default defineConfig({
                 if (item.url !== site + '/' && item.url.endsWith('/')) {
                     item.url = item.url.slice(0, -1);
                 }
+
+                // Exclude root URL redirect since prefixDefaultLocale is true.
+                // Google Bot throws a "Redirect error" if a redirect is in the sitemap.
+                if (item.url === site + '/') {
+                    return undefined;
+                }
+
                 return item;
             }
         })
