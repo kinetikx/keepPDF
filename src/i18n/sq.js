@@ -205,23 +205,23 @@ export const sq = {
         },
         sign: {
             title: "Nënshkruaj PDF",
-            description: "Nënshkruani vetë ose kërkoni nënshkrime elektronike nga të tjerët."
+            description: "Vegla e nënshkrimit digjital të dokumenteve po vjen së shpejti."
         },
         edit: {
             title: "Redakto PDF",
-            description: "Shtoni tekst, forma, komente dhe nënshkrime në skedarin tuaj PDF."
+            description: "Vegla e avancuar e redaktimit të tekstit dhe formave po vjen së shpejti."
         },
         pdfToTxt: {
             title: "PDF në TXT",
-            description: "Nxirrni tekstin nga skedari juaj PDF."
+            description: "Nxjerrja e tekstit të pastër nga PDF po vjen së shpejti."
         },
         pdfToExcel: {
             title: "PDF në Excel",
-            description: "Konvertoni të dhënat e PDF-së në tabela Excel."
+            description: "Konvertimi i tabelave PDF në Excel po vjen së shpejti."
         },
         ocr: {
             title: "OCR PDF",
-            description: "Njihni tekstin në skedarin tuaj PDF."
+            description: "Njohja optike e tekstit (OCR) po vjen së shpejti."
         }
     },
     nav: {

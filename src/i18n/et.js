@@ -205,23 +205,23 @@ export const et = {
         },
         sign: {
             title: "Allkirjasta PDF",
-            description: "Allkirjastage ise või taotlege teistelt elektroonilisi allkirju."
+            description: "Digitaalallkirja ja allkirjastamise tööriist on peagi saadaval."
         },
         edit: {
             title: "Redigeeri PDF-i",
-            description: "Lisage oma PDF-failile teksti, kujundeid, kommentaare ja esiletõsteid."
+            description: "Täiustatud teksti ja kujundite redigeerimise tööriist on peagi saadaval."
         },
         pdfToTxt: {
             title: "PDF TXT-ks",
-            description: "Eraldage tekst oma PDF-failist."
+            description: "Puhta teksti eraldamise tööriist on peagi saadaval."
         },
         pdfToExcel: {
             title: "PDF Exceliks",
-            description: "Teisendage PDF-andmed Exceli tabeliteks."
+            description: "Tabelite Excelisse teisendamise tööriist on peagi saadaval."
         },
         ocr: {
             title: "OCR PDF",
-            description: "Tuvastage tekst oma PDF-failis."
+            description: "Skannitud failide tekstituvastuse (OCR) tööriist on peagi saadaval."
         }
     },
     nav: {

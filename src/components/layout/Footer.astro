@@ -35,6 +35,7 @@ const { lang, dict } = Astro.props;
         <h4 class="font-semibold text-slate-900 mb-4">{dict.footer.company}</h4>
         <ul class="space-y-3 text-sm text-slate-600">
           <li><a href={`/${lang}#why`} class="hover:text-brand-600 transition-colors">{dict.footer.links.about}</a></li>
+          <li><a href={`/${lang}/pricing`} class="hover:text-brand-600 transition-colors">{dict?.nav?.pricing || "Pricing"}</a></li>
           <li><a href={`/${lang}/blog`} class="hover:text-brand-600 transition-colors">{dict.footer.links.blog}</a></li>
           <li><a href={`/${lang}/privacy`} class="hover:text-brand-600 transition-colors">{dict.footer.links.privacy}</a></li>
           <li><a href={`/${lang}/terms`} class="hover:text-brand-600 transition-colors">{dict.footer.links.terms}</a></li>

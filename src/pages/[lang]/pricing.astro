@@ -1,0 +1,342 @@
+---
+export const prerender = true;
+import Layout from '../../layouts/Layout.astro';
+import { getDictionary, locales } from '../../i18n/dictionary';
+import Navbar from '../../components/landing/Navbar';
+import CookieBanner from '../../components/landing/CookieBanner';
+
+export function getStaticPaths() {
+  return locales.map(lang => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params;
+const dict = getDictionary(lang);
+
+const pricingData = {
+  en: {
+    metaTitle: "KeepPDF Pricing — 100% Free PDF Tools Without Limits",
+    metaDesc: "Discover KeepPDF's 100% free model. No subscriptions, no credit card, no daily limits, and complete client-side privacy.",
+    h1: "Simple, Transparent, and 100% Free Forever",
+    subtitle: "No hidden paywalls, no monthly subscriptions, and no credit card required. KeepPDF is built for everyone.",
+    freeBadge: "Free Forever",
+    freeTitle: "Community & Personal Edition",
+    freePrice: "$0",
+    freePriceSub: "/ forever",
+    freeFeatures: [
+      "Unlimited PDF merges, splits and compresses",
+      "100% Client-Side privacy (zero server uploads)",
+      "No file count or daily task limits",
+      "No watermarks on your finished documents",
+      "Instant browser-based processing speed",
+      "No email registration or login required"
+    ],
+    competitorTitle: "Traditional Cloud Competitors",
+    competitorSubtitle: "Smallpdf, iLovePDF, Adobe Acrobat",
+    competitorPrice: "$6 - $12",
+    competitorPriceSub: "/ month",
+    competitorFeatures: [
+      "Strict limit of 2 free tasks per day",
+      "Documents uploaded and cached on remote servers",
+      "Paywalled advanced compression presets",
+      "Constant popups prompting for credit cards",
+      "Requires account creation and email tracking"
+    ],
+    whyFreeTitle: "Why is KeepPDF completely free?",
+    whyFreeDesc: "Unlike older services that run hundreds of costly backend servers to process your files in the cloud, KeepPDF utilizes cutting-edge WebAssembly (Wasm) and Web Workers. All PDF computation happens right inside your browser on your own device. This eliminates massive server infrastructure costs and allows us to keep KeepPDF completely free, sustainable, and 100% private forever.",
+    ctaTitle: "Ready to get started with fast, free PDF tools?",
+    ctaBtn: "Explore All Free Tools",
+    faqs: [
+      {
+        q: "Are there any hidden fees or automatic renewals?",
+        a: "None whatsoever. KeepPDF does not ask for your credit card, billing address, or payment information. There are zero subscriptions."
+      },
+      {
+        q: "Will KeepPDF introduce paid paywalls in the future?",
+        a: "No. Our core tools—merging, splitting, compressing, and organizing PDFs—will remain completely free and unlimited forever."
+      },
+      {
+        q: "Is it safe to use KeepPDF for sensitive business and legal documents?",
+        a: "Yes! Because KeepPDF processes everything locally on your computer or phone, confidential contracts, bank statements, and personal records never leave your machine."
+      }
+    ]
+  },
+  tr: {
+    metaTitle: "KeepPDF Fiyatlandırma — %100 Ücretsiz ve Limitsiz PDF Araçları",
+    metaDesc: "KeepPDF'in tamamen ücretsiz modelini keşfedin. Abonelik yok, kredi kartı yok, günlük görev sınırı yok ve %100 yerel gizlilik.",
+    h1: "Şeffaf, Basit ve Sonsuza Kadar %100 Ücretsiz",
+    subtitle: "Gizli ücretler, aylık abonelik tuzakları veya kredi kartı zorunluluğu yok. KeepPDF herkes için ücretsizdir.",
+    freeBadge: "Sonsuza Kadar Ücretsiz",
+    freeTitle: "Bireysel ve Kurumsal Kullanım",
+    freePrice: "0 ₺",
+    freePriceSub: "/ her zaman",
+    freeFeatures: [
+      "Sınırsız PDF birleştirme, bölme ve sıkıştırma",
+      "%100 Tarayıcı içi gizlilik (sunucuya yükleme yok)",
+      "Günlük dosya veya görev sınırı yok",
+      "Belgelerinizde asla filigran (watermark) çıkmaz",
+      "Tarayıcıda anında ve ışık hızında işlem",
+      "E-posta kaydı veya üyelik gerektirmez"
+    ],
+    competitorTitle: "Geleneksel Bulut Rakipler",
+    competitorSubtitle: "Smallpdf, iLovePDF, Adobe Acrobat",
+    competitorPrice: "250 - 450 ₺",
+    competitorPriceSub: "/ her ay",
+    competitorFeatures: [
+      "Günde yalnızca 1-2 ücretsiz dosya sınırı",
+      "Özel evrakların yabancı bulut sunucularına yüklenmesi",
+      "Güçlü sıkıştırma için ücretli üyelik dayatması",
+      "Sürekli çıkan kredi kartı pencereleri",
+      "Zorunlu hesap açma ve e-posta takibi"
+    ],
+    whyFreeTitle: "KeepPDF neden tamamen ücretsiz?",
+    whyFreeDesc: "Eski nesil siteler dosyalarınızı kendi sunucularına yükleyip işlemek için devasa sunucu çiftlikleri kiralar ve bu maliyeti size aylık abonelik olarak yansıtır. KeepPDF ise modern WebAssembly teknolojisi sayesinde tüm işlemleri doğrudan kendi bilgisayarınızın işlemcisiyle tarayıcınızda yapar. Sunucu maliyetimiz neredeyse sıfır olduğu için KeepPDF'i sonsuza dek ücretsiz ve gizli tutabiliyoruz.",
+    ctaTitle: "Hemen ücretsiz ve güvenli PDF araçlarını deneyin",
+    ctaBtn: "Tüm Araçları Gör",
+    faqs: [
+      {
+        q: "Herhangi bir gizli ücret veya otomatik çekim var mı?",
+        a: "Kesinlikle hayır. Sitemizde kredi kartı veya fatura bilgisi alanı dahi bulunmamaktadır."
+      },
+      {
+        q: "İleride ücretli abonelik gelecek mi?",
+        a: "Hayır. PDF birleştirme, sıkıştırma ve bölme gibi temel araçlarımız sonsuza dek ücretsiz ve sınırsız kalacaktır."
+      },
+      {
+        q: "Ticari veya resmi evraklar için kullanmak güvenli mi?",
+        a: "Evet. Dosyalarınız cihazınızdan dışarı çıkmadığı için KVKK ve şirket gizlilik standartlarına %100 uygundur."
+      }
+    ]
+  },
+  sq: {
+    metaTitle: "Çmimet e KeepPDF — Mjete PDF 100% Falas pa Kufizime",
+    metaDesc: "Zbuloni modelin falas të KeepPDF. Pa pagesa mujore, pa kartë krediti dhe me privatësi maksimale.",
+    h1: "E Thjeshtë, Transparente dhe 100% Falas Përgjithmonë",
+    subtitle: "Pa kosto të fshehura, pa abonime mujore dhe pa kërkesë për kartë krediti.",
+    freeBadge: "Falas Përgjithmonë",
+    freeTitle: "Përdorim Publik dhe Personal",
+    freePrice: "0 €",
+    freePriceSub: "/ gjithmonë",
+    freeFeatures: [
+      "Bashkim, ndarje dhe kompresim i pakufizuar i PDF-ve",
+      "Privatësi 100% në shfletues (pa ngarkim në server)",
+      "Pa kufij ditorë apo numër skedarësh",
+      "Pa asnjë filigran në dokumentet tuaja",
+      "Shpejtësi e menjëhershme e përpunimit",
+      "Nuk kërkohet regjistrim me email"
+    ],
+    competitorTitle: "Shërbimet Tradicionale në Re",
+    competitorSubtitle: "Smallpdf, iLovePDF, Adobe Acrobat",
+    competitorPrice: "6 - 12 €",
+    competitorPriceSub: "/ në muaj",
+    competitorFeatures: [
+      "Limit i rreptë prej 2 skedarësh në ditë",
+      "Dokumentet ngarkohen në serverë të panjohur",
+      "Kërkojnë pagesë për kompresim cilësor",
+      "Kërkesa të vazhdueshme për kartë krediti"
+    ],
+    whyFreeTitle: "Pse është KeepPDF tërësisht falas?",
+    whyFreeDesc: "Përpunimi i PDF-ve bëhet lokalisht në pajisjen tuaj me WebAssembly, duke eliminuar shpenzimet e mëdha të serverëve.",
+    ctaTitle: "Filloni tani përdorimin e mjeteve falas",
+    ctaBtn: "Shiko të Gjitha Mjetet",
+    faqs: [
+      {
+        q: "A ka ndonjë kosto të fshehur?",
+        a: "Asnjë. Nuk kërkohet kartë krediti apo të dhëna pagese."
+      }
+    ]
+  },
+  et: {
+    metaTitle: "KeepPDF Hinnad — 100% Tasuta PDF-tööriistad Ilma Piiranguteta",
+    metaDesc: "KeepPDF on täiesti tasuta. Puuduvad kuutasud, krediitkaardi nõuded ja failipiirangud.",
+    h1: "Lihtne, Läbipaistev ja 100% Tasuta",
+    subtitle: "Ei mingeid varjatud kulusid ega kuutasusid. Loodud kõigile mugavaks kasutamiseks.",
+    freeBadge: "Alati Tasuta",
+    freeTitle: "Täisversioon kõigile",
+    freePrice: "0 €",
+    freePriceSub: "/ alati",
+    freeFeatures: [
+      "Piiranguteta PDF-ide liitmine, tükeldamine ja tihendamine",
+      "100% Privaatne veebilehitsejas (ei laadita serverisse)",
+      "Päevalimiidid puuduvad",
+      "Dokumentidele ei lisata vesimärke",
+      "Ei vaja registreerumist ega sisselogimist"
+    ],
+    competitorTitle: "Tavalised Pilveteenused",
+    competitorSubtitle: "Smallpdf, iLovePDF, Adobe Acrobat",
+    competitorPrice: "6 - 12 €",
+    competitorPriceSub: "/ kuus",
+    competitorFeatures: [
+      "Ainult 1-2 tasuta faili päevas",
+      "Dokumendid laaditakse kolmandate osapoolte serveritesse",
+      "Pidev krediitkaardi andmete küsimine"
+    ],
+    whyFreeTitle: "Miks KeepPDF on tasuta?",
+    whyFreeDesc: "Tänu WebAssembly tehnoloogiale toimub kogu failide töötlemine teie seadmes, säästes suuri serverikulusid.",
+    ctaTitle: "Proovige tasuta tööriistu kohe",
+    ctaBtn: "Kõik Tööriistad",
+    faqs: [
+      {
+        q: "Kas siin on varjatud kulusid?",
+        a: "Ei ole. Teenus on täiesti tasuta."
+      }
+    ]
+  },
+  lv: {
+    metaTitle: "KeepPDF Cenas — 100% Bezmaksas PDF Rīki Bez Ierobežojumiem",
+    metaDesc: "KeepPDF ir pilnībā bezmaksas. Bez abonementiem, bez kredītkartēm un ar 100% privātumu.",
+    h1: "Vienkārši, Caurspīdīgi un 100% Bezmaksas",
+    subtitle: "Nav slēptu izmaksu, abonēšanas maksu vai kredītkartes prasību.",
+    freeBadge: "Vienmēr Bezmaksas",
+    freeTitle: "Pilna Versija Visiem",
+    freePrice: "0 €",
+    freePriceSub: "/ vienmēr",
+    freeFeatures: [
+      "Neierobežota PDF apvienošana, sadalīšana un saspiešana",
+      "100% Pārlūkprogrammas privātums (faili netiek augšupielādēti)",
+      "Nav dienas limitu vai ierobežojumu",
+      "Netiek pievienotas ūdenszīmes",
+      "Nav nepieciešama reģistrācija"
+    ],
+    competitorTitle: "Mākoņpakalpojumu Konkurenti",
+    competitorSubtitle: "Smallpdf, iLovePDF, Adobe Acrobat",
+    competitorPrice: "6 - 12 €",
+    competitorPriceSub: "/ mēnesī",
+    competitorFeatures: [
+      "Stingrs limits (1-2 faili dienā)",
+      "Faili tiek nosūtīti uz ārējiem serveriem",
+      "Nepārtraukti aicinājumi ievadīt maksājumu karti"
+    ],
+    whyFreeTitle: "Kāpēc KeepPDF ir bezmaksas?",
+    whyFreeDesc: "KeepPDF apstrādā failus tieši jūsu datorā ar WebAssembly, tādēļ mums nav lielu serveru uzturēšanas izmaksu.",
+    ctaTitle: "Sāciet lietot bezmaksas rīkus tagad",
+    ctaBtn: "Visi Rīki",
+    faqs: [
+      {
+        q: "Vai ir kādi slēpti maksājumi?",
+        a: "Nē, pakalpojums ir pilnīgi bez maksas."
+      }
+    ]
+  }
+};
+
+const current = pricingData[lang] || pricingData.en;
+---
+
+<Layout
+  lang={lang}
+  dict={dict}
+  title={current.metaTitle}
+  description={current.metaDesc}
+>
+  <Navbar client:idle lang={lang} dict={dict} slot="navbar" />
+
+  <!-- Hero Header -->
+  <section class="relative py-20 bg-gradient-to-b from-white via-indigo-50/40 to-white overflow-hidden text-center">
+    <div class="container-custom max-w-4xl mx-auto px-4 relative z-10">
+      <span class="inline-block px-4 py-1.5 bg-emerald-100 text-emerald-800 text-xs sm:text-sm font-bold rounded-full mb-6 uppercase tracking-wider">
+        {current.freeBadge}
+      </span>
+      <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-slate-900 tracking-tight mb-6 leading-tight">
+        {current.h1}
+      </h1>
+      <p class="text-lg sm:text-xl text-slate-500 max-w-2xl mx-auto leading-relaxed">
+        {current.subtitle}
+      </p>
+    </div>
+  </section>
+
+  <!-- Pricing Cards Comparison -->
+  <section class="py-12 bg-white">
+    <div class="container-custom max-w-5xl mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+        
+        {/* KeepPDF Free Card */}
+        <div class="relative bg-gradient-to-b from-indigo-900 via-slate-900 to-indigo-950 text-white rounded-3xl p-8 sm:p-10 shadow-2xl flex flex-col justify-between border-2 border-indigo-500/50">
+          <div class="absolute -top-3.5 right-8 bg-emerald-500 text-white text-xs font-bold uppercase tracking-wider px-3.5 py-1 rounded-full shadow-md">
+            Recommended
+          </div>
+          <div>
+            <h3 class="text-2xl font-bold mb-2">KeepPDF</h3>
+            <p class="text-slate-300 text-sm mb-6">{current.freeTitle}</p>
+            <div class="flex items-baseline gap-2 mb-8">
+              <span class="text-5xl sm:text-6xl font-extrabold tracking-tight text-white">{current.freePrice}</span>
+              <span class="text-slate-400 text-sm font-medium">{current.freePriceSub}</span>
+            </div>
+            <ul class="space-y-4 mb-8">
+              {current.freeFeatures.map(feat => (
+                <li class="flex items-start gap-3 text-sm text-slate-200">
+                  <span class="text-emerald-400 font-bold shrink-0">✓</span>
+                  <span>{feat}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <a
+            href={`/${lang}`}
+            class="w-full text-center py-4 bg-indigo-600 hover:bg-indigo-500 active:scale-95 text-white font-bold rounded-xl shadow-lg transition-all"
+          >
+            {current.ctaBtn}
+          </a>
+        </div>
+
+        {/* Traditional Competitors Card */}
+        <div class="bg-slate-50 border border-slate-200 rounded-3xl p-8 sm:p-10 flex flex-col justify-between text-slate-700">
+          <div>
+            <h3 class="text-2xl font-bold text-slate-900 mb-2">{current.competitorTitle}</h3>
+            <p class="text-slate-500 text-sm mb-6">{current.competitorSubtitle}</p>
+            <div class="flex items-baseline gap-2 mb-8">
+              <span class="text-4xl sm:text-5xl font-bold tracking-tight text-slate-500 line-through opacity-70">{current.competitorPrice}</span>
+              <span class="text-slate-500 text-sm">{current.competitorPriceSub}</span>
+            </div>
+            <ul class="space-y-4 mb-8">
+              {current.competitorFeatures.map(feat => (
+                <li class="flex items-start gap-3 text-sm text-slate-500">
+                  <span class="text-rose-500 font-bold shrink-0">✗</span>
+                  <span>{feat}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div class="text-center py-3 bg-slate-200/60 rounded-xl text-xs font-semibold text-slate-500 uppercase tracking-wide">
+            Not Recommended
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  {/* Why is it free Section */}
+  <section class="py-16 bg-slate-50 border-t border-slate-200">
+    <div class="container-custom max-w-4xl mx-auto px-4 text-center">
+      <div class="w-12 h-12 rounded-2xl bg-indigo-100 text-indigo-600 flex items-center justify-center mx-auto mb-4 text-2xl font-bold">
+        💡
+      </div>
+      <h2 class="text-3xl font-extrabold text-slate-900 mb-4 tracking-tight">
+        {current.whyFreeTitle}
+      </h2>
+      <p class="text-slate-600 text-base sm:text-lg leading-relaxed max-w-3xl mx-auto">
+        {current.whyFreeDesc}
+      </p>
+    </div>
+  </section>
+
+  {/* FAQs */}
+  <section class="py-16 bg-white border-t border-slate-200">
+    <div class="container-custom max-w-3xl mx-auto px-4">
+      <h2 class="text-3xl font-extrabold text-slate-900 mb-8 text-center tracking-tight">
+        Frequently Asked Questions
+      </h2>
+      <div class="space-y-4">
+        {current.faqs.map(faq => (
+          <div class="p-6 rounded-2xl border border-slate-200 bg-slate-50/50">
+            <h3 class="text-lg font-bold text-slate-900 mb-2">{faq.q}</h3>
+            <p class="text-slate-600 text-sm leading-relaxed">{faq.a}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CookieBanner client:idle dict={dict} slot="cookie-banner" />
+</Layout>

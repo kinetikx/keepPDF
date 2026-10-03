@@ -1,4 +1,4 @@
-﻿---
+---
 export const prerender = true;
 import Layout from '../../layouts/Layout.astro';
 import { getDictionary, locales } from '../../i18n/dictionary';
@@ -16,12 +16,358 @@ export function getStaticPaths() {
 const { lang } = Astro.params;
 const dict = getDictionary(lang);
 const howToSchema = buildHowToSchema('compress', lang);
+
+// Localized Content for Compress Landing Page
+const localizedContent = {
+  en: {
+    heroBadge: "🔒 100% Client-Side Private — No Server Uploads",
+    subH1: "Reduce PDF File Size Online to 100KB, 200KB, 500KB or 1MB",
+    highlights: [
+      "Up to 85% File Size Reduction",
+      "Visa, Passport & Job Application Ready",
+      "No Quality Loss for Text & Vectors",
+      "No Email or Signup Required"
+    ],
+    targetTitle: "Target Specific File Sizes for Any Portal",
+    targetDesc: "Different government and employment portals enforce strict upload limits. KeepPDF helps you hit the exact size requirements effortlessly.",
+    targets: [
+      { size: "100 KB", label: "Government Forms & ID Photos", desc: "For university admissions, state exam forms, and identity verification portals requiring tiny PDFs." },
+      { size: "200 KB", label: "Visa & Passport Applications", desc: "Meets strict requirements for US DS-160, UKVI visa applications, and Schengen visa appointment uploads." },
+      { size: "500 KB", label: "Job Resumes & Portfolios", desc: "Ideal for Workday, Taleo, LinkedIn, and corporate HR portals that reject files larger than 1MB." },
+      { size: "1 MB / 2 MB", label: "Official Certificates & Invoices", desc: "Compress heavy scanned multipage contracts, utility bills, and tax forms for instant upload." },
+      { size: "< 25 MB", label: "Email Attachments (Gmail/Outlook)", desc: "Never get blocked by Gmail's 25MB or Outlook's 20MB attachment size limit again." }
+    ],
+    portalsTitle: "Universal Compatibility with Official Portals",
+    portalsDesc: "Designed to meet the upload specifications of worldwide administrative systems:",
+    portals: [
+      { name: "USCIS & US Visa (CEAC)", desc: "Complies with strict file size and dimension limits for immigration and consular filings." },
+      { name: "UK Visas & Immigration (UKVI)", desc: "Easily compress evidence documents and bank statements under required thresholds." },
+      { name: "Corporate Job Portals (Workday, Greenhouse)", desc: "Avoid rejection by automated applicant tracking systems due to oversized resume PDFs." },
+      { name: "Academic Portals (Common App, UCAS)", desc: "Shrink transcripts, recommendation letters, and essays without blurring text." }
+    ],
+    faqTitle: "Frequently Asked Questions About PDF Compression",
+    faqs: [
+      {
+        q: "How can I compress a PDF to 200 KB or 100 KB?",
+        a: "Simply upload your PDF above and choose our 'Strong' or 'Extreme' compression preset. KeepPDF uses a dual-engine architecture that smartly downsamples high-resolution embedded images while keeping text and fonts 100% sharp and readable."
+      },
+      {
+        q: "Are my confidential files uploaded to any servers?",
+        a: "No! Unlike Smallpdf, iLovePDF, or Adobe Acrobat online, KeepPDF performs all compression operations directly inside your browser using client-side WebAssembly. Your files never leave your device, ensuring total privacy."
+      },
+      {
+        q: "Will compression ruin the text quality or legibility?",
+        a: "Not at all. In Basic mode, vector fonts and digital text are completely preserved with zero quality loss. Only redundant metadata and uncompressed raster objects are optimized."
+      },
+      {
+        q: "Is there any daily limit or watermark?",
+        a: "Zero limits and zero watermarks. You can compress as many PDF documents as you need completely free of charge."
+      }
+    ]
+  },
+  tr: {
+    heroBadge: "🔒 %100 Güvenli & Gizli — Dosyalarınız Tarayıcıda İşlenir",
+    subH1: "PDF Dosya Boyutunu 100KB, 200KB, 500KB veya 1MB'a Düşürün",
+    highlights: [
+      "%85'e Varan Boyut Küçültme",
+      "UYAP, E-Devlet ve ÖSYM Uyumlu",
+      "Metin ve Yazılarda Kalite Kaybı Yok",
+      "Üyelik veya Kayıt Gerektirmez"
+    ],
+    targetTitle: "Resmi Kurumlar İçin Hedef Dosya Boyutları",
+    targetDesc: "Devlet portalları ve başvuru sistemleri katı dosya yükleme sınırları koyar. KeepPDF ile istenen tam boyuta kolayca ulaşın.",
+    targets: [
+      { size: "100 KB - 200 KB", label: "Vize & Konsolosluk Başvuruları", desc: "Konsolosluk randevu sistemleri ve pasaport formlarının talep ettiği minimum dosya boyutu." },
+      { size: "500 KB - 1 MB", label: "ÖSYM AİS & MEB Yüklemeleri", desc: "Sınav başvuruları, diploma ve fotoğraf onayları için sorunsuz yükleme." },
+      { size: "5 MB", label: "E-Devlet Kapısı Üst Sınırı", desc: "Adli sicil, ikametgah ve resmi dilekçelerin E-Devlet portalına tek seferde yüklenmesi." },
+      { size: "10 MB", label: "UYAP Avukat & Vatandaş Portalı", desc: "Dava dosyaları, bilirkişi raporları ve delil belgelerinin UYAP sistem sınırlarına uyarlanması." },
+      { size: "< 25 MB", label: "E-Posta Ekleri (Gmail & Outlook)", desc: "Büyük PDF'leri sıkıştırarak e-posta ek kotasına takılmadan hemen gönderin." }
+    ],
+    portalsTitle: "Resmi Portallarla Tam Uyumluluk",
+    portalsDesc: "Türkiye'deki tüm kamu ve kurumsal sistemlerin dosya standartlarına %100 uygundur:",
+    portals: [
+      { name: "UYAP Bilişim Sistemi", desc: "Avukat ve vatandaş portalları için mahkeme evraklarını 10MB sınırına sığdırır." },
+      { name: "E-Devlet Kapısı", desc: "Kamu kurumlarına yapılan başvuru ve itiraz dilekçelerini 5MB altına indirir." },
+      { name: "ÖSYM Aday İşlemleri (AİS)", desc: "Öğrenci ve aday belgelerini sistemin talep ettiği hafif formata dönüştürür." },
+      { name: "Gelir İdaresi (GİB) & E-Fatura", desc: "Büyük e-arşiv ve mali müşavir dökümlerini arşivleme standartlarına uygun sıkıştırır." }
+    ],
+    faqTitle: "PDF Sıkıştırma Hakkında Sıkça Sorulan Sorular",
+    faqs: [
+      {
+        q: "PDF dosyamı 200 KB veya 500 KB'a nasıl düşürebilirim?",
+        a: "Dosyanızı yukarıdaki alana yükleyin ve 'Güçlü' sıkıştırma seçeneğini seçin. KeepPDF, belgenin metin netliğini koruyarak içindeki yüksek çözünürlüklü taramaları ve gereksiz meta verileri optimize eder."
+      },
+      {
+        q: "Belgelerim herhangi bir sunucuya yükleniyor mu?",
+        a: "Kesinlikle hayır! KeepPDF tüm sıkıştırma sürecini doğrudan bilgisayarınızın veya telefonunuzun tarayıcısında (WebAssembly) çalıştırır. Belgeleriniz asla internete veya uzak bir sunucuya gitmez."
+      },
+      {
+        q: "Sıkıştırma yazıları bulanıklaştırır mı?",
+        a: "Temel modda metinler ve vektörler sıfır kalite kaybıyla korunur. Güçlü modda ise taranmış evraklar dahi okunabilirlik korunarak maksimum tasarruf sağlanır."
+      },
+      {
+        q: "Günlük kullanım limiti veya filigran var mı?",
+        a: "Hiçbir kullanım sınırı ve filigran (watermark) yoktur. Dilediğiniz kadar PDF belgesini tamamen ücretsiz sıkıştırabilirsiniz."
+      }
+    ]
+  },
+  sq: {
+    heroBadge: "🔒 100% Private — Punohet në Shfletues pa Ngarkim në Server",
+    subH1: "Zvogëloni Madhësinë e Skedarit PDF në 100KB, 200KB ose 1MB",
+    highlights: [
+      "Deri në 85% Ulje të Madhësisë",
+      "E Përshtatshme për e-Albania dhe Tatime",
+      "Ruajtje e Plotë e Cilësisë së Tekstit",
+      "Falas, pa Regjistrim dhe pa Kufij"
+    ],
+    targetTitle: "Madhësitë e Rekomanduara për Portale Zyrtare",
+    targetDesc: "Portalet qeveritare dhe aplikimet për viza kërkojnë skedarë të lehtë. KeepPDF plotëson çdo kufizim me lehtësi.",
+    targets: [
+      { size: "100 KB - 200 KB", label: "Aplikime për Viza & Pasaporta", desc: "Plotëson kërkesat strikte të ambasadave dhe takimeve konsullore." },
+      { size: "500 KB - 1 MB", label: "CV dhe Dokumente Pune", desc: "Ideale për ngarkim në portale rekrutimi pa u refuzuar nga sistemi." },
+      { size: "2 MB - 5 MB", label: "Portali e-Albania & QKB", desc: "Zvogëloni vërtetimet, bilancet dhe deklaratat tatimore për ngarkim të menjëhershëm." },
+      { size: "< 25 MB", label: "Bashkëngjitje në Email", desc: "Dërgoni dokumente të mëdha përmes Gmail dhe Outlook pa kufizime madhësie." }
+    ],
+    portalsTitle: "Përputhshmëri me Portale Administrative",
+    portalsDesc: "Optimizuar posaçërisht për sistemet digjitale zyrtare:",
+    portals: [
+      { name: "Portali e-Albania", desc: "Përshtat dokumentet dhe certifikatat me limitet e ngarkimit të portalit." },
+      { name: "Drejtoria e Përgjithshme e Tatimeve", desc: "Kompreson faturat dhe pasqyrat financiare në madhësi të pranueshme." },
+      { name: "Qendra Kombëtare e Biznesit (QKB)", desc: "Optimizon aktet e themelimit dhe vendimet për regjistrim online." }
+    ],
+    faqTitle: "Pyetjet më të Shpeshta mbi Kompresimin e PDF",
+    faqs: [
+      {
+        q: "A ngarkohen dokumentet e mia në ndonjë server?",
+        a: "Jo! Çdo veprim kryhet 100% lokalisht në shfletuesin tuaj. Skedarët tuaj nuk dalin kurrë nga pajisja juaj."
+      },
+      {
+        q: "Si mund ta zvogëloj një PDF për e-Albania?",
+        a: "Ngarkoni skedarin më lart, zgjidhni opsionin 'E Fortë' dhe shkarkoni skedarin e optimizuar në pak sekonda."
+      }
+    ]
+  },
+  et: {
+    heroBadge: "🔒 100% Privaatne — Töötlemine toimub veebilehitsejas",
+    subH1: "Vähendage PDF-faili mahtu 100KB, 200KB, 500KB või 1MB-ni",
+    highlights: [
+      "Kuni 85% mahu vähenemine",
+      "Sobib Äriregistri ja DigiDoc jaoks",
+      "Teksti teravus ja kvaliteet säilib",
+      "Täiesti tasuta, ilma registreerimiseta"
+    ],
+    targetTitle: "Sihtsuurused ametlikele portaalidele",
+    targetDesc: "Eesti e-riigi süsteemid nõuavad optimaalseid failisuurusi. KeepPDF lahendab mahuprobleemid hetkega.",
+    targets: [
+      { size: "200 KB - 500 KB", label: "DigiDoc & Ametlikud Avaldused", desc: "Kompaktne failisuurus kiireks digiallkirjastamiseks ja saatmiseks." },
+      { size: "1 MB - 5 MB", label: "Äriregister (Aastaaruanne)", desc: "Vähendage mahukad majandusaasta aruanded ja lisad registri limiitidele sobivaks." },
+      { size: "< 25 MB", label: "E-posti manused", desc: "Saatke lepinguid ja aruandeid vabalt Gmail ja Outlook kaudu." }
+    ],
+    portalsTitle: "Täielik ühilduvus e-riigi portaalidega",
+    portalsDesc: "Optimeeritud Eesti digiteenuste standarditele:",
+    portals: [
+      { name: "e-Äriregister", desc: "Aastaaruannete ja põhidokumentide kohandamine üleslaadimiseks." },
+      { name: "Maksu- ja Tolliamet (EMTA)", desc: "Maksudeklaratsioonide lisade ja tõendite kiire tihendamine." }
+    ],
+    faqTitle: "Korduma kippuvad küsimused",
+    faqs: [
+      {
+        q: "Kas minu failid laaditakse kuskile serverisse?",
+        a: "Ei! Failide töötlemine toimub täielikult teie seadmes veebilehitseja vahendusel."
+      },
+      {
+        q: "Kuidas tihendada PDF-i Äriregistri jaoks?",
+        a: "Valige 'Tugev' tihendusviis ning KeepPDF vähendab skannitud piltide mahtu ilma teksti loetavust rikkumata."
+      }
+    ]
+  },
+  lv: {
+    heroBadge: "🔒 100% Privāts — Faili netiek augšupielādēti serveros",
+    subH1: "Samaziniet PDF faila izmēru līdz 100KB, 200KB, 500KB vai 1MB",
+    highlights: [
+      "Līdz pat 85% izmēra samazinājums",
+      "Pielāgots VID EDS un eParaksts prasībām",
+      "Saglabā teksta skaidrību un kvalitāti",
+      "Bezmaksas, bez reģistrācijas un ierobežojumiem"
+    ],
+    targetTitle: "Mērķa izmēri valsts pārvaldes portāliem",
+    targetDesc: "Latvijas e-pakalpojumu portāliem bieži ir stingri failu izmēru ierobežojumi.",
+    targets: [
+      { size: "200 KB - 500 KB", label: "Vīzu un iestāžu pieteikumi", desc: "Optimāls izmērs iesniegumiem un fotokopijām bez kvalitātes zuduma." },
+      { size: "1 MB - 5 MB", label: "VID EDS & Uzņēmumu reģistrs", desc: "Gada pārskatu, deklarāciju un līgumu pielāgošana EDS sistēmas prasībām." },
+      { size: "< 25 MB", label: "E-pasta pielikumi", desc: "Ērta sūtīšana caur Gmail, Outlook un citiem e-pasta pakalpojumiem." }
+    ],
+    portalsTitle: "Savietojamība ar Latvijas e-sistēmām",
+    portalsDesc: "Pielāgots ērtai dokumentu apritei:",
+    portals: [
+      { name: "VID Elektroniskās deklarēšanas sistēma (EDS)", desc: "Samaziniet pārskatus un atskaites iesniegšanai bez kļūdām." },
+      { name: "Uzņēmumu reģistrs (UR)", desc: "Dokumentu sagatavošana reģistrācijai un izmaiņu veikšanai." }
+    ],
+    faqTitle: "Biežāk uzdotie jautājumi",
+    faqs: [
+      {
+        q: "Vai mani dokumenti ir drošībā?",
+        a: "Jā, KeepPDF apstrādā failus tikai jūsu pārlūkprogrammā lokāli, tie nekad netiek pārsūtīti uz ārējiem serveriem."
+      }
+    ]
+  }
+};
+
+const content = localizedContent[lang] || localizedContent.en;
+
+// Schema JSON-LD
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": content.faqs.map(item => ({
+    "@type": "Question",
+    "name": item.q,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": item.a
+    }
+  }))
+};
 ---
 
-<Layout lang={lang} dict={dict} title={dict.metadata.compress.title} description={dict.metadata.compress.description} howToSchema={howToSchema}>
-  <Navbar client:load lang={lang} dict={dict} slot="navbar" />
-  <CompressClient client:load dict={dict} />
+<Layout 
+  lang={lang} 
+  dict={dict} 
+  title={dict.metadata.compress.title} 
+  description={dict.metadata.compress.description} 
+  howToSchema={howToSchema}
+  faqSchema={faqSchema}
+>
+  <Navbar client:idle lang={lang} dict={dict} slot="navbar" />
+
+  <!-- Hero Banner -->
+  <section class="relative pt-24 pb-12 bg-gradient-to-b from-indigo-900 via-slate-900 to-indigo-950 text-white overflow-hidden">
+    <div class="absolute inset-0 opacity-20 pointer-events-none">
+      <div class="absolute top-10 left-1/4 w-96 h-96 bg-indigo-500 rounded-full blur-3xl"></div>
+      <div class="absolute bottom-10 right-1/4 w-96 h-96 bg-brand-500 rounded-full blur-3xl"></div>
+    </div>
+    
+    <div class="container-custom max-w-4xl mx-auto relative z-10 text-center px-4">
+      <span class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md text-indigo-200 text-xs sm:text-sm font-semibold px-4 py-1.5 rounded-full border border-white/15 mb-6">
+        {content.heroBadge}
+      </span>
+      
+      <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-4">
+        {dict.tools.compress.title}
+        <span class="block text-indigo-300 text-xl sm:text-2xl md:text-3xl font-medium mt-3">
+          {content.subH1}
+        </span>
+      </h1>
+      
+      <p class="text-slate-300 text-base sm:text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
+        {dict.tools.compress.description}
+      </p>
+
+      {/* Feature Pills */}
+      <div class="flex flex-wrap justify-center gap-3 max-w-3xl mx-auto">
+        {content.highlights.map(item => (
+          <div class="flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/10 px-3.5 py-1.5 rounded-xl text-white/90 text-xs sm:text-sm font-medium">
+            <span class="text-emerald-400 font-bold">✓</span> {item}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Compressor Tool Dropzone -->
+  <div class="relative z-20 -mt-8">
+    <CompressClient client:idle dict={dict} />
+  </div>
+
+  <!-- Target Sizes Section (SEO & Intent Booster) -->
+  <section class="py-16 bg-white border-t border-slate-100">
+    <div class="container-custom max-w-5xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-3 tracking-tight">
+          {content.targetTitle}
+        </h2>
+        <p class="text-slate-500 text-base max-w-2xl mx-auto leading-relaxed">
+          {content.targetDesc}
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {content.targets.map(target => (
+          <div class="p-6 rounded-2xl border border-slate-200/80 bg-slate-50/50 hover:bg-white hover:border-brand-300 hover:shadow-lg transition-all duration-200 flex flex-col justify-between">
+            <div>
+              <span class="inline-block px-3 py-1 bg-indigo-100 text-indigo-700 text-xs font-bold rounded-lg mb-3">
+                {target.size}
+              </span>
+              <h3 class="text-lg font-bold text-slate-900 mb-2">
+                {target.label}
+              </h3>
+              <p class="text-sm text-slate-500 leading-relaxed">
+                {target.desc}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Official Portals Section -->
+  <section class="py-16 bg-slate-50 border-t border-slate-200">
+    <div class="container-custom max-w-5xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-3 tracking-tight">
+          {content.portalsTitle}
+        </h2>
+        <p class="text-slate-500 text-base max-w-2xl mx-auto leading-relaxed">
+          {content.portalsDesc}
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        {content.portals.map(portal => (
+          <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex items-start gap-4">
+            <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0 font-bold text-lg">
+              ✓
+            </div>
+            <div>
+              <h3 class="font-bold text-slate-900 mb-1">{portal.name}</h3>
+              <p class="text-sm text-slate-500 leading-relaxed">{portal.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Step-by-Step How-To Section -->
   <HowToSection client:visible slug="compress" lang={lang} />
+
+  <!-- Use Cases -->
   <UseCaseSection client:visible slug="compress" lang={lang} />
+
+  <!-- FAQ Section with Schema Support -->
+  <section class="py-16 bg-white border-t border-slate-200">
+    <div class="container-custom max-w-4xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-extrabold text-slate-900 mb-3 tracking-tight">
+          {content.faqTitle}
+        </h2>
+      </div>
+
+      <div class="space-y-4">
+        {content.faqs.map(faq => (
+          <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200/80">
+            <h3 class="text-lg font-bold text-slate-900 mb-2">
+              {faq.q}
+            </h3>
+            <p class="text-slate-600 text-sm leading-relaxed">
+              {faq.a}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
   <CookieBanner client:idle dict={dict} slot="cookie-banner" />
 </Layout>

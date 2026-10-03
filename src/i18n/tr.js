@@ -205,23 +205,23 @@ export const tr = {
         },
         sign: {
             title: "PDF İmzala",
-            description: "Kendiniz imzalayın veya başkalarından elektronik imza isteyin."
+            description: "Dijital imza ve form imzalama özelliği yakında kullanıma sunulacaktır."
         },
         edit: {
             title: "PDF Düzenle",
-            description: "PDF dosyanıza metin, şekil, yorum ve vurgular ekleyin."
+            description: "Gelişmiş metin, şekil ve içerik düzenleme aracı çok yakında aktif olacaktır."
         },
         pdfToTxt: {
             title: "PDF'den TXT'ye",
-            description: "PDF dosyanızdan metin çıkarın."
+            description: "PDF belgelerinden saf metin çıkarma aracı yakında hizmetinizde."
         },
         pdfToExcel: {
             title: "PDF'den Excel'e",
-            description: "PDF verilerini Excel tablolarına dönüştürün."
+            description: "PDF tablolarını Excel hesap tablosuna dönüştürme özelliği yakında."
         },
         ocr: {
             title: "OCR PDF",
-            description: "PDF dosyanızdaki metni tanıyın."
+            description: "Taranmış belgeleri aranabilir metne dönüştürme özelliği çok yakında."
         }
     },
     nav: {

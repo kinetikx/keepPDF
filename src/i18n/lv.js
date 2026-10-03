@@ -205,23 +205,23 @@ export const lv = {
         },
         sign: {
             title: "Parakstīt PDF",
-            description: "Parakstiet paši vai pieprasiet elektroniskus parakstus no citiem."
+            description: "Digitālā paraksta un parakstīšanas rīks drīzumā būs pieejams."
         },
         edit: {
             title: "Rediģēt PDF",
-            description: "Pievienojiet tekstu, formas, komentārus un izcelšanu savam PDF failam."
+            description: "Uzlabots teksta un formu rediģēšanas rīks drīzumā būs pieejams."
         },
         pdfToTxt: {
             title: "PDF uz TXT",
-            description: "Izvelciet tekstu no sava PDF faila."
+            description: "Tīra teksta ieguves rīks drīzumā būs pieejams."
         },
         pdfToExcel: {
             title: "PDF uz Excel",
-            description: "Konvertējiet PDF datus Excel izklājlapās."
+            description: "Tabulu konvertēšanas uz Excel rīks drīzumā būs pieejams."
         },
         ocr: {
             title: "OCR PDF",
-            description: "Atpazīstiet tekstu savā PDF failā."
+            description: "Skenētu failu teksta atpazīšanas (OCR) rīks drīzumā būs pieejams."
         }
     },
     nav: {

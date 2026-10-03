@@ -205,23 +205,23 @@ export const en = {
         },
         sign: {
             title: "Sign PDF",
-            description: "Sign yourself or request electronic signatures from others."
+            description: "Digital signature and document signing tool coming soon."
         },
         edit: {
             title: "Edit PDF",
-            description: "Add text, shapes, comments and highlights to your PDF file."
+            description: "Advanced text, shape, and PDF content editing tool coming soon."
         },
         pdfToTxt: {
             title: "PDF to TXT",
-            description: "Extract text from your PDF file."
+            description: "Extract clean, plain text from your PDF files coming soon."
         },
         pdfToExcel: {
             title: "PDF to Excel",
-            description: "Convert PDF data to Excel spreadsheets."
+            description: "Convert PDF tables into Excel spreadsheets coming soon."
         },
         ocr: {
             title: "OCR PDF",
-            description: "Recognize text in your PDF file."
+            description: "Extract and recognize text from scanned PDFs coming soon."
         }
     },
     nav: {
