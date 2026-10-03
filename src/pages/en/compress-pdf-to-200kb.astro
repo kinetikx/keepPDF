@@ -1,0 +1,296 @@
+---
+export const prerender = true;
+import Layout from '../../layouts/Layout.astro';
+import { getDictionary } from '../../i18n/dictionary';
+import Navbar from '../../components/landing/Navbar';
+import CookieBanner from '../../components/landing/CookieBanner';
+import CompressClient from '../../components/tools/CompressClient';
+
+const lang = 'en';
+const dict = getDictionary(lang);
+
+const seoTitle = "Compress PDF to 200KB Online Free — For UPSC, Sarkari Result & University Portals | KeepPDF";
+const seoDescription = "Compress PDF to under 200KB online for free without blurring text. Perfect for UPSC DAF, Sarkari Result, NTA NEET/JEE, and university admissions. 100% private in-browser.";
+
+const howToSchema = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to Compress PDF to 200KB Online for Free",
+    "description": "Step-by-step instructions on shrinking your PDF to under 200KB for competitive exams and government portals using KeepPDF.",
+    "step": [
+        {
+            "@type": "HowToStep",
+            "position": 1,
+            "name": "Upload Your Document",
+            "text": "Drag and drop or select your certificate, marksheet, or application PDF."
+        },
+        {
+            "@type": "HowToStep",
+            "position": 2,
+            "name": "Select '< 200 KB' Target Preset",
+            "text": "Click on the '< 200 KB' target button to trigger automated byte-budgeting algorithms."
+        },
+        {
+            "@type": "HowToStep",
+            "position": 3,
+            "name": "Download Your Verified PDF",
+            "text": "Click 'Compress PDF Now' and download a crisp, government-compliant document under 200KB."
+        }
+    ]
+};
+
+const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "Why is the 200KB limit so common in UPSC and Sarkari portals?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Agencies like UPSC, State PSCs, and NTA process millions of candidate documents during brief 2-week registration windows. A 200KB ceiling provides the exact balance between legibility of official stamps and signatures, and manageable server bandwidth and database storage."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How do I compress a 3 or 4 page PDF under 200KB without making it unreadable?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "For multipage PDFs, KeepPDF divides the 200KB allowance across all pages (e.g., ~45KB to 50KB per page for a 4-page file). It optimizes font glyphs and applies adaptive image downsampling so key details like registration numbers, signatures, and university crests remain sharp."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Will the barcode, QR code, or official seal blur when compressed to 200KB?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. KeepPDF uses contrast-preserving quantization. While smooth gradients and paper background textures are compressed heavily, high-contrast edges such as QR codes, barcodes, printed text, and official government rubber stamps remain sharp enough for OCR and automated scanners."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Are my private documents (Aadhaar, marksheet, caste certificate) stored on your servers?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Never. KeepPDF processes files 100% locally in your device's browser memory using WebAssembly. Zero bytes are uploaded to any external server or cloud storage."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What if my compressed PDF is 202KB instead of under 200KB?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "KeepPDF's '< 200 KB' preset includes a built-in safety cushion, calculating a target ceiling of 185KB to 195KB. This prevents rejection by portals that enforce strict decimal byte limits."
+            }
+        }
+    ]
+};
+---
+
+<Layout lang={lang} dict={dict} title={seoTitle} description={seoDescription} canonical="https://keep-pdf.online/en/compress-pdf-to-200kb">
+    <Navbar client:load lang={lang} dict={dict} slot="navbar" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden pt-24 pb-16" style="background: linear-gradient(135deg, #090d16 0%, #172554 50%, #1e3a8a 100%);">
+        <div class="absolute inset-0 opacity-15">
+            <div class="absolute top-10 left-1/3 w-80 h-80 bg-blue-500 rounded-full filter blur-3xl animate-pulse"></div>
+            <div class="absolute bottom-10 right-1/4 w-96 h-96 bg-cyan-400 rounded-full filter blur-3xl animate-pulse" style="animation-delay: 1.2s;"></div>
+        </div>
+        <div class="container-custom max-w-4xl mx-auto relative z-10 text-center px-4">
+            <span class="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-400/30 text-blue-300 text-xs md:text-sm font-semibold px-4 py-2 rounded-full mb-6 backdrop-blur-md">
+                🎯 Official Exam Document Optimizer — 100% Private In-Browser
+            </span>
+            <h1 class="text-3xl md:text-5xl lg:text-6xl font-black text-white leading-tight mb-4 tracking-tight">
+                Compress PDF to 200KB Online
+                <span class="block text-transparent bg-clip-text bg-gradient-to-r from-blue-300 via-cyan-300 to-teal-300 text-xl md:text-3xl font-bold mt-2">
+                    Tailored for UPSC DAF, Sarkari Result & University Portals
+                </span>
+            </h1>
+            <p class="text-slate-300 text-base md:text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
+                Effortlessly shrink single or multi-page PDF documents under 200 KB. Keep government seals, signatures, and marksheet grades razor sharp without uploading sensitive data to any server.
+            </p>
+
+            <div class="flex flex-wrap justify-center gap-3 text-xs md:text-sm font-medium text-slate-200">
+                <span class="bg-white/10 backdrop-blur-sm px-3.5 py-1.5 rounded-lg border border-white/10 flex items-center gap-1.5">
+                    <span class="text-cyan-400 font-bold">✓</span> UPSC Civil Services DAF Ready
+                </span>
+                <span class="bg-white/10 backdrop-blur-sm px-3.5 py-1.5 rounded-lg border border-white/10 flex items-center gap-1.5">
+                    <span class="text-cyan-400 font-bold">✓</span> Sarkari & State PSC Verified
+                </span>
+                <span class="bg-white/10 backdrop-blur-sm px-3.5 py-1.5 rounded-lg border border-white/10 flex items-center gap-1.5">
+                    <span class="text-cyan-400 font-bold">✓</span> NTA NEET / JEE Certificate Format
+                </span>
+                <span class="bg-white/10 backdrop-blur-sm px-3.5 py-1.5 rounded-lg border border-white/10 flex items-center gap-1.5">
+                    <span class="text-cyan-400 font-bold">✓</span> Instant & Unlimited
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Compressor Tool Section -->
+    <section class="py-12 bg-slate-50 border-b border-slate-200">
+        <div class="container-custom max-w-4xl mx-auto px-4">
+            <div class="bg-white p-6 md:p-8 rounded-3xl shadow-xl border border-slate-100">
+                <div class="mb-6 text-center">
+                    <span class="text-xs uppercase font-extrabold tracking-wider text-blue-600 bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
+                        Preset: &lt; 200 KB Target
+                    </span>
+                    <h2 class="text-2xl font-bold text-slate-900 mt-2">Compress PDF Under 200KB</h2>
+                    <p class="text-sm text-slate-500">Choose your file below, tap <strong>&lt; 200 KB</strong>, and get your certified PDF instantly.</p>
+                </div>
+                <CompressClient client:load dict={dict} lang="en" />
+            </div>
+        </div>
+    </section>
+
+    <!-- Comprehensive 500+ Word Guide Section -->
+    <article class="py-16 bg-white">
+        <div class="container-custom max-w-4xl mx-auto px-4 prose prose-slate max-w-none">
+            
+            <div class="border-l-4 border-blue-600 pl-6 mb-12">
+                <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 mb-2">
+                    The 200KB PDF Benchmark: Indian Exams and Public Recruitment Standards
+                </h2>
+                <p class="text-slate-600 leading-relaxed">
+                    Across national and state government examinations in India, the <strong>200 KB limit</strong> is the universal benchmark. Whether you are filling out the <strong>UPSC Civil Services Detailed Application Form (DAF)</strong>, applying for SSC CGL, appearing for banking recruitments (IBPS, SBI), or submitting admission documentation for Indian institutes like IITs, NITs, and central universities, portals strictly enforce that certificates and proofs must not exceed 200 KB.
+                </p>
+            </div>
+
+            <p class="text-slate-700 leading-relaxed mb-6">
+                When candidates upload documents, the portal's automated validation script checks the file size down to the byte. If your scanned degree certificate or caste validity document is 201 KB, the system halts your submission and throws an alert: <em>"File size must be between 20 KB and 200 KB"</em>. As deadline day approaches and portals experience heavy traffic, struggling with oversized PDFs causes severe anxiety.
+            </p>
+
+            <h3 class="text-xl font-bold text-slate-900 mt-8 mb-4">
+                Key Exam Portals Requiring 200KB PDF Documents
+            </h3>
+            <div class="overflow-x-auto my-6">
+                <table class="w-full text-left border-collapse border border-slate-200 rounded-xl overflow-hidden text-sm">
+                    <thead>
+                        <tr class="bg-slate-100 text-slate-900 font-semibold">
+                            <th class="p-3 border border-slate-200">Exam / Authority</th>
+                            <th class="p-3 border border-slate-200">Required Documents</th>
+                            <th class="p-3 border border-slate-200">Size Requirement</th>
+                            <th class="p-3 border border-slate-200">Critical Check</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-slate-600">
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 border border-slate-200 font-medium text-slate-900">UPSC CSE (DAF-I &amp; DAF-II)</td>
+                            <td class="p-3 border border-slate-200">Age proof, Degree, Category certificate</td>
+                            <td class="p-3 border border-slate-200 text-blue-600 font-bold">20 KB to 200 KB</td>
+                            <td class="p-3 border border-slate-200">Official seal &amp; officer signature must be visible</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 border border-slate-200 font-medium text-slate-900">Sarkari Result / State PSCs</td>
+                            <td class="p-3 border border-slate-200">Domicile, EWS, OBC-NCL certificates</td>
+                            <td class="p-3 border border-slate-200 text-blue-600 font-bold">&le; 200 KB</td>
+                            <td class="p-3 border border-slate-200">Issue date &amp; certificate number legibility</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 border border-slate-200 font-medium text-slate-900">NTA (NEET, JEE, CUET)</td>
+                            <td class="p-3 border border-slate-200">Class 10 Certificate, PwD Proof</td>
+                            <td class="p-3 border border-slate-200 text-blue-600 font-bold">50 KB to 300 KB / 200 KB</td>
+                            <td class="p-3 border border-slate-200">Candidate name spelling &amp; Roll Number</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 border border-slate-200 font-medium text-slate-900">IBPS PO / Clerk Recruitment</td>
+                            <td class="p-3 border border-slate-200">Handwritten declaration, experience proof</td>
+                            <td class="p-3 border border-slate-200 text-blue-600 font-bold">&le; 200 KB (PDF / JPG)</td>
+                            <td class="p-3 border border-slate-200">Clear handwriting without smudge</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 border border-slate-200 font-medium text-slate-900">Central &amp; State Universities</td>
+                            <td class="p-3 border border-slate-200">Consolidated semester grade cards</td>
+                            <td class="p-3 border border-slate-200 text-blue-600 font-bold">&le; 200 KB per document</td>
+                            <td class="p-3 border border-slate-200">Grade table &amp; CGPA column readability</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="text-xl font-bold text-slate-900 mt-8 mb-4">
+                The Science of High-Clarity 200KB Compression
+            </h3>
+            <p class="text-slate-700 leading-relaxed mb-4">
+                Standard compression utilities often take a blunt, aggressive approach: they downsample your entire page to 72 DPI and compress JPEG quality down to 20%. The outcome is disastrous: government stamps become unreadable blurs, signatures look pixelated, and verification officers at exam centers reject candidate dossiers during physical verification.
+            </p>
+            <p class="text-slate-700 leading-relaxed mb-4">
+                KeepPDF takes an engineered approach specifically suited for academic and administrative records:
+            </p>
+            <ul class="list-disc pl-6 space-y-2 text-slate-700 mb-6">
+                <li><strong>High-Frequency Detail Preservation:</strong> Characters, numbers, ink signatures, and rubber stamps belong to the high-frequency image spectrum. KeepPDF applies an edge-preserving filter that retains these critical outlines while aggressively compressing blank paper backgrounds.</li>
+                <li><strong>Multipage Byte Allocation:</strong> If you upload a 3-page consolidated marksheet, KeepPDF dynamically allocates approximately 60 KB per page rather than letting page 1 take 150 KB and forcing pages 2 and 3 into extreme degradation.</li>
+                <li><strong>Color Space Optimization:</strong> Most scanners capture documents in 24-bit TrueColor. For administrative forms that are predominantly black text on white or pale blue paper, converting to indexed palettes or optimized luminance channels slashes 60% of file size with zero visible distinction to the human eye.</li>
+                <li><strong>Zero Server Latency:</strong> Because all mathematical transformations occur in your browser's local thread using WebAssembly, you don't have to wait for upload or download queues. Even on a modest 4G connection, a 10MB document is compressed to 190KB in under 3 seconds.</li>
+            </ul>
+
+            <h3 class="text-xl font-bold text-slate-900 mt-8 mb-4">
+                Checklist: Before You Upload to UPSC or Sarkari Portals
+            </h3>
+            <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 my-6">
+                <ol class="list-decimal pl-5 space-y-3 text-slate-700 text-sm leading-relaxed">
+                    <li><strong>Verify Final File Size:</strong> Right-click on your downloaded PDF and click "Properties" (or tap info on mobile). Confirm that the size on disk is strictly below 200.0 KB (under 204,800 bytes). KeepPDF automatically handles this cushion.</li>
+                    <li><strong>Inspect Text at 150% Zoom:</strong> Open the PDF in your browser or Adobe Reader. Zoom to 150% and verify that your roll number, certificate serial number, and issuing authority's designation are crisp and readable.</li>
+                    <li><strong>Ensure No Password Protection:</strong> Ensure the file opens directly without prompting for a PIN or passphrase. Encrypted files cause automated parsing errors in UPSC and NTA portals.</li>
+                    <li><strong>Single Document Orientation:</strong> Ensure all pages are right side up. If a scanned page is sideways, use KeepPDF's <a href="/en/organize" class="text-blue-600 underline font-medium">Organize PDF tool</a> to rotate it 90 degrees before uploading.</li>
+                </ol>
+            </div>
+
+            <h3 class="text-xl font-bold text-slate-900 mt-8 mb-4">
+                Absolute Privacy: Protecting Candidate Data
+            </h3>
+            <p class="text-slate-700 leading-relaxed mb-4">
+                Preparing for competitive exams requires uploading some of the most sensitive personal records of your lifetime: caste and category certificates detailing social status, medical disability documents, family income declarations for EWS quotas, and domicile records with permanent home addresses. 
+            </p>
+            <p class="text-slate-700 leading-relaxed mb-6">
+                Uploading these files to commercial third-party web converters exposes you to data harvesting risks, identity theft, and spam calls. <strong>KeepPDF guarantees absolute data confidentiality.</strong> Your files are held strictly within your computer's RAM or phone's memory while the browser tab is open. No copies are sent across the internet, no logs are created, and no cloud servers touch your documents.
+            </p>
+
+            <!-- Internal Linking Section -->
+            <div class="mt-12 p-6 rounded-2xl bg-blue-50/50 border border-blue-100">
+                <h4 class="font-bold text-slate-900 mb-3 text-base">Explore Related Indian Exam & Portal PDF Tools:</h4>
+                <div class="flex flex-wrap gap-3">
+                    <a href="/en/compress-pdf-to-100kb" class="inline-flex items-center gap-1.5 text-xs md:text-sm font-semibold text-blue-700 bg-white px-3.5 py-2 rounded-xl border border-blue-200 hover:border-blue-400 hover:shadow-sm transition-all">
+                        📄 Compress PDF to 100KB (PAN & Passport) &rarr;
+                    </a>
+                    <a href="/en/merge-pdf" class="inline-flex items-center gap-1.5 text-xs md:text-sm font-semibold text-blue-700 bg-white px-3.5 py-2 rounded-xl border border-blue-200 hover:border-blue-400 hover:shadow-sm transition-all">
+                        🔗 Merge Marksheets & ID Proofs &rarr;
+                    </a>
+                    <a href="/en/split" class="inline-flex items-center gap-1.5 text-xs md:text-sm font-semibold text-blue-700 bg-white px-3.5 py-2 rounded-xl border border-blue-200 hover:border-blue-400 hover:shadow-sm transition-all">
+                        ✂️ Split Specific Pages from Marksheets &rarr;
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </article>
+
+    <!-- FAQ Section -->
+    <section class="py-16 bg-slate-50 border-t border-slate-200">
+        <div class="container-custom max-w-3xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <span class="text-xs uppercase font-extrabold tracking-wider text-blue-600 bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
+                    Frequently Asked Questions
+                </span>
+                <h2 class="text-2xl md:text-3xl font-black text-slate-900 mt-2">
+                    200KB PDF Compression FAQ
+                </h2>
+                <p class="text-slate-500 text-sm mt-1">Clear answers for competitive exam candidates and portal applicants</p>
+            </div>
+
+            <div class="space-y-4">
+                {faqSchema.mainEntity.map((item) => (
+                    <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                        <h3 class="font-bold text-slate-900 text-base mb-2">{item.name}</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">{item.acceptedAnswer.text}</p>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    <CookieBanner client:idle dict={dict} slot="cookie-banner" />
+</Layout>

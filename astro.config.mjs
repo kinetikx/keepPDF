@@ -5,7 +5,7 @@ import tailwindcss from '@tailwindcss/vite';
 import vercel from '@astrojs/vercel';
 
 // All supported locales — keep in sync with src/i18n/dictionary.js languageRegistry
-const allLocales = ['en', 'tr', 'sq', 'et', 'lv'];
+const allLocales = ['en', 'tr', 'sq', 'et', 'lv', 'id'];
 const site = 'https://keep-pdf.online';
 
 // We no longer need customPages since Astro automatically detects all static routes in src/pages.

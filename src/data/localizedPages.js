@@ -13,6 +13,7 @@ export const hreflangGroups = {
         sq: '/sq/bashko-pdf-falas',
         et: '/et/uhenda-pdf-tasuta',
         lv: '/lv/apvienot-pdf-bezmaksas',
+        id: '/id/gabung-pdf-gratis',
     },
     split: {
         en: '/en/split',
@@ -20,6 +21,7 @@ export const hreflangGroups = {
         sq: '/sq/ndaj-pdf-falas-online',
         et: '/et/tukkelda-pdf-tasuta',
         lv: '/lv/sadalit-pdf-bezmaksas',
+        id: '/id/split',
     },
     compress: {
         en: '/en/compress',
@@ -27,6 +29,7 @@ export const hreflangGroups = {
         sq: '/sq/kompriso-pdf-pa-regjistrim',
         et: '/et/tihenda-pdf-tasuta',
         lv: '/lv/saspiest-pdf-bezmaksas',
+        id: '/id/kompres-pdf-200kb-cpns',
     },
     edit: {
         en: '/en/edit-pdf',
@@ -34,6 +37,7 @@ export const hreflangGroups = {
         sq: '/sq/redakto-pdf-online-falas',
         et: '/et/muuda-pdf-veebi-tasuta',
         lv: '/lv/rediget-pdf-tiesaiste',
+        id: '/id/edit-pdf',
     },
 };
 

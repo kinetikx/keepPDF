@@ -1,0 +1,269 @@
+---
+export const prerender = true;
+import Layout from '../../layouts/Layout.astro';
+import { getDictionary } from '../../i18n/dictionary';
+import Navbar from '../../components/landing/Navbar';
+import CookieBanner from '../../components/landing/CookieBanner';
+import MergeClient from '../../components/tools/MergeClient';
+
+const lang = 'id';
+const dict = getDictionary(lang);
+
+const seoTitle = "Gabung PDF Gratis Online — Satukan Berkas Lamaran, Ijazah & Transkrip | KeepPDF";
+const seoDescription = "Gabungkan beberapa file PDF menjadi satu dokumen berurutan secara online dan gratis. Cocok untuk syarat berkas CPNS, BUMN, dan lamaran kerja. 100% privat di browser.";
+
+const howToSchema = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "Cara Menggabungkan Beberapa Berkas PDF Menjadi Satu Dokumen",
+    "description": "Panduan praktis menyatukan scan surat lamaran, ijazah, transkrip nilai, dan sertifikat menjadi satu file PDF utuh menggunakan KeepPDF.",
+    "step": [
+        {
+            "@type": "HowToStep",
+            "position": 1,
+            "name": "Pilih Dokumen PDF Anda",
+            "text": "Klik tombol unggah atau seret berkas-berkas PDF yang ingin Anda gabungkan ke dalam area kerja."
+        },
+        {
+            "@type": "HowToStep",
+            "position": 2,
+            "name": "Atur Urutan Dokumen",
+            "text": "Tarik dan susun urutan dokumen sesuai persyaratan lamaran (misalnya: Surat Lamaran, CV, Ijazah, Transkrip, Sertifikat)."
+        },
+        {
+            "@type": "HowToStep",
+            "position": 3,
+            "name": "Gabungkan dan Unduh Seketika",
+            "text": "Klik tombol 'Gabungkan PDF', tunggu proses penyatuan lokal selama 1 detik, lalu unduh dokumen gabungan Anda."
+        }
+    ]
+};
+
+const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "Bagaimana cara menyatukan berkas ijazah dan transkrip nilai menjadi satu PDF?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Anda cukup memilih file scan ijazah dan file scan transkrip nilai secara bersamaan di KeepPDF. Setelah muncul di layar, Anda dapat mengatur urutan lembar pertama sebagai ijazah dan lembar kedua sebagai transkrip nilai, lalu klik 'Gabungkan PDF' untuk mengunduh satu berkas utuh."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Apakah ada batasan jumlah file PDF yang bisa digabungkan?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Tidak ada batasan jumlah file di KeepPDF! Anda bebas menyatukan 2, 5, 10, bahkan puluhan berkas PDF sekaligus secara gratis tanpa watermark dan tanpa perlu membuat akun."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Apakah berkas penting saya akan tersimpan di internet saat digabungkan?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Sama sekali tidak. Berbeda dengan layanan konverter online biasa, KeepPDF bekerja 100% di memori peramban (browser) laptop atau smartphone Anda. Berkas PDF Anda tidak pernah dikirimkan atau disimpan di server mana pun, sehingga data pribadi dan riwayat hidup Anda terlindungi sepenuhnya."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Bagaimana jika ukuran file PDF hasil gabungan melebihi batas upload portal instansi?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Setelah dokumen digabungkan, Anda dapat langsung menggunakan fitur 'Kompres PDF' KeepPDF untuk mengecilkan ukuran berkas gabungan tersebut agar berada di bawah 200KB, 500KB, atau 1MB sesuai batas maksimal portal lamaran instansi yang dituju."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Apakah urutan nomor halaman dan orientasi kertas (potret/lanskap) akan rusak?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Tidak. KeepPDF mempertahankan ukuran asli, rasio aspek, dan orientasi masing-masing halaman dokumen (baik portrait maupun landscape). Teks digital, font, dan hyperlink juga tetap aktif tanpa mengalami penurunan kualitas."
+            }
+        }
+    ]
+};
+---
+
+<Layout lang={lang} dict={dict} title={seoTitle} description={seoDescription} canonical="https://keep-pdf.online/id/gabung-pdf-gratis">
+    <Navbar client:load lang={lang} dict={dict} slot="navbar" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden pt-24 pb-16" style="background: linear-gradient(135deg, #09172a 0%, #1e293b 50%, #0f172a 100%);">
+        <div class="absolute inset-0 opacity-15">
+            <div class="absolute top-10 left-1/3 w-80 h-80 bg-indigo-500 rounded-full filter blur-3xl animate-pulse"></div>
+            <div class="absolute bottom-10 right-1/4 w-96 h-96 bg-purple-500 rounded-full filter blur-3xl animate-pulse" style="animation-delay: 1.5s;"></div>
+        </div>
+        <div class="container-custom max-w-4xl mx-auto relative z-10 text-center px-4">
+            <span class="inline-flex items-center gap-2 bg-indigo-500/10 border border-indigo-400/30 text-indigo-300 text-xs md:text-sm font-semibold px-4 py-2 rounded-full mb-6 backdrop-blur-md">
+                ⚡ Cepat, Rapi &amp; 100% Privat di Browser Anda
+            </span>
+            <h1 class="text-3xl md:text-5xl lg:text-6xl font-black text-white leading-tight mb-4 tracking-tight">
+                Gabung PDF Gratis Online
+                <span class="block text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 via-sky-300 to-teal-200 text-xl md:text-3xl font-bold mt-2">
+                    Satukan Berkas Lamaran, Ijazah &amp; Transkrip Tanpa Server
+                </span>
+            </h1>
+            <p class="text-slate-300 text-base md:text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
+                Satukan beberapa file PDF terpisah menjadi satu dokumen yang rapi dan berurutan dalam sekejap. Sangat ideal untuk syarat berkas CPNS, BUMN Rekrutmen Bersama, dan portofolio profesional.
+            </p>
+
+            <div class="flex flex-wrap justify-center gap-3 text-xs md:text-sm font-medium text-slate-200">
+                <span class="bg-white/10 backdrop-blur-sm px-3.5 py-1.5 rounded-lg border border-white/10 flex items-center gap-1.5">
+                    <span class="text-teal-400 font-bold">✓</span> Bebas Atur Urutan Berkas
+                </span>
+                <span class="bg-white/10 backdrop-blur-sm px-3.5 py-1.5 rounded-lg border border-white/10 flex items-center gap-1.5">
+                    <span class="text-teal-400 font-bold">✓</span> Tanpa Batasan Jumlah File
+                </span>
+                <span class="bg-white/10 backdrop-blur-sm px-3.5 py-1.5 rounded-lg border border-white/10 flex items-center gap-1.5">
+                    <span class="text-teal-400 font-bold">✓</span> Tanpa Watermark
+                </span>
+                <span class="bg-white/10 backdrop-blur-sm px-3.5 py-1.5 rounded-lg border border-white/10 flex items-center gap-1.5">
+                    <span class="text-teal-400 font-bold">✓</span> Berkas Tetap di Komputer Anda
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Merge Tool Section -->
+    <section class="py-12 bg-slate-50 border-b border-slate-200">
+        <div class="container-custom max-w-4xl mx-auto px-4">
+            <div class="bg-white p-6 md:p-8 rounded-3xl shadow-xl border border-slate-100">
+                <MergeClient client:load dict={dict} />
+            </div>
+        </div>
+    </section>
+
+    <!-- Detailed 500+ Word Guide Section -->
+    <article class="py-16 bg-white">
+        <div class="container-custom max-w-4xl mx-auto px-4 prose prose-slate max-w-none">
+            
+            <div class="border-l-4 border-indigo-600 pl-6 mb-12">
+                <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 mb-2">
+                    Panduan Standar Menggabungkan Berkas Lamaran Kerja &amp; Seleksi Resmi
+                </h2>
+                <p class="text-slate-600 leading-relaxed">
+                    Saat melamar pekerjaan di instansi pemerintah (CPNS/PPPK), perusahaan BUMN melalui portal Rekrutmen Bersama, ataupun perusahaan multinasional swasta, Anda hampir selalu diminta untuk mengunggah dokumen administrasi dalam format <strong>"Satu Berkas PDF Terpadu"</strong> (Single Merged PDF).
+                </p>
+            </div>
+
+            <p class="text-slate-700 leading-relaxed mb-6">
+                Banyak tim Human Resources (HRD) dan tim verifikator seleksi menolak pelamar yang mengunggah berkas yang berantakan, terpecah-pecah dalam puluhan file individual, atau memiliki susunan dokumen yang acak-acakan. Verifikator memeriksa ratusan lamaran per hari; dokumen yang tersusun rapi dengan urutan logis memberikan kesan profesionalisme tinggi dan memudahkan proses validasi kualifikasi Anda.
+            </p>
+
+            <h3 class="text-xl font-bold text-slate-900 mt-8 mb-4">
+                Urutan Standar Berkas Lamaran Kerja yang Disukai Verifikator &amp; HRD
+            </h3>
+            <p class="text-slate-700 leading-relaxed mb-4">
+                Berikut adalah susunan halaman yang baku dan paling direkomendasikan saat menyatukan berkas lamaran kerja ke dalam 1 file PDF:
+            </p>
+            <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 my-6">
+                <ol class="list-decimal pl-5 space-y-3 text-slate-700 text-sm leading-relaxed">
+                    <li><strong>Halaman 1 &mdash; Surat Lamaran Kerja (Cover Letter):</strong> Memuat posisi yang dilamar, tanggal pembuatan, tanda tangan asli/elektronik, dan e-meterai (jika dipersyaratkan).</li>
+                    <li><strong>Halaman 2 &ndash; 3 &mdash; Curriculum Vitae (CV / Resume):</strong> Ringkasan pengalaman kerja, riwayat pendidikan, kontak aktif, dan keahlian utama.</li>
+                    <li><strong>Halaman 4 &mdash; Scan Ijazah Pendidikan Terakhir:</strong> Ijazah asli atau salinan legalisir basah dari universitas/sekolah.</li>
+                    <li><strong>Halaman 5 &ndash; 6 &mdash; Scan Transkrip Nilai Akademik:</strong> Lengkap seluruh semester dengan IPK akhir dan stempel dekanat.</li>
+                    <li><strong>Halaman 7 &mdash; Surat Keterangan Catatan Kepolisian (SKCK):</strong> SKCK aktif yang diterbitkan oleh kepolisian setempat sesuai level instansi.</li>
+                    <li><strong>Halaman 8 &mdash; Surat Keterangan Bebas Narkoba &amp; Sehat:</strong> Dari rumah sakit pemerintah atau puskesmas setempat.</li>
+                    <li><strong>Halaman 9 dst &mdash; Sertifikat Pelatihan, TOEFL &amp; Portofolio:</strong> Bukti kompetensi keahlian dan lisensi profesi pendukung.</li>
+                </ol>
+            </div>
+
+            <h3 class="text-xl font-bold text-slate-900 mt-8 mb-4">
+                Mengapa Menggabungkan PDF dengan KeepPDF Jauh Lebih Baik?
+            </h3>
+            <p class="text-slate-700 leading-relaxed mb-4">
+                Banyak orang mencoba menggabungkan PDF dengan cara kuno: menyisipkan gambar scan ke dalam Microsoft Word lalu menyimpannya sebagai PDF (Save as PDF). Cara ini sering kali merusak kualitas teks, membuat orientasi halaman menjadi terpotong, atau bahkan menghasilkan file raksasa berukuran 30 MB hingga 50 MB yang mustahil diunggah ke portal mana pun.
+            </p>
+            <p class="text-slate-700 leading-relaxed mb-4">
+                KeepPDF menggunakan mesin penyatuan PDF biner tingkat rendah (low-level binary stream merging) yang beroperasi langsung di browser Anda:
+            </p>
+            <ul class="list-disc pl-6 space-y-2 text-slate-700 mb-6">
+                <li><strong>Tanpa Penurunan Kualitas (Lossless Merging):</strong> Berkas PDF asli tidak dikonversi ulang menjadi gambar; struktur font vektor, teks yang dapat disorot (selectable text), dan resolusi asli halaman tetap dipertahankan 100%.</li>
+                <li><strong>Mendukung Campuran Ukuran Kertas &amp; Orientasi:</strong> Jika ijazah Anda berformat Landscape (mendatar) berukuran A4 sementara surat lamaran berformat Portrait (tegak) berukuran Folio/F4, KeepPDF menjaga dimensi asli masing-masing halaman tanpa memaksanya terpotong.</li>
+                <li><strong>Urutan Drag-and-Drop yang Intuitif:</strong> Anda dapat dengan mudah menggeser kartu berkas ke kiri atau ke kanan untuk memposisikan ijazah sebelum transkrip nilai, menghapus berkas yang salah klik, atau menambahkan berkas baru kapan saja.</li>
+                <li><strong>Kecepatan Instan:</strong> Karena pemrosesan tidak melibatkan pengiriman byte melintasi internet ke server, proses penggabungan 10 dokumen selesai hanya dalam waktu 1 hingga 2 detik.</li>
+            </ul>
+
+            <h3 class="text-xl font-bold text-slate-900 mt-8 mb-4">
+                Privasi Dokumen Negara &amp; Bebas Bahaya Kebocoran Data Pribadi
+            </h3>
+            <p class="text-slate-700 leading-relaxed mb-4">
+                Ijazah, SKCK, dan transkrip nilai Anda memuat data personal yang dilindungi Undang-Undang Perlindungan Data Pribadi (UU PDP). Mengunggah dokumen-dokumen ini ke situs kompresor atau penggabung PDF komersial gratisan di luar negeri berisiko membuka akses data pribadi Anda kepada pihak ketiga.
+            </p>
+            <p class="text-slate-700 leading-relaxed mb-6">
+                <strong>KeepPDF diciptakan dengan filosofi Privacy-First (Privasi Utama):</strong>
+                Kami memanfaatkan teknologi modern browser WebAssembly dan JavaScript. Dokumen Anda sepenuhnya diolah di dalam memori RAM komputer atau ponsel cerdas Anda sendiri. Tidak ada satu byte pun dokumen Anda yang dikirim ke server web kami. Anda bahkan dapat memutuskan koneksi internet (Wi-Fi/data) setelah situs terbuka, dan KeepPDF tetap dapat menggabungkan berkas-berkas Anda dengan sempurna tanpa jaringan internet!
+            </p>
+
+            <h3 class="text-xl font-bold text-slate-900 mt-8 mb-4">
+                Setelah Berkas Digabung: Langkah Lanjutan yang Wajib Dilakukan
+            </h3>
+            <p class="text-slate-700 leading-relaxed mb-4">
+                Setelah Anda mengunduh dokumen gabungan dari KeepPDF, lakukan langkah pemeriksaan terakhir berikut:
+            </p>
+            <div class="space-y-4 my-6">
+                <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+                    <h5 class="font-bold text-slate-900 text-sm mb-1">1. Cek Ukuran Total Berkas Gabungan</h5>
+                    <p class="text-slate-600 text-sm">
+                        Jika portal pendaftaran membatasi maksimal 500 KB atau 1 MB, dan dokumen gabungan Anda berukuran 1.4 MB, Anda tidak perlu panik. Cukup buka alat <a href="/id/kompres-pdf-200kb-cpns" class="text-indigo-600 font-semibold underline">Kompres PDF</a> kami dan pilih target yang sesuai untuk mengecilkannya secara instan.
+                    </p>
+                </div>
+                <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+                    <h5 class="font-bold text-slate-900 text-sm mb-1">2. Periksa Kelengkapan Halaman</h5>
+                    <p class="text-slate-600 text-sm">
+                        Buka berkas PDF gabungan di peramban dan gulir dari halaman pertama hingga terakhir. Pastikan tidak ada halaman yang terbalik (terbalik 180° atau miring). Jika ada halaman yang salah arah, gunakan fitur <a href="/id/organize" class="text-indigo-600 font-semibold underline">Atur PDF</a> untuk memutarnya.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Internal Linking Section -->
+            <div class="mt-12 p-6 rounded-2xl bg-indigo-50/50 border border-indigo-100">
+                <h4 class="font-bold text-slate-900 mb-3 text-base">Alat PDF Pilihan untuk Kebutuhan Berkas Anda:</h4>
+                <div class="flex flex-wrap gap-3">
+                    <a href="/id/kompres-pdf-200kb-cpns" class="inline-flex items-center gap-1.5 text-xs md:text-sm font-semibold text-indigo-700 bg-white px-3.5 py-2 rounded-xl border border-indigo-200 hover:border-indigo-400 hover:shadow-sm transition-all">
+                        📄 Kompres PDF 200KB (Syarat SSCASN CPNS) &rarr;
+                    </a>
+                    <a href="/id/split" class="inline-flex items-center gap-1.5 text-xs md:text-sm font-semibold text-indigo-700 bg-white px-3.5 py-2 rounded-xl border border-indigo-200 hover:border-indigo-400 hover:shadow-sm transition-all">
+                        ✂️ Pisahkan Halaman PDF Tertentu &rarr;
+                    </a>
+                    <a href="/id/organize" class="inline-flex items-center gap-1.5 text-xs md:text-sm font-semibold text-indigo-700 bg-white px-3.5 py-2 rounded-xl border border-indigo-200 hover:border-indigo-400 hover:shadow-sm transition-all">
+                        📑 Atur &amp; Putar Posisi Halaman PDF &rarr;
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </article>
+
+    <!-- FAQ Section -->
+    <section class="py-16 bg-slate-50 border-t border-slate-200">
+        <div class="container-custom max-w-3xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <span class="text-xs uppercase font-extrabold tracking-wider text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-200">
+                    Tanya Jawab
+                </span>
+                <h2 class="text-2xl md:text-3xl font-black text-slate-900 mt-2">
+                    Pertanyaan Seputar Penggabungan PDF
+                </h2>
+                <p class="text-slate-500 text-sm mt-1">Jawaban lengkap seputar cara menyatukan berkas lamaran dan dokumen resmi</p>
+            </div>
+
+            <div class="space-y-4">
+                {faqSchema.mainEntity.map((item) => (
+                    <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                        <h3 class="font-bold text-slate-900 text-base mb-2">{item.name}</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">{item.acceptedAnswer.text}</p>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    <CookieBanner client:idle dict={dict} slot="cookie-banner" />
+</Layout>

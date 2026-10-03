@@ -1,0 +1,322 @@
+---
+export const prerender = true;
+import Layout from '../../layouts/Layout.astro';
+import { getDictionary } from '../../i18n/dictionary';
+import Navbar from '../../components/landing/Navbar';
+import CookieBanner from '../../components/landing/CookieBanner';
+import CompressClient from '../../components/tools/CompressClient';
+
+const lang = 'id';
+const dict = getDictionary(lang);
+
+const seoTitle = "Kompres PDF 200KB Online Gratis — Khusus Syarat SSCASN BKN (CPNS & PPPK) | KeepPDF";
+const seoDescription = "Kompres PDF menjadi maksimal 200KB online gratis tanpa mengurangi keterbacaan teks dan stempel. Syarat resmi SSCASN BKN untuk seleksi CPNS & PPPK. 100% aman di browser.";
+
+const howToSchema = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "Cara Kompres PDF 200KB untuk Syarat Pendaftaran SSCASN BKN",
+    "description": "Panduan langkah demi langkah mengecilkan ukuran berkas PDF ijazah, transkrip, atau surat lamaran di bawah 200KB tanpa buram menggunakan KeepPDF.",
+    "step": [
+        {
+            "@type": "HowToStep",
+            "position": 1,
+            "name": "Pilih Dokumen PDF Anda",
+            "text": "Klik tombol 'Pilih Dokumen' atau seret file PDF ijazah, surat pernyataan, atau berkas CPNS Anda ke area unggah."
+        },
+        {
+            "@type": "HowToStep",
+            "position": 2,
+            "name": "Pilih Target '< 200 KB'",
+            "text": "Pilih tombol preset '< 200 KB (SSCASN CPNS/PPPK)' untuk mengaktifkan algoritma pembatasan ukuran otomatis."
+        },
+        {
+            "@type": "HowToStep",
+            "position": 3,
+            "name": "Unduh Berkas Hasil Kompresi",
+            "text": "Klik 'Kompres PDF Sekarang', tunggu 2 detik, lalu unduh dokumen PDF Anda yang telah terverifikasi di bawah 200KB dan siap diunggah ke SSCASN."
+        }
+    ]
+};
+
+const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "Mengapa portal SSCASN BKN membatasi ukuran PDF maksimal 200KB hingga 500KB?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Badan Kepegawaian Negara (BKN) menerima jutaan pendaftar seleksi CPNS dan PPPK dalam waktu bersamaan. Pembatasan ukuran file antara 200KB hingga 500KB diterapkan agar server basis data nasional tidak mengalami lonjakan beban (overload), mempercepat proses unggah di jaringan internet daerah, dan memudahkan verifikator berkas instansi membuka dokumen secara instan."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Apakah nomor ijazah dan stempel basah akan buram setelah dikompres ke 200KB?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Tidak jika menggunakan KeepPDF. KeepPDF menggunakan algoritma kompresi adaptif yang memprioritaskan ketajaman teks beresolusi tinggi, nomor ijazah, tanda tangan dekan/rektor, dan stempel basah. Bagian latar belakang kertas yang polos dikompresi lebih kuat sehingga ukuran file turun drastis tanpa merusak kejelasan huruf."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Apakah aman mengompres dokumen pribadi seperti ijazah, KTP, dan transkrip di KeepPDF?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Sangat aman. Berbeda dengan situs kompresor PDF online lainnya yang mengunggah dokumen Anda ke server luar negeri, KeepPDF bekerja 100% di peramban (browser) Anda menggunakan teknologi WebAssembly. Dokumen Anda tidak pernah dikirim lewat internet atau disimpan di server mana pun."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Bagaimana jika file PDF yang dikompresi berukuran 201KB atau 202KB?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Portal SSCASN memiliki validasi ketat dan otomatis menolak file di atas 200,000 bytes. Preset '< 200 KB' di KeepPDF sengaja menargetkan ukuran sekitar 180KB hingga 195KB sehingga dokumen Anda dijamin lolos verifikasi ukuran sistem BKN tanpa gagal."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Apakah e-meterai (meterai elektronik) rusak jika PDF dikompresi?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Disarankan untuk membubuhkan e-meterai resmi Peruri setelah Anda memastikan ukuran halaman dan tata letak PDF rapi, atau kompres terlebih dahulu berkas pendukung sebelum pembubuhan tanda tangan dan meterai elektronik agar integritas kode QR meterai tidak terdistorsi."
+            }
+        }
+    ]
+};
+---
+
+<Layout lang={lang} dict={dict} title={seoTitle} description={seoDescription} canonical="https://keep-pdf.online/id/kompres-pdf-200kb-cpns">
+    <Navbar client:load lang={lang} dict={dict} slot="navbar" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden pt-24 pb-16" style="background: linear-gradient(135deg, #091e3a 0%, #102a43 50%, #1e3a8a 100%);">
+        <div class="absolute inset-0 opacity-15">
+            <div class="absolute top-10 left-1/4 w-80 h-80 bg-cyan-400 rounded-full filter blur-3xl animate-pulse"></div>
+            <div class="absolute bottom-10 right-1/4 w-96 h-96 bg-blue-500 rounded-full filter blur-3xl animate-pulse" style="animation-delay: 1.5s;"></div>
+        </div>
+        <div class="container-custom max-w-4xl mx-auto relative z-10 text-center px-4">
+            <span class="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-400/30 text-emerald-300 text-xs md:text-sm font-semibold px-4 py-2 rounded-full mb-6 backdrop-blur-md">
+                🇮🇩 Standar Resmi Seleksi CASN — 100% Aman Tanpa Server
+            </span>
+            <h1 class="text-3xl md:text-5xl lg:text-6xl font-black text-white leading-tight mb-4 tracking-tight">
+                Kompres PDF 200KB Online Gratis
+                <span class="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-teal-300 to-emerald-300 text-xl md:text-3xl font-bold mt-2">
+                    Khusus Syarat Unggah SSCASN BKN (CPNS &amp; PPPK)
+                </span>
+            </h1>
+            <p class="text-slate-300 text-base md:text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
+                Perkecil ukuran dokumen PDF ijazah, transkrip nilai, dan surat lamaran Anda menjadi pas di bawah 200 KB. Teks tajam, stempel jelas, bebas watermark, dan 100% privat di peramban Anda.
+            </p>
+
+            <div class="flex flex-wrap justify-center gap-3 text-xs md:text-sm font-medium text-slate-200">
+                <span class="bg-white/10 backdrop-blur-sm px-3.5 py-1.5 rounded-lg border border-white/10 flex items-center gap-1.5">
+                    <span class="text-emerald-400 font-bold">✓</span> Lolos Verifikasi SSCASN BKN
+                </span>
+                <span class="bg-white/10 backdrop-blur-sm px-3.5 py-1.5 rounded-lg border border-white/10 flex items-center gap-1.5">
+                    <span class="text-emerald-400 font-bold">✓</span> Nomor Ijazah &amp; Stempel Tetap Jelas
+                </span>
+                <span class="bg-white/10 backdrop-blur-sm px-3.5 py-1.5 rounded-lg border border-white/10 flex items-center gap-1.5">
+                    <span class="text-emerald-400 font-bold">✓</span> Tanpa Unggah ke Server (Privat)
+                </span>
+                <span class="bg-white/10 backdrop-blur-sm px-3.5 py-1.5 rounded-lg border border-white/10 flex items-center gap-1.5">
+                    <span class="text-emerald-400 font-bold">✓</span> Gratis Tanpa Batas File
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Compressor Tool Section -->
+    <section class="py-12 bg-slate-50 border-b border-slate-200">
+        <div class="container-custom max-w-4xl mx-auto px-4">
+            <div class="bg-white p-6 md:p-8 rounded-3xl shadow-xl border border-slate-100">
+                <div class="mb-6 text-center">
+                    <span class="text-xs uppercase font-extrabold tracking-wider text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
+                        Target Otomatis: &lt; 200 KB
+                    </span>
+                    <h2 class="text-2xl font-bold text-slate-900 mt-2">Kompres Dokumen PDF Anda Sekarang</h2>
+                    <p class="text-sm text-slate-500">Pilih berkas Anda di bawah, klik preset <strong>&lt; 200 KB</strong>, dan unduh hasilnya seketika.</p>
+                </div>
+                <CompressClient client:load dict={dict} lang="id" />
+            </div>
+        </div>
+    </section>
+
+    <!-- Detailed 500+ Word Guide Section -->
+    <article class="py-16 bg-white">
+        <div class="container-custom max-w-4xl mx-auto px-4 prose prose-slate max-w-none">
+            
+            <div class="border-l-4 border-emerald-600 pl-6 mb-12">
+                <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 mb-2">
+                    Panduan Lengkap Batas Ukuran Berkas Pendaftaran SSCASN BKN
+                </h2>
+                <p class="text-slate-600 leading-relaxed">
+                    Setiap periode seleksi <strong>Calon Pegawai Negeri Sipil (CPNS)</strong> dan <strong>Pegawai Pemerintah dengan Perjanjian Kerja (PPPK)</strong> dibuka melalui portal resmi <em>sscasn.bkn.go.id</em>, ribuan pelamar gugur di tahap seleksi administrasi awal bukan karena kualifikasi akademik yang kurang, melainkan akibat berkas unggahan yang dinyatakan <strong>TMS (Tidak Memenuhi Syarat)</strong>.
+                </p>
+            </div>
+
+            <p class="text-slate-700 leading-relaxed mb-6">
+                Penyebab utama status TMS adalah dokumen yang terpotong, buram akibat kompresi yang sembarangan, atau ukuran file yang melebihi ambang batas maksimal yang ditentukan oleh Badan Kepegawaian Negara (BKN) dan masing-masing instansi kementerian/lembaga. Sistem unggah portal SSCASN memiliki skrip validasi ukuran biner ketat: apabila berkas Anda berukuran 200.5 KB, sistem akan langsung menolak unggahan dengan pesan peringatan: <em>"Ukuran berkas melebihi batas maksimal yang diperbolehkan"</em>.
+            </p>
+
+            <h3 class="text-xl font-bold text-slate-900 mt-8 mb-4">
+                Daftar Lengkap Ketentuan Berkas Pendaftaran SSCASN CPNS &amp; PPPK
+            </h3>
+            <div class="overflow-x-auto my-6">
+                <table class="w-full text-left border-collapse border border-slate-200 rounded-xl overflow-hidden text-sm">
+                    <thead>
+                        <tr class="bg-slate-100 text-slate-900 font-semibold">
+                            <th class="p-3 border border-slate-200">Jenis Dokumen Persyaratan</th>
+                            <th class="p-3 border border-slate-200">Format Wajib</th>
+                            <th class="p-3 border border-slate-200">Batas Ukuran Maksimal</th>
+                            <th class="p-3 border border-slate-200">Poin Penting Verifikator</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-slate-600">
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 border border-slate-200 font-medium text-slate-900">Scan KTP Asli / Surat Keterangan Dukcapil</td>
+                            <td class="p-3 border border-slate-200">JPG / JPEG</td>
+                            <td class="p-3 border border-slate-200 text-emerald-600 font-bold">Maksimal 200 KB</td>
+                            <td class="p-3 border border-slate-200">NIK, nama lengkap, dan foto wajah tidak silau/buram</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 border border-slate-200 font-medium text-slate-900">Pasfoto Formal Terbaru (Latar Merah)</td>
+                            <td class="p-3 border border-slate-200">JPG / JPEG</td>
+                            <td class="p-3 border border-slate-200 text-emerald-600 font-bold">Maksimal 200 KB</td>
+                            <td class="p-3 border border-slate-200">Pakaian formal, wajah menghadap lurus</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 border border-slate-200 font-medium text-slate-900">Scan Ijazah Asli</td>
+                            <td class="p-3 border border-slate-200">PDF</td>
+                            <td class="p-3 border border-slate-200 text-emerald-600 font-bold">200 KB &ndash; 1000 KB (Tergantung Instansi)</td>
+                            <td class="p-3 border border-slate-200">Nomor seri ijazah, akreditasi, &amp; stempel terbaca jelas</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 border border-slate-200 font-medium text-slate-900">Scan Transkrip Nilai Asli</td>
+                            <td class="p-3 border border-slate-200">PDF (Bisa Multipage)</td>
+                            <td class="p-3 border border-slate-200 text-emerald-600 font-bold">Maksimal 500 KB / 200 KB</td>
+                            <td class="p-3 border border-slate-200">Daftar mata kuliah, IPK, dan tanda tangan sah</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 border border-slate-200 font-medium text-slate-900">Surat Lamaran &amp; Surat Pernyataan</td>
+                            <td class="p-3 border border-slate-200">PDF</td>
+                            <td class="p-3 border border-slate-200 text-emerald-600 font-bold">Maksimal 300 KB &ndash; 500 KB</td>
+                            <td class="p-3 border border-slate-200">Format sesuai template instansi, bermeterai sah</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 border border-slate-200 font-medium text-slate-900">Surat Tanda Registrasi (STR) / Sertifikat</td>
+                            <td class="p-3 border border-slate-200">PDF</td>
+                            <td class="p-3 border border-slate-200 text-emerald-600 font-bold">Maksimal 500 KB / 200 KB</td>
+                            <td class="p-3 border border-slate-200">Masa berlaku STR masih aktif saat pendaftaran</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="text-xl font-bold text-slate-900 mt-8 mb-4">
+                Mengapa Hasil Scan Ijazah Berukuran Besar (Dan Cara KeepPDF Memperkecilnya)
+            </h3>
+            <p class="text-slate-700 leading-relaxed mb-4">
+                Ketika Anda memindai ijazah atau transkrip nilai di tempat fotokopi atau menggunakan scanner rumahan, mesin pemindai umumnya menggunakan pengaturan standar 300 DPI hingga 600 DPI dengan profil warna 24-bit TrueColor. Hasil pemindaian tersebut menghasilkan gambar raster mentah dengan jutaan piksel warna, yang membuat satu lembar dokumen PDF berukuran antara <strong>4 MB hingga 15 MB</strong>!
+            </p>
+            <p class="text-slate-700 leading-relaxed mb-4">
+                Jika Anda menggunakan situs kompresor konvensional murahan, mereka akan memangkas resolusi secara membabi buta sehingga tulisan kecil pada transkrip nilai menjadi buram dan kode angka pada ijazah tidak bisa dibaca oleh verifikator. 
+                <strong>KeepPDF dirancang khusus dengan teknologi optimasi cerdas:</strong>
+            </p>
+            <ul class="list-disc pl-6 space-y-2 text-slate-700 mb-6">
+                <li><strong>Preservasi Kontras Tinggi (High-Contrast Edge Retention):</strong> Angka nomor ijazah, huruf nama wisudawan, dan garis stempel basah dipertahankan ketajamannya dengan mempertahankan kontras batas piksel tinggi, sementara warna kertas latar belakang yang tidak bermakna dioptimalkan secara agresif.</li>
+                <li><strong>Penghapusan Metadata Berlebih:</strong> File PDF hasil scanner sering kali membawa ratusan kilobyte metadata printer, profil warna ICC yang tidak perlu, dan thumbnail pratinjau yang tidak berguna. KeepPDF membersihkan semua beban tak berguna ini secara bersih.</li>
+                <li><strong>Anggaran Byte Adaptif (Byte-Budgeting):</strong> Saat Anda memilih target <code>&lt; 200 KB</code>, KeepPDF menghitung batas aman di kisaran 185 KB hingga 195 KB. Dengan demikian, dokumen Anda dipastikan tidak akan menyentuh batas 201 KB yang akan ditolak oleh sistem BKN.</li>
+            </ul>
+
+            <div class="bg-emerald-50 border-l-4 border-emerald-500 p-5 rounded-r-2xl my-8">
+                <h4 class="text-emerald-900 font-bold text-base mb-1">💡 Tips Penting Seputar E-Meterai (Meterai Elektronik)</h4>
+                <p class="text-emerald-800 text-sm leading-relaxed">
+                    Jika surat lamaran atau surat pernyataan Anda mewajibkan e-meterai resmi Peruri: pastikan tata letak, ukuran file, dan konversi ke PDF sudah final <strong>sebelum</strong> membubuhkan e-meterai. Menjalankan kompresi berat setelah e-meterai terpasang berisiko merusak struktur QR code tanda tangan digital meterai sehingga gagal terbaca saat validasi berkas.
+                </p>
+            </div>
+
+            <h3 class="text-xl font-bold text-slate-900 mt-8 mb-4">
+                Privasi 100% Terjamin: Lindungi Data Pribadi Anda dari Kebocoran
+            </h3>
+            <p class="text-slate-700 leading-relaxed mb-4">
+                Ijazah, KTP, dan transkrip nilai adalah dokumen yang memuat data pribadi sangat sensitif, termasuk Nomor Induk Kependudukan (NIK), nama orang tua, tanggal lahir, riwayat pendidikan, dan tanda tangan asli Anda. 
+            </p>
+            <p class="text-slate-700 leading-relaxed mb-6">
+                Sebagian besar situs web kompresor PDF populer mengharuskan berkas Anda diunggah ke server jarak jauh yang berada di luar yurisdiksi Indonesia. Risiko kebocoran data, penyimpanan tanpa izin, atau penjualan data profil pelamar kerja sangat nyata. 
+                <strong>KeepPDF memberikan garansi privasi mutlak:</strong> seluruh pemrosesan PDF berjalan secara lokal 100% di memori perangkat Anda menggunakan WebAssembly. Berkas Anda tidak pernah keluar dari gawai Anda, tidak ada lalu lintas data dokumen ke server, dan Anda bahkan bisa mengompresi dokumen dalam keadaan internet terputus (offline) setelah situs terbuka!
+            </p>
+
+            <h3 class="text-xl font-bold text-slate-900 mt-8 mb-4">
+                Solusi Mengatasi Kendala Unggah di Portal SSCASN
+            </h3>
+            <div class="space-y-4 my-6">
+                <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+                    <h5 class="font-bold text-slate-900 text-sm mb-1">❌ Kendala: "Ukuran berkas melebihi 200 KB"</h5>
+                    <p class="text-slate-600 text-sm">
+                        Gunakan preset <code>&lt; 200 KB</code> di KeepPDF. Algoritma kami secara otomatis membatasi output agar berada di rentang 180 KB - 195 KB sehingga aman dari perhitungan biner ketat server SSCASN.
+                    </p>
+                </div>
+                <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+                    <h5 class="font-bold text-slate-900 text-sm mb-1">❌ Kendala: "Berkas PDF terenkripsi atau membutuhkan password"</h5>
+                    <p class="text-slate-600 text-sm">
+                        Beberapa dokumen resmi atau cetak rekening bank memiliki kata sandi perlindungan. Pastikan kata sandi telah dihapus sebelum diunggah ke SSCASN karena sistem verifikasi otomatis instansi tidak dapat membuka PDF terkunci.
+                    </p>
+                </div>
+                <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+                    <h5 class="font-bold text-slate-900 text-sm mb-1">❌ Kendala: "Halaman transkrip nilai terpisah-pisah"</h5>
+                    <p class="text-slate-600 text-sm">
+                        Jika transkrip nilai universitas Anda terdiri dari 2 atau 3 halaman hasil scan terpisah, satukan terlebih dahulu menjadi satu file dokumen menggunakan alat <a href="/id/gabung-pdf-gratis" class="text-emerald-700 font-semibold underline">Gabung PDF Gratis</a> kami, lalu kompres file hasil gabungannya ke bawah 500 KB atau 200 KB.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Internal Linking Section -->
+            <div class="mt-12 p-6 rounded-2xl bg-emerald-50/50 border border-emerald-100">
+                <h4 class="font-bold text-slate-900 mb-3 text-base">Alat PDF Terkait untuk Keperluan Seleksi &amp; Kerja:</h4>
+                <div class="flex flex-wrap gap-3">
+                    <a href="/id/gabung-pdf-gratis" class="inline-flex items-center gap-1.5 text-xs md:text-sm font-semibold text-emerald-800 bg-white px-3.5 py-2 rounded-xl border border-emerald-200 hover:border-emerald-400 hover:shadow-sm transition-all">
+                        🔗 Gabung Berkas Ijazah &amp; Transkrip &rarr;
+                    </a>
+                    <a href="/id/split" class="inline-flex items-center gap-1.5 text-xs md:text-sm font-semibold text-emerald-800 bg-white px-3.5 py-2 rounded-xl border border-emerald-200 hover:border-emerald-400 hover:shadow-sm transition-all">
+                        ✂️ Pisahkan Halaman PDF Tertentu &rarr;
+                    </a>
+                    <a href="/id/pricing" class="inline-flex items-center gap-1.5 text-xs md:text-sm font-semibold text-emerald-800 bg-white px-3.5 py-2 rounded-xl border border-emerald-200 hover:border-emerald-400 hover:shadow-sm transition-all">
+                        💳 100% Gratis Tanpa Biaya Berlangganan &rarr;
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </article>
+
+    <!-- FAQ Section -->
+    <section class="py-16 bg-slate-50 border-t border-slate-200">
+        <div class="container-custom max-w-3xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <span class="text-xs uppercase font-extrabold tracking-wider text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
+                    Tanya Jawab
+                </span>
+                <h2 class="text-2xl md:text-3xl font-black text-slate-900 mt-2">
+                    Pertanyaan yang Sering Diajukan (FAQ)
+                </h2>
+                <p class="text-slate-500 text-sm mt-1">Solusi praktis kompresi berkas untuk peserta seleksi CPNS dan PPPK</p>
+            </div>
+
+            <div class="space-y-4">
+                {faqSchema.mainEntity.map((item) => (
+                    <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                        <h3 class="font-bold text-slate-900 text-base mb-2">{item.name}</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">{item.acceptedAnswer.text}</p>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    <CookieBanner client:idle dict={dict} slot="cookie-banner" />
+</Layout>

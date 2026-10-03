@@ -3,6 +3,7 @@ import { tr } from './tr';
 import { sq } from './sq';
 import { et } from './et';
 import { lv } from './lv';
+import { id } from './id';
 
 // Central language registry — add new languages here
 export const languageRegistry = {
@@ -11,6 +12,7 @@ export const languageRegistry = {
     sq: { dict: sq, flag: '🇦🇱', name: 'Shqip', ogLocale: 'sq_AL' },
     et: { dict: et, flag: '🇪🇪', name: 'Eesti', ogLocale: 'et_EE' },
     lv: { dict: lv, flag: '🇱🇻', name: 'Latviešu', ogLocale: 'lv_LV' },
+    id: { dict: id, flag: '🇮🇩', name: 'Bahasa Indonesia', ogLocale: 'id_ID' },
 };
 
 export const locales = Object.keys(languageRegistry);
