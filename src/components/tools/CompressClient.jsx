@@ -2,10 +2,10 @@ import { useState } from "react";
 import PDFDropzone from "../landing/PDFDropzone";
 import Compressor from "../compress/Compressor";
 
-export default function CompressClient({ dict }) {
+export default function CompressClient({ dict, lang = 'en' }) {
     const [file, setFile] = useState(null);
     const handleFileSelect = (files) => { if (files && files.length > 0) setFile(files[0]); };
-    if (file) return (<section className="py-12 bg-slate-50 min-h-screen"><div className="container-custom"><Compressor file={file} onBack={() => setFile(null)} dict={dict} /></div></section>);
+    if (file) return (<section className="py-12 bg-slate-50 min-h-screen"><div className="container-custom"><Compressor file={file} onBack={() => setFile(null)} dict={dict} lang={lang} /></div></section>);
     return (
         <section className="py-20 bg-slate-50 min-h-screen">
             <div className="container-custom max-w-4xl mx-auto">
