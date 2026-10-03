@@ -274,5 +274,35 @@ if (dbPost) {
         </div>
     </article>
 
+    <!-- Internal Links: Related PDF Tools (SEO + UX) -->
+    <section class="py-12 bg-gradient-to-b from-slate-50 to-white border-t border-slate-100">
+        <div class="container-custom max-w-3xl mx-auto px-4">
+            <h2 class="text-xl font-bold text-slate-800 mb-2">
+                🛠️ {dict?.blog?.freeTools || "Free PDF Tools"}
+            </h2>
+            <p class="text-sm text-slate-500 mb-6">
+                {dict?.blog?.freeToolsDesc || "Try our free online PDF tools — no signup, no limits."}
+            </p>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                {[
+                    { href: `/${lang}/compress`, emoji: '📦', label: dict?.nav?.compress || 'Compress PDF' },
+                    { href: `/${lang}/merge-pdf`, emoji: '🔗', label: dict?.nav?.merge || 'Merge PDF' },
+                    { href: `/${lang}/split`, emoji: '✂️', label: dict?.nav?.split || 'Split PDF' },
+                    { href: `/${lang}/pdf-to-word`, emoji: '📝', label: dict?.nav?.pdfToWord || 'PDF to Word' },
+                    { href: `/${lang}/pdf-to-image`, emoji: '🖼️', label: dict?.nav?.pdfToImage || 'PDF to Image' },
+                    { href: `/${lang}/edit-pdf`, emoji: '✏️', label: dict?.nav?.editPdf || 'Edit PDF' },
+                ].map(tool => (
+                    <a
+                        href={tool.href}
+                        class="flex items-center gap-2.5 p-3 bg-white border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 hover:border-indigo-300 hover:text-indigo-700 hover:shadow-sm transition-all group"
+                    >
+                        <span class="text-lg">{tool.emoji}</span>
+                        <span class="group-hover:translate-x-0.5 transition-transform">{tool.label}</span>
+                    </a>
+                ))}
+            </div>
+        </div>
+    </section>
+
     <CookieBanner client:idle dict={dict} slot="cookie-banner" />
 </BlogPostLayout>

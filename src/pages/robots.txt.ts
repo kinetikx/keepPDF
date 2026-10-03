@@ -7,8 +7,9 @@ Disallow: /admin
 Disallow: /admin/
 Disallow: /*.json$
 
-# Sitemap
+# Sitemaps
 Sitemap: ${new URL('sitemap-index.xml', 'https://keep-pdf.online').href}
+Sitemap: ${new URL('sitemap-blog.xml', 'https://keep-pdf.online').href}
 `.trim();
 
 export const GET: APIRoute = () => {
