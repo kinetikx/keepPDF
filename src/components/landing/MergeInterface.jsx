@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "../ui/button";
-import { motion, Reorder } from "framer-motion";
+import { Reorder } from "framer-motion";
 import { FileText, Image as ImageIcon, PenTool, Type, MousePointer2, FileType, X, GripVertical } from "lucide-react";
 import PDFDropzone from "./PDFDropzone";
 
@@ -69,21 +69,16 @@ export default function MergeInterface({ children, dict }) {
 
     return (
         <div className="container-custom relative z-10 flex flex-col items-center text-center">
-            <motion.div
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.4 }}
-                className="relative w-full max-w-5xl mx-auto min-h-[500px]"
-            >
+            <div className="relative w-full max-w-5xl mx-auto min-h-[500px]">
                 {/* Floating Icons */}
                 {files.length === 0 && (
                     <>
-                        <motion.div animate={{ y: [0, -10, 0] }} transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }} className="absolute -left-4 top-10 bg-indigo-500 text-white p-3 rounded-xl shadow-lg z-20 hidden md:block">
+                        <div className="absolute -left-4 top-10 bg-indigo-500 text-white p-3 rounded-xl shadow-lg z-20 hidden md:block animate-float">
                             <FileType size={24} />
-                        </motion.div>
-                        <motion.div animate={{ y: [0, -15, 0] }} transition={{ repeat: Infinity, duration: 5, ease: "easeInOut", delay: 1 }} className="absolute -right-4 top-20 bg-red-500 text-white p-3 rounded-xl shadow-lg z-20 hidden md:block">
+                        </div>
+                        <div className="absolute -right-4 top-20 bg-red-500 text-white p-3 rounded-xl shadow-lg z-20 hidden md:block animate-float [animation-delay:2s]">
                             <FileText size={24} />
-                        </motion.div>
+                        </div>
                     </>
                 )}
 
@@ -186,13 +181,14 @@ export default function MergeInterface({ children, dict }) {
                                         title={dict?.common?.clickToUpload}
                                         buttonText={dict?.common?.browse}
                                         limit={dict?.common?.limit}
+                                        securityBadge={`${dict?.hero?.trustBanner?.secureTitle || "100% Private"} · ${dict?.hero?.trustBanner?.secureDesc || "Files never leave your browser"}`}
                                     />
                                 </div>
                             </div>
                         )}
                     </div>
                 </div>
-            </motion.div>
+            </div>
         </div>
     );
 }
