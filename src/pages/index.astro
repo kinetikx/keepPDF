@@ -2,18 +2,46 @@
 // Root index page - detect language and redirect to appropriate locale
 // Priority: 1) Vercel geo-IP country → 2) Browser Accept-Language → 3) default 'en'
 
+const supportedLocales = ['tr', 'sq', 'et', 'lv', 'id', 'pt', 'es', 'en'];
+
 // Country code → locale mapping (Vercel injects x-vercel-ip-country header in production)
-const countryToLocale = {
+const countryToLocale: Record<string, string> = {
     'TR': 'tr',  // Turkey → Turkish
     'AL': 'sq',  // Albania → Albanian
     'XK': 'sq',  // Kosovo → Albanian
+    'MK': 'sq',  // North Macedonia → Albanian
     'EE': 'et',  // Estonia → Estonian
     'LV': 'lv',  // Latvia → Latvian
+    'ID': 'id',  // Indonesia → Indonesian
+    'BR': 'pt',  // Brazil → Portuguese
+    'PT': 'pt',  // Portugal → Portuguese
+    'ES': 'es',  // Spain → Spanish
+    'MX': 'es',  // Mexico → Spanish
+    'AR': 'es',  // Argentina → Spanish
+    'CO': 'es',  // Colombia → Spanish
 };
 
+// 1. Geo-IP detection via Vercel header
 const country = Astro.request.headers.get('x-vercel-ip-country');
 const geoLocale = country ? countryToLocale[country] : null;
 
-const locale = geoLocale || Astro.preferredLocale || 'en';
-return Astro.redirect(`/${locale}`);
+// 2. Parse Accept-Language header manually (handles tr-TR, tr;q=0.9 etc.)
+function parseAcceptLanguage(header: string | null): string | null {
+    if (!header) return null;
+    // Parse "tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7" style headers
+    const langs = header.split(',').map(part => {
+        const [lang] = part.trim().split(';');
+        return lang.trim().toLowerCase().split('-')[0]; // get base language (tr from tr-TR)
+    });
+    for (const lang of langs) {
+        if (supportedLocales.includes(lang)) return lang;
+    }
+    return null;
+}
+
+const acceptLanguage = Astro.request.headers.get('accept-language');
+const browserLocale = parseAcceptLanguage(acceptLanguage);
+
+const locale = geoLocale || browserLocale || Astro.preferredLocale || 'en';
+return Astro.redirect(`/${locale}`, 302);
 ---
