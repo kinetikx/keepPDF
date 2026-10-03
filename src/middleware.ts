@@ -44,5 +44,12 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
     const locale = geoLocale || browserLocale || 'en';
 
-    return Response.redirect(new URL(`/${locale}`, context.url), 302);
+    // Build absolute URL using x-forwarded-host (real public hostname)
+    // context.url can return internal Vercel hostname — avoid it
+    const forwardedHost = request.headers.get('x-forwarded-host');
+    const host = forwardedHost || request.headers.get('host') || 'keep-pdf.online';
+    const proto = request.headers.get('x-forwarded-proto') || 'https';
+    const redirectUrl = `${proto}://${host}/${locale}`;
+
+    return Response.redirect(redirectUrl, 302);
 });
