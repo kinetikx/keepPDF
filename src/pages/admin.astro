@@ -2,6 +2,7 @@
 // Admin page - standalone, no site layout
 import TranslationManager from '../components/admin/TranslationManager';
 import KeywordPagesDashboard from '../components/admin/KeywordPagesDashboard';
+import BlogManager from '../components/admin/BlogManager';
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -63,6 +64,9 @@ import KeywordPagesDashboard from '../components/admin/KeywordPagesDashboard';
         <button class="admin-tab" data-tab="keywords" onclick="switchTab('keywords')">
             🎯 Keyword Pages
         </button>
+        <button class="admin-tab" data-tab="blog" onclick="switchTab('blog')">
+            ✍️ Canlı Blog (Supabase)
+        </button>
     </div>
 
     <!-- Tab Panels -->
@@ -71,6 +75,9 @@ import KeywordPagesDashboard from '../components/admin/KeywordPagesDashboard';
     </div>
     <div id="tab-keywords" class="tab-panel">
         <KeywordPagesDashboard client:only="react" />
+    </div>
+    <div id="tab-blog" class="tab-panel">
+        <BlogManager client:only="react" />
     </div>
 
     <script is:inline>

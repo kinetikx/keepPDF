@@ -1,70 +1,144 @@
-﻿---
-export const prerender = true;
+---
+export const prerender = false;
 import BlogPostLayout from '../../../layouts/BlogPostLayout.astro';
-import { getDictionary, locales, languageRegistry } from '../../../i18n/dictionary';
+import { getDictionary, languageRegistry } from '../../../i18n/dictionary';
 import { getCollection, render } from 'astro:content';
 import Navbar from '../../../components/landing/Navbar';
 import CookieBanner from '../../../components/landing/CookieBanner';
+import { supabase } from '../../../lib/supabase';
+import { marked } from 'marked';
 
-export async function getStaticPaths() {
-    const allPosts = await getCollection('blog');
-    const paths = [];
+const { lang, slug } = Astro.params;
+const dict = getDictionary(lang);
 
-    for (const lang of locales) {
-        const langPosts = allPosts.filter(post => post.id.startsWith(`${lang}/`));
-
-        for (const post of langPosts) {
-            const slug = post.id.replace(`${lang}/`, '');
-
-            // Find translations via translationKey
-            let translations = [];
-            if (post.data.translationKey) {
-                const translatedPosts = allPosts.filter(
-                    p => p.data.translationKey === post.data.translationKey && p.id !== post.id
-                );
-                translations = translatedPosts.map(p => {
-                    const tLang = p.id.split('/')[0];
-                    const tSlug = p.id.replace(`${tLang}/`, '');
-                    return { lang: tLang, slug: tSlug };
-                });
-            }
-
-            paths.push({
-                params: { lang, slug },
-                props: { post, translations, allPosts: langPosts }
-            });
-        }
-    }
-
-    return paths;
+// 1. Try fetching from Supabase first
+let dbPost = null;
+try {
+    const { data } = await supabase
+        .from('blog_posts')
+        .select('*')
+        .eq('lang', lang)
+        .eq('slug', slug)
+        .eq('is_published', true)
+        .single();
+    if (data) dbPost = data;
+} catch (e) {
+    console.error('Supabase post fetch error:', e);
 }
 
-const { lang } = Astro.params;
-const { post, translations, allPosts } = Astro.props;
-const dict = getDictionary(lang);
-const { Content } = await render(post);
+// 2. If not found in Supabase, try local markdown content collection
+let localPost = null;
+let ContentComponent = null;
+let htmlContent = '';
+
+if (dbPost) {
+    htmlContent = await marked.parse(dbPost.content || '');
+} else {
+    try {
+        const allPosts = await getCollection('blog');
+        localPost = allPosts.find(p => p.id === `${lang}/${slug}`);
+        if (localPost) {
+            const rendered = await render(localPost);
+            ContentComponent = rendered.Content;
+        }
+    } catch (e) {
+        console.error('Local collection post fetch error:', e);
+    }
+}
+
+// 3. If post does not exist in either, 404
+if (!dbPost && !localPost) {
+    return Astro.redirect(`/${lang}/404`);
+}
+
+// 4. Unified post object
+const post = dbPost ? {
+    id: `${dbPost.lang}/${dbPost.slug}`,
+    data: {
+        title: dbPost.title,
+        description: dbPost.description,
+        date: new Date(dbPost.published_at || dbPost.created_at),
+        author: dbPost.author || 'KeepPDF Team',
+        tags: dbPost.tags || [],
+        image: dbPost.cover_image || null,
+        category: dbPost.category || 'Guides',
+    },
+    body: dbPost.content || ''
+} : localPost;
 
 const bodyText = typeof post.body === 'string' ? post.body : '';
 const readingTime = Math.ceil(bodyText.split(/\s+/).length / 200);
 
-// Related posts (same lang, same category or shared tags, excluding current)
-const relatedPosts = allPosts
-    .filter(p => p.id !== post.id)
-    .filter(p => p.data.category === post.data.category || p.data.tags?.some(t => post.data.tags?.includes(t)))
-    .slice(0, 3);
+// 5. Dynamic Translations & Related Posts
+let translations = [];
+let relatedPosts = [];
+
+if (dbPost) {
+    // Check if there are posts with the same slug or same category in other languages
+    try {
+        const { data: transData } = await supabase
+            .from('blog_posts')
+            .select('lang, slug')
+            .eq('slug', slug)
+            .neq('lang', lang)
+            .eq('is_published', true);
+        if (transData) translations = transData;
+
+        const { data: relData } = await supabase
+            .from('blog_posts')
+            .select('*')
+            .eq('lang', lang)
+            .neq('slug', slug)
+            .eq('is_published', true)
+            .limit(3);
+        if (relData) {
+            relatedPosts = relData.map(p => ({
+                id: `${p.lang}/${p.slug}`,
+                slug: p.slug,
+                data: {
+                    title: p.title,
+                    description: p.description,
+                    category: p.category,
+                    date: new Date(p.published_at || p.created_at)
+                }
+            }));
+        }
+    } catch (e) {}
+} else if (localPost) {
+    try {
+        const allPosts = await getCollection('blog');
+        const langPosts = allPosts.filter(p => p.id.startsWith(`${lang}/`) && p.id !== localPost.id);
+        relatedPosts = langPosts.slice(0, 3).map(p => ({
+            id: p.id,
+            slug: p.id.replace(`${lang}/`, ''),
+            data: p.data
+        }));
+
+        if (localPost.data.translationKey) {
+            const translatedPosts = allPosts.filter(
+                p => p.data.translationKey === localPost.data.translationKey && p.id !== localPost.id
+            );
+            translations = translatedPosts.map(p => {
+                const tLang = p.id.split('/')[0];
+                const tSlug = p.id.replace(`${tLang}/`, '');
+                return { lang: tLang, slug: tSlug };
+            });
+        }
+    } catch (e) {}
+}
 ---
 
 <BlogPostLayout lang={lang} dict={dict} post={post} translations={translations}>
     <Navbar client:load lang={lang} dict={dict} slot="navbar" />
 
     <article class="py-12">
-        <div class="container-custom max-w-3xl mx-auto">
+        <div class="container-custom max-w-3xl mx-auto px-4">
             <!-- Breadcrumb -->
             <nav class="mb-8 text-sm">
                 <ol class="flex items-center gap-2 text-slate-400">
-                    <li><a href={`/${lang}`} class="hover:text-brand-600 transition-colors">KeepPDF</a></li>
+                    <li><a href={`/${lang}`} class="hover:text-indigo-600 transition-colors">KeepPDF</a></li>
                     <li>/</li>
-                    <li><a href={`/${lang}/blog`} class="hover:text-brand-600 transition-colors">{dict.blog.title}</a></li>
+                    <li><a href={`/${lang}/blog`} class="hover:text-indigo-600 transition-colors">{dict?.blog?.title || "Blog"}</a></li>
                     <li>/</li>
                     <li class="text-slate-600 font-medium truncate max-w-[200px]">{post.data.title}</li>
                 </ol>
@@ -74,10 +148,10 @@ const relatedPosts = allPosts
             <header class="mb-10">
                 <div class="flex items-center gap-3 mb-4">
                     <span class="text-xs font-semibold text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-full uppercase tracking-wider">
-                        {dict.blog.categories?.[post.data.category] || post.data.category}
+                        {dict?.blog?.categories?.[post.data.category] || post.data.category}
                     </span>
                     <span class="text-sm text-slate-400">
-                        {readingTime} {dict.blog.minRead}
+                        {readingTime} {dict?.blog?.minRead || "min read"}
                     </span>
                 </div>
 
@@ -90,9 +164,9 @@ const relatedPosts = allPosts
                 </p>
 
                 <div class="flex items-center gap-4 text-sm text-slate-400 pb-6 border-b border-slate-100">
-                    <span>{dict.blog.publishedOn} {post.data.date.toLocaleDateString(lang === 'tr' ? 'tr-TR' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                    <span>{dict?.blog?.publishedOn || "Published on"} {post.data.date.toLocaleDateString(lang === 'tr' ? 'tr-TR' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
                     <span>•</span>
-                    <span>{dict.blog.by} {post.data.author}</span>
+                    <span>{dict?.blog?.by || "by"} {post.data.author}</span>
                 </div>
             </header>
 
@@ -102,31 +176,34 @@ const relatedPosts = allPosts
                         src={post.data.image}
                         alt={post.data.title}
                         class="w-full aspect-video object-cover"
-                        onerror="this.parentElement.style.display='none'"
                     />
                 </div>
             )}
 
-            <!-- Blog Content -->
+            <!-- Blog Content (Markdown or Rendered) -->
             <div class="prose prose-lg prose-slate max-w-none
                 prose-headings:font-bold prose-headings:text-slate-900
                 prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4
                 prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3
                 prose-p:text-slate-600 prose-p:leading-relaxed
-                prose-a:text-brand-600 prose-a:no-underline hover:prose-a:underline
+                prose-a:text-indigo-600 prose-a:no-underline hover:prose-a:underline
                 prose-strong:text-slate-800
                 prose-li:text-slate-600
                 prose-code:text-indigo-600 prose-code:bg-indigo-50 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded
-                prose-blockquote:border-l-brand-500 prose-blockquote:bg-slate-50 prose-blockquote:py-1 prose-blockquote:px-6 prose-blockquote:rounded-r-lg
+                prose-blockquote:border-l-indigo-500 prose-blockquote:bg-slate-50 prose-blockquote:py-1 prose-blockquote:px-6 prose-blockquote:rounded-r-lg
                 prose-table:border prose-table:border-slate-200 prose-th:bg-slate-50 prose-td:border prose-td:border-slate-200 prose-th:border prose-th:border-slate-200 prose-th:px-4 prose-th:py-2 prose-td:px-4 prose-td:py-2
             ">
-                <Content />
+                {ContentComponent ? (
+                    <ContentComponent />
+                ) : (
+                    <div set:html={htmlContent} />
+                )}
             </div>
 
             <!-- Tags -->
             {post.data.tags && post.data.tags.length > 0 && (
                 <div class="mt-10 pt-6 border-t border-slate-100">
-                    <span class="text-sm font-semibold text-slate-500 mr-2">{dict.blog.tags}:</span>
+                    <span class="text-sm font-semibold text-slate-500 mr-2">{dict?.blog?.tags || "Tags"}:</span>
                     <div class="inline-flex flex-wrap gap-2 mt-2">
                         {post.data.tags.map(tag => (
                             <span class="text-xs bg-slate-100 text-slate-600 px-3 py-1.5 rounded-full font-medium">
@@ -141,9 +218,9 @@ const relatedPosts = allPosts
             {translations && translations.length > 0 && (
                 <div class="mt-6 p-4 bg-indigo-50/50 rounded-xl border border-indigo-100">
                     <span class="text-sm text-indigo-600 font-medium">
-                        🌐 {dict.blog.translationAvailable || 'This post is also available in:'}
+                        🌐 {dict?.blog?.translationAvailable || 'This post is also available in:'}
                     </span>
-                    <div class="flex gap-3 mt-2">
+                    <div class="flex flex-wrap gap-3 mt-2">
                         {translations.map(t => (
                             <a
                                 href={`/${t.lang}/blog/${t.slug}`}
@@ -160,45 +237,42 @@ const relatedPosts = allPosts
             <div class="mt-10">
                 <a
                     href={`/${lang}/blog`}
-                    class="inline-flex items-center gap-2 text-sm font-semibold text-brand-600 hover:text-brand-700 transition-colors"
+                    class="inline-flex items-center gap-2 text-sm font-semibold text-indigo-600 hover:text-indigo-800 transition-colors"
                 >
-                    {dict.blog.backToBlog}
+                    {dict?.blog?.backToBlog || "← Back to Blog"}
                 </a>
             </div>
+
+            <!-- Related Posts -->
+            {relatedPosts && relatedPosts.length > 0 && (
+                <section class="mt-16 pt-10 border-t border-slate-200">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-6">
+                        {dict?.blog?.relatedPosts || "Related Posts"}
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        {relatedPosts.map(rp => (
+                            <a
+                                href={`/${lang}/blog/${rp.slug}`}
+                                class="group p-5 rounded-xl border border-slate-200 hover:border-indigo-300 hover:shadow-md transition-all flex flex-col justify-between"
+                            >
+                                <div>
+                                    <span class="text-xs text-indigo-600 font-semibold uppercase">
+                                        {rp.data.category}
+                                    </span>
+                                    <h3 class="text-base font-bold text-slate-900 mt-2 group-hover:text-indigo-600 transition-colors line-clamp-2">
+                                        {rp.data.title}
+                                    </h3>
+                                </div>
+                                <span class="text-xs text-slate-400 mt-4 block">
+                                    {rp.data.date?.toLocaleDateString?.(lang === 'tr' ? 'tr-TR' : 'en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
+                                </span>
+                            </a>
+                        ))}
+                    </div>
+                </section>
+            )}
         </div>
     </article>
-
-    <!-- Related Posts -->
-    {relatedPosts.length > 0 && (
-        <section class="py-16 bg-slate-50">
-            <div class="container-custom max-w-5xl mx-auto">
-                <h2 class="text-2xl font-bold text-slate-900 mb-8">{dict.blog.relatedPosts}</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {relatedPosts.map(rp => {
-                        const rpSlug = rp.id.replace(`${lang}/`, '');
-                        const rpReadingTime = Math.ceil((typeof rp.body === 'string' ? rp.body : '').split(/\s+/).length / 200);
-                        return (
-                            <a
-                                href={`/${lang}/blog/${rpSlug}`}
-                                class="group bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300"
-                            >
-                                <span class="text-xs font-semibold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full">
-                                    {dict.blog.categories?.[rp.data.category] || rp.data.category}
-                                </span>
-                                <h3 class="text-base font-bold text-slate-900 mt-3 mb-2 group-hover:text-brand-600 transition-colors line-clamp-2">
-                                    {rp.data.title}
-                                </h3>
-                                <p class="text-sm text-slate-500 line-clamp-2">{rp.data.description}</p>
-                                <div class="mt-3 text-xs text-slate-400">
-                                    {rpReadingTime} {dict.blog.minRead}
-                                </div>
-                            </a>
-                        );
-                    })}
-                </div>
-            </div>
-        </section>
-    )}
 
     <CookieBanner client:idle dict={dict} slot="cookie-banner" />
 </BlogPostLayout>
