@@ -1,0 +1,307 @@
+---
+export const prerender = true;
+import Layout from '../../layouts/Layout.astro';
+import { getDictionary } from '../../i18n/dictionary';
+import Navbar from '../../components/landing/Navbar';
+import CookieBanner from '../../components/landing/CookieBanner';
+import CompressClient from '../../components/tools/CompressClient';
+
+const lang = 'pt';
+const dict = getDictionary(lang);
+
+const seoTitle = "Comprimir PDF para 1MB Online Grátis — Gov.br, PJe Tribunais e Concursos | KeepPDF";
+const seoDescription = "Comprima PDF para menos de 1MB online grátis sem perder nitidez. Ideal para Gov.br, petições do PJe (Tribunais) e concursos públicos. 100% privado no navegador.";
+
+const howToSchema = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "Como Comprimir PDF para Menos de 1MB para Gov.br e PJe",
+    "description": "Guia passo a passo para reduzir o tamanho de documentos PDF abaixo de 1MB mantendo a nitidez de assinaturas e carimbos para portais governamentais.",
+    "step": [
+        {
+            "@type": "HowToStep",
+            "position": 1,
+            "name": "Selecione seu Arquivo PDF",
+            "text": "Clique no botão de seleção ou arraste sua petição, diploma, laudo ou comprovante para a área de upload."
+        },
+        {
+            "@type": "HowToStep",
+            "position": 2,
+            "name": "Escolha o Alvo '< 1 MB'",
+            "text": "Clique no botão de preset '< 1 MB (PJe & Tribunais)' para acionar o cálculo automático de orçamento de bytes."
+        },
+        {
+            "@type": "HowToStep",
+            "position": 3,
+            "name": "Baixe seu PDF Otimizado",
+            "text": "Clique em 'Comprimir PDF Agora' e baixe instantaneamente seu documento pronto e validado para upload em portais oficiais."
+        }
+    ]
+};
+
+const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "Por que o Gov.br e o sistema PJe dos tribunais impõem limites de 1MB a 3MB?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Os servidores do Poder Judiciário (PJe, Projudi, e-SAJ) e os portais federais do Gov.br gerenciam milhões de petições e documentos por dia. O teto rígido de 1MB a 3MB evita sobrecarga nos bancos de dados públicos e garante que juízes, analistas e servidores acessem as peças processuais rapidamente sem lentidão na rede."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "A compressão vai borrar a assinatura digital ou o carimbo do cartório?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Não com o KeepPDF. Diferente de conversores genéricos que pixelizam o documento inteiro, o KeepPDF preserva o alto contraste de assinaturas com caneta, selos de autenticação cartorária, códigos de barras e assinaturas digitais, comprimindo agressivamente apenas os ruídos de fundo do papel escaneado."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "É seguro comprimir declaração do Imposto de Renda (IRPF) e contracheques no KeepPDF?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Sim, em total conformidade com a LGPD. O KeepPDF não faz upload de nenhum arquivo para a internet. Todo o processamento matemático acontece localmente na memória RAM do seu navegador por meio de WebAssembly. Seus dados fiscais e pessoais nunca saem do seu computador."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "O que fazer se o PJe apontar que o arquivo ultrapassou 1,5 MB?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Utilize nosso preset '< 1 MB'. O KeepPDF calcula uma margem de segurança de aproximadamente 900 KB a 950 KB, garantindo que o arquivo final seja aceito imediatamente em qualquer tribunal (TRF, TJ, TRT, STJ) sem erros de validação de tamanho."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Como comprimir documentos com muitas páginas para caber em 1MB?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Para arquivos multipáginas (como laudos periciais ou contratos longos), o KeepPDF distribui proporcionalmente o limite de bytes entre as páginas. Se o arquivo tiver mais de 20 páginas escaneadas em altíssima resolução, recomendamos utilizar o modo de compressão forte em escala de cinza."
+            }
+        }
+    ]
+};
+---
+
+<Layout lang={lang} dict={dict} title={seoTitle} description={seoDescription} canonical="https://keep-pdf.online/pt/comprimir-pdf-1mb-gov-br">
+    <Navbar client:load lang={lang} dict={dict} slot="navbar" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden pt-24 pb-16" style="background: linear-gradient(135deg, #062b19 0%, #064e3b 50%, #047857 100%);">
+        <div class="absolute inset-0 opacity-15">
+            <div class="absolute top-10 left-1/4 w-80 h-80 bg-emerald-400 rounded-full filter blur-3xl animate-pulse"></div>
+            <div class="absolute bottom-10 right-1/4 w-96 h-96 bg-teal-300 rounded-full filter blur-3xl animate-pulse" style="animation-delay: 1.5s;"></div>
+        </div>
+        <div class="container-custom max-w-4xl mx-auto relative z-10 text-center px-4">
+            <span class="inline-flex items-center gap-2 bg-emerald-400/10 border border-emerald-300/30 text-emerald-200 text-xs md:text-sm font-semibold px-4 py-2 rounded-full mb-6 backdrop-blur-md">
+                🇧🇷 Padrão Oficial Gov.br e Tribunais — 100% no Navegador (LGPD)
+            </span>
+            <h1 class="text-3xl md:text-5xl lg:text-6xl font-black text-white leading-tight mb-4 tracking-tight">
+                Comprimir PDF para 1MB Online
+                <span class="block text-transparent bg-clip-text bg-gradient-to-r from-emerald-200 via-teal-200 to-cyan-200 text-xl md:text-3xl font-bold mt-2">
+                    Especial para Gov.br, PJe Tribunais e Concursos Públicos
+                </span>
+            </h1>
+            <p class="text-emerald-100 text-base md:text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
+                Diminua o tamanho de petições, diplomas, certidões e comprovantes para menos de 1 MB com rapidez. Textos nítidos, carimbos legíveis, sem marcas d'água e com sigilo total.
+            </p>
+
+            <div class="flex flex-wrap justify-center gap-3 text-xs md:text-sm font-medium text-emerald-100">
+                <span class="bg-white/10 backdrop-blur-sm px-3.5 py-1.5 rounded-lg border border-white/10 flex items-center gap-1.5">
+                    <span class="text-emerald-300 font-bold">✓</span> Compatível com Gov.br
+                </span>
+                <span class="bg-white/10 backdrop-blur-sm px-3.5 py-1.5 rounded-lg border border-white/10 flex items-center gap-1.5">
+                    <span class="text-emerald-300 font-bold">✓</span> Aceito no PJe / e-SAJ / Projudi
+                </span>
+                <span class="bg-white/10 backdrop-blur-sm px-3.5 py-1.5 rounded-lg border border-white/10 flex items-center gap-1.5">
+                    <span class="text-emerald-300 font-bold">✓</span> Bancas Cebraspe, FGV e Vunesp
+                </span>
+                <span class="bg-white/10 backdrop-blur-sm px-3.5 py-1.5 rounded-lg border border-white/10 flex items-center gap-1.5">
+                    <span class="text-emerald-300 font-bold">✓</span> Sem Envio para Servidor (Privado)
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Compressor Tool Section -->
+    <section class="py-12 bg-slate-50 border-b border-slate-200">
+        <div class="container-custom max-w-4xl mx-auto px-4">
+            <div class="bg-white p-6 md:p-8 rounded-3xl shadow-xl border border-slate-100">
+                <div class="mb-6 text-center">
+                    <span class="text-xs uppercase font-extrabold tracking-wider text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
+                        Otimizador Ativo: Menos de 1 MB
+                    </span>
+                    <h2 class="text-2xl font-bold text-slate-900 mt-2">Comprima seu Documento PDF Agora</h2>
+                    <p class="text-sm text-slate-500">Selecione seu arquivo, clique no preset <strong>&lt; 1 MB</strong> e faça o download imediato.</p>
+                </div>
+                <CompressClient client:load dict={dict} lang="pt" />
+            </div>
+        </div>
+    </section>
+
+    <!-- Comprehensive 500+ Word Guide Section -->
+    <article class="py-16 bg-white">
+        <div class="container-custom max-w-4xl mx-auto px-4 prose prose-slate max-w-none">
+            
+            <div class="border-l-4 border-emerald-600 pl-6 mb-12">
+                <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 mb-2">
+                    A Trava de Upload nos Portais Governamentais e Tribunais Brasileiros
+                </h2>
+                <p class="text-slate-600 leading-relaxed">
+                    Quem já precisou protocolar uma petição inicial no <strong>PJe (Processo Judicial Eletrônico)</strong>, enviar documentos no portal <strong>Gov.br</strong>, comprovar renda para o <strong>SISU/Prouni</strong> ou anexar títulos em concursos públicos das bancas <strong>Cebraspe, FGV ou Vunesp</strong> certamente já se deparou com a clássica mensagem de erro: <em>"O arquivo selecionado excede o tamanho limite permitido de 1,0 MB"</em>.
+                </p>
+            </div>
+
+            <p class="text-slate-700 leading-relaxed mb-6">
+                No Brasil, a infraestrutura de tecnologia dos órgãos públicos lida diariamente com gigabytes de dados protocolados por milhões de cidadãos e advogados. Para evitar lentidão estrutural nos bancos de dados da Receita Federal, Ministério da Educação e tribunais de justiça estaduais e federais (como TJSP, TJRJ, TRF1 a TRF6, TRT e STJ), são estabelecidas travas rígidas de tamanho de arquivo. Se o seu PDF tiver apenas 1,02 MB, o sistema do tribunal simplesmente aborta a transmissão.
+            </p>
+
+            <h3 class="text-xl font-bold text-slate-900 mt-8 mb-4">
+                Tabela de Limites Oficiais de Upload no Brasil
+            </h3>
+            <div class="overflow-x-auto my-6">
+                <table class="w-full text-left border-collapse border border-slate-200 rounded-xl overflow-hidden text-sm">
+                    <thead>
+                        <tr class="bg-slate-100 text-slate-900 font-semibold">
+                            <th class="p-3 border border-slate-200">Órgão / Sistema</th>
+                            <th class="p-3 border border-slate-200">Tipo de Documento</th>
+                            <th class="p-3 border border-slate-200">Tamanho Máximo Permitido</th>
+                            <th class="p-3 border border-slate-200">Exigência Principal</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-slate-600">
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 border border-slate-200 font-medium text-slate-900">PJe / Tribunais de Justiça (TRF, TJ, TRT)</td>
+                            <td class="p-3 border border-slate-200">Petições, procurações, laudos periciais</td>
+                            <td class="p-3 border border-slate-200 text-emerald-700 font-bold">1,5 MB a 3 MB (ou 1 MB por anexo)</td>
+                            <td class="p-3 border border-slate-200">Padrão PDF/A, sem senha, texto legível</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 border border-slate-200 font-medium text-slate-900">Portal Gov.br / INSS / Meu INSS</td>
+                            <td class="p-3 border border-slate-200">Atestados médicos, certidões de tempo de serviço</td>
+                            <td class="p-3 border border-slate-200 text-emerald-700 font-bold">&le; 1 MB a 2 MB por documento</td>
+                            <td class="p-3 border border-slate-200">Carimbo e CRM do médico visíveis</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 border border-slate-200 font-medium text-slate-900">Concursos Públicos (Cebraspe, FGV, Vunesp)</td>
+                            <td class="p-3 border border-slate-200">Diplomas, títulos de pós, laudos de cota PcD</td>
+                            <td class="p-3 border border-slate-200 text-emerald-700 font-bold">&le; 1 MB ou 2 MB</td>
+                            <td class="p-3 border border-slate-200">Frente e verso nítidos, autenticação digital visível</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 border border-slate-200 font-medium text-slate-900">MEC / SISU / Prouni / FIES</td>
+                            <td class="p-3 border border-slate-200">Comprovantes de renda familiar, IRPF, CTPS</td>
+                            <td class="p-3 border border-slate-200 text-emerald-700 font-bold">&le; 1 MB a 2 MB por arquivo</td>
+                            <td class="p-3 border border-slate-200">Valores de salário e assinaturas legíveis</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 border border-slate-200 font-medium text-slate-900">Receita Federal (e-CAC)</td>
+                            <td class="p-3 border border-slate-200">Dossiê de atendimento, impugnações fiscais</td>
+                            <td class="p-3 border border-slate-200 text-emerald-700 font-bold">&le; 5 MB a 15 MB (Geral) / 1 MB individual</td>
+                            <td class="p-3 border border-slate-200">Resolução entre 150 e 200 DPI em escala de cinza</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="text-xl font-bold text-slate-900 mt-8 mb-4">
+                Por que Arquivos Digitalizados Ficam Tão Pesados?
+            </h3>
+            <p class="text-slate-700 leading-relaxed mb-4">
+                Ao digitalizar uma certidão de casamento, histórico escolar ou contrato em scanners multifuncionais de cartórios e escritórios de advocacia, o equipamento costuma vir configurado de fábrica para 300 ou 600 DPI colorido (24-bit TrueColor). Uma única folha A4 escaneada nessas configurações gera uma imagem bruta de mais de <strong>20 megabytes</strong> na memória, resultando em um PDF de 8 MB a 15 MB para meras 3 páginas!
+            </p>
+            <p class="text-slate-700 leading-relaxed mb-4">
+                Ferramentas online amadoras tentam reduzir o peso diminuindo brutalmente a resolução global para 50 DPI. O resultado é desastroso: o número da OAB do advogado fica ilegível, o código do processo fica borrado e a petição é devolvida pelo juiz ou cartório judicial com determinação de emenda.
+            </p>
+            <p class="text-slate-700 leading-relaxed mb-4">
+                <strong>O KeepPDF adota uma arquitetura de compressão inteligente de duas vias:</strong>
+            </p>
+            <ul class="list-disc pl-6 space-y-2 text-slate-700 mb-6">
+                <li><strong>Preservação de Bordas de Alto Contraste:</strong> O algoritmo diferencia texto preto e carimbos de tinta azul do papel de fundo. O fundo branco/cinza é comprimido ao máximo, enquanto os contornos das letras e assinaturas mantêm nitidez de leitura.</li>
+                <li><strong>Purga de Metadados e Perfis ICC:</strong> Softwares de scanner costumam embutir perfis de cor pesados e dados do fabricante da máquina. O KeepPDF elimina todo o peso invisível desnecessário sem tocar na integridade do documento.</li>
+                <li><strong>Cálculo Dinâmico de Orçamento de Bytes:</strong> Ao escolher o preset <code>&lt; 1 MB</code>, nosso sistema calcula um teto de segurança em torno de 900 KB a 950 KB, garantindo que o PDF gerado jamais estoure os 1.048.576 bytes do limite rígido dos servidores.</li>
+            </ul>
+
+            <div class="bg-emerald-50 border-l-4 border-emerald-600 p-5 rounded-r-2xl my-8">
+                <h4 class="text-emerald-950 font-bold text-base mb-1">⚖️ Conformidade Total com a LGPD (Lei Geral de Proteção de Dados)</h4>
+                <p class="text-emerald-800 text-sm leading-relaxed">
+                    Petições judiciais, laudos médicos, declarações de Imposto de Renda e cópias de RG/CPF contêm dados pessoais altamente protegidos pela <strong>Lei nº 13.709/2018 (LGPD)</strong>. Enviar esses arquivos para serviços tradicionais de PDF em nuvem expõe clientes e candidatos a riscos graves de vazamento e quebra de sigilo profissional. No KeepPDF, todo o processo ocorre <strong>100% dentro da memória do seu próprio navegador</strong> via WebAssembly — nenhum arquivo é transferido para a internet.
+                </p>
+            </div>
+
+            <h3 class="text-xl font-bold text-slate-900 mt-8 mb-4">
+                Como Resolver os Principais Erros de Envio no PJe e Gov.br
+            </h3>
+            <div class="space-y-4 my-6">
+                <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+                    <h5 class="font-bold text-slate-900 text-sm mb-1">❌ Erro: "Arquivo excede o limite máximo de 1,5 MB ou 1 MB"</h5>
+                    <p class="text-slate-600 text-sm">
+                        Selecione o preset <code>&lt; 1 MB</code> no KeepPDF. Ele força o tamanho para a faixa de 900 KB, passando com folga em qualquer tribunal estadual ou federal.
+                    </p>
+                </div>
+                <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+                    <h5 class="font-bold text-slate-900 text-sm mb-1">❌ Erro: "Documento protegido por senha ou criptografia inválida"</h5>
+                    <p class="text-slate-600 text-sm">
+                        Comprovantes bancários e faturas de cartão de crédito frequentemente possuem senha (como os primeiros dígitos do CPF). Remova a senha antes de anexar ao PJe ou Gov.br, pois os sistemas de protocolo automático não aceitam arquivos criptografados.
+                    </p>
+                </div>
+                <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+                    <h5 class="font-bold text-slate-900 text-sm mb-1">❌ Erro: "Documentos digitalizados em arquivos separados"</h5>
+                    <p class="text-slate-600 text-sm">
+                        Se a banca de concurso ou tribunal exige envio de documento único para diploma frente e verso mais histórico escolar, use nossa ferramenta <a href="/pt/juntar-pdf-gratis" class="text-emerald-700 font-semibold underline">Juntar PDF Grátis</a> e depois comprima o arquivo final.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Internal Linking Section -->
+            <div class="mt-12 p-6 rounded-2xl bg-emerald-50/50 border border-emerald-100">
+                <h4 class="font-bold text-slate-900 mb-3 text-base">Ferramentas de PDF Recomendadas para Concursos e Advocacia:</h4>
+                <div class="flex flex-wrap gap-3">
+                    <a href="/pt/juntar-pdf-gratis" class="inline-flex items-center gap-1.5 text-xs md:text-sm font-semibold text-emerald-800 bg-white px-3.5 py-2 rounded-xl border border-emerald-200 hover:border-emerald-400 hover:shadow-sm transition-all">
+                        🔗 Juntar Petições &amp; Documentos &rarr;
+                    </a>
+                    <a href="/pt/split" class="inline-flex items-center gap-1.5 text-xs md:text-sm font-semibold text-emerald-800 bg-white px-3.5 py-2 rounded-xl border border-emerald-200 hover:border-emerald-400 hover:shadow-sm transition-all">
+                        ✂️ Dividir Páginas de Autos Processuais &rarr;
+                    </a>
+                    <a href="/pt/pricing" class="inline-flex items-center gap-1.5 text-xs md:text-sm font-semibold text-emerald-800 bg-white px-3.5 py-2 rounded-xl border border-emerald-200 hover:border-emerald-400 hover:shadow-sm transition-all">
+                        💳 100% Gratuito Sem Assinatura Mensal &rarr;
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </article>
+
+    <!-- FAQ Section -->
+    <section class="py-16 bg-slate-50 border-t border-slate-200">
+        <div class="container-custom max-w-3xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <span class="text-xs uppercase font-extrabold tracking-wider text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
+                    Dúvidas Frequentes
+                </span>
+                <h2 class="text-2xl md:text-3xl font-black text-slate-900 mt-2">
+                    Perguntas Frequentes sobre Compressão para 1MB
+                </h2>
+                <p class="text-slate-500 text-sm mt-1">Esclarecimentos práticos para advogados, concurseiros e cidadãos</p>
+            </div>
+
+            <div class="space-y-4">
+                {faqSchema.mainEntity.map((item) => (
+                    <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                        <h3 class="font-bold text-slate-900 text-base mb-2">{item.name}</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">{item.acceptedAnswer.text}</p>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    <CookieBanner client:idle dict={dict} slot="cookie-banner" />
+</Layout>

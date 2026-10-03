@@ -1,0 +1,265 @@
+---
+export const prerender = true;
+import Layout from '../../layouts/Layout.astro';
+import { getDictionary } from '../../i18n/dictionary';
+import Navbar from '../../components/landing/Navbar';
+import CookieBanner from '../../components/landing/CookieBanner';
+import MergeClient from '../../components/tools/MergeClient';
+
+const lang = 'pt';
+const dict = getDictionary(lang);
+
+const seoTitle = "Juntar PDF Grátis Online — Unir Documentos para Concursos e Processos | KeepPDF";
+const seoDescription = "Junte vários arquivos PDF em um único documento online e grátis. Ideal para organizar certidões de concursos públicos, petições do PJe e contratos. 100% privado no navegador.";
+
+const howToSchema = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "Como Juntar Múltiplos Arquivos PDF em Um Só Documento",
+    "description": "Instruções fáceis para combinar certidões, diplomas, contratos e petições em um único arquivo PDF sem enviar dados para a nuvem.",
+    "step": [
+        {
+            "@type": "HowToStep",
+            "position": 1,
+            "name": "Selecione seus Arquivos PDF",
+            "text": "Arraste seus documentos PDF ou clique no botão de seleção para adicionar quantas páginas precisar."
+        },
+        {
+            "@type": "HowToStep",
+            "position": 2,
+            "name": "Organize a Ordem dos Documentos",
+            "text": "Arraste os cartões dos arquivos para a esquerda ou direita para definir a sequência perfeita exigida pelo edital ou tribunal."
+        },
+        {
+            "@type": "HowToStep",
+            "position": 3,
+            "name": "Una e Baixe seu Arquivo",
+            "text": "Clique no botão 'Juntar PDFs' e baixe seu documento compilado em menos de 2 segundos."
+        }
+    ]
+};
+
+const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "Como juntar diploma e histórico escolar em um único arquivo PDF?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Basta selecionar o arquivo escaneado do diploma e o do histórico escolar no KeepPDF. Na tela de organização, posicione o diploma na primeira posição e o histórico logo em seguida. Clique em 'Juntar PDFs' para baixar o documento unificado."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Existe limite na quantidade de PDFs que posso juntar?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Não há limites no KeepPDF. Você pode combinar 2, 10 ou mais de 30 arquivos PDF de uma só vez, de forma totalmente gratuita e sem marcas d'água."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "O KeepPDF armazena meus documentos na nuvem?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Não. Diferente de outros serviços web, o KeepPDF executa toda a fusão de arquivos localmente na memória RAM do seu navegador por meio de tecnologia WebAssembly. Nenhum dado ou documento é transmitido para servidores externos, garantindo total conformidade com a LGPD."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "O que fazer se o PDF resultante ficar maior do que o limite do portal?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Após a junção, você pode usar imediatamente nossa ferramenta 'Comprimir PDF' para reduzir o tamanho do arquivo combinado para menos de 1MB, 2MB ou 5MB, de acordo com o limite exigido pelo tribunal ou banca organizadora."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Posso juntar páginas em formato retrato (em pé) com paisagem (deitado)?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Sim. O KeepPDF preserva a orientação e as dimensões originais de cada página individualmente, evitando que tabelas ou diplomas deitados fiquem deformados ou cortados."
+            }
+        }
+    ]
+};
+---
+
+<Layout lang={lang} dict={dict} title={seoTitle} description={seoDescription} canonical="https://keep-pdf.online/pt/juntar-pdf-gratis">
+    <Navbar client:load lang={lang} dict={dict} slot="navbar" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden pt-24 pb-16" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #064e3b 100%);">
+        <div class="absolute inset-0 opacity-15">
+            <div class="absolute top-10 left-1/3 w-80 h-80 bg-teal-500 rounded-full filter blur-3xl animate-pulse"></div>
+            <div class="absolute bottom-10 right-1/4 w-96 h-96 bg-emerald-400 rounded-full filter blur-3xl animate-pulse" style="animation-delay: 1.5s;"></div>
+        </div>
+        <div class="container-custom max-w-4xl mx-auto relative z-10 text-center px-4">
+            <span class="inline-flex items-center gap-2 bg-emerald-400/10 border border-emerald-300/30 text-emerald-200 text-xs md:text-sm font-semibold px-4 py-2 rounded-full mb-6 backdrop-blur-md">
+                ⚡ Rápido, Organizado e 100% no seu Navegador
+            </span>
+            <h1 class="text-3xl md:text-5xl lg:text-6xl font-black text-white leading-tight mb-4 tracking-tight">
+                Juntar PDF Grátis Online
+                <span class="block text-transparent bg-clip-text bg-gradient-to-r from-emerald-200 via-teal-200 to-cyan-200 text-xl md:text-3xl font-bold mt-2">
+                    Unir Documentos para Concursos, PJe e Empresas
+                </span>
+            </h1>
+            <p class="text-slate-300 text-base md:text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
+                Combine múltiplos arquivos PDF avulsos em um único documento oficial limpo e sequencial. Perfeito para dossiês jurídicos, posse em concursos públicos e processos seletivos.
+            </p>
+
+            <div class="flex flex-wrap justify-center gap-3 text-xs md:text-sm font-medium text-slate-200">
+                <span class="bg-white/10 backdrop-blur-sm px-3.5 py-1.5 rounded-lg border border-white/10 flex items-center gap-1.5">
+                    <span class="text-emerald-400 font-bold">✓</span> Reordene com Arrastar e Soltar
+                </span>
+                <span class="bg-white/10 backdrop-blur-sm px-3.5 py-1.5 rounded-lg border border-white/10 flex items-center gap-1.5">
+                    <span class="text-emerald-400 font-bold">✓</span> Sem Limite de Páginas ou Arquivos
+                </span>
+                <span class="bg-white/10 backdrop-blur-sm px-3.5 py-1.5 rounded-lg border border-white/10 flex items-center gap-1.5">
+                    <span class="text-emerald-400 font-bold">✓</span> Sem Marcas d'Água
+                </span>
+                <span class="bg-white/10 backdrop-blur-sm px-3.5 py-1.5 rounded-lg border border-white/10 flex items-center gap-1.5">
+                    <span class="text-emerald-400 font-bold">✓</span> Totalmente em Conformidade com a LGPD
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Merge Tool Section -->
+    <section class="py-12 bg-slate-50 border-b border-slate-200">
+        <div class="container-custom max-w-4xl mx-auto px-4">
+            <div class="bg-white p-6 md:p-8 rounded-3xl shadow-xl border border-slate-100">
+                <MergeClient client:load dict={dict} />
+            </div>
+        </div>
+    </section>
+
+    <!-- Comprehensive 500+ Word Guide Section -->
+    <article class="py-16 bg-white">
+        <div class="container-custom max-w-4xl mx-auto px-4 prose prose-slate max-w-none">
+            
+            <div class="border-l-4 border-emerald-600 pl-6 mb-12">
+                <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 mb-2">
+                    A Importância do Arquivo Único em Editais e Processos Oficiais
+                </h2>
+                <p class="text-slate-600 leading-relaxed">
+                    Em praticamente todos os grandes processos seletivos do Brasil — seja na fase de investigação social ou entrega de títulos de <strong>concursos públicos (Cebraspe, FGV, FCC, Vunesp)</strong>, na contratação em empresas privadas ou no protocolo de ações no <strong>PJe da Justiça Estadual e Federal</strong> —, as comissões examinadoras e secretarias judiciais determinam a exigência de <strong>"Arquivo Único Consolidado em formato PDF"</strong>.
+                </p>
+            </div>
+
+            <p class="text-slate-700 leading-relaxed mb-6">
+                Anexar dezenas de comprovantes avulsos em formatos variados gera reprovação de bancas e pedidos de emenda por juízes. As bancas de concurso frequentemente estabelecem em edital: <em>"Documentos enviados de forma fracionada ou fora da ordem estipulada no edital não serão analisados pela banca avaliadora"</em>. Por essa razão, saber compilar e ordenar seus arquivos PDF corretamente é uma etapa eliminatória crucial.
+            </p>
+
+            <h3 class="text-xl font-bold text-slate-900 mt-8 mb-4">
+                Sequência Recomendada para Dossiês de Posse em Concursos Públicos
+            </h3>
+            <p class="text-slate-700 leading-relaxed mb-4">
+                Para evitar indeferimento de matrícula ou posse no serviço público federal, estadual ou municipal, adote a ordem padrão aceita pelos departamentos de Recursos Humanos (DGP/PROGEP):
+            </p>
+            <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 my-6">
+                <ol class="list-decimal pl-5 space-y-3 text-slate-700 text-sm leading-relaxed">
+                    <li><strong>Documento de Identidade com Foto e CPF:</strong> CNH Digital ou RG frente e verso recente.</li>
+                    <li><strong>Título de Eleitor e Certidão de Quitação Eleitoral:</strong> Emitida no portal do Tribunal Superior Eleitoral (TSE).</li>
+                    <li><strong>Certificado de Reservista ou Dispensa de Incorporação:</strong> Para candidatos do sexo masculino.</li>
+                    <li><strong>Diploma de Graduação e Histórico Escolar Completo:</strong> Com reconhecimento formal do MEC.</li>
+                    <li><strong>Certidões Negativas Cíveis e Criminais:</strong> Da Justiça Estadual, Justiça Federal e Justiça Militar.</li>
+                    <li><strong>Comprovante de Residência Atualizado:</strong> Conta de água, luz ou gás dos últimos 60 dias.</li>
+                    <li><strong>Declaração de Não Acumulação de Cargos e Bens (IRPF):</strong> Cópia da última declaração entregue à Receita Federal.</li>
+                </ol>
+            </div>
+
+            <h3 class="text-xl font-bold text-slate-900 mt-8 mb-4">
+                Vantagens Técnicas da Fusão com o KeepPDF
+            </h3>
+            <p class="text-slate-700 leading-relaxed mb-4">
+                Muitos usuários recorrem ao improviso: colam imagens escaneadas no Microsoft Word e tentam exportar como PDF. Esse método cria problemas graves: comprime fontes em imagens de baixa qualidade, corta margens de certidões em formato ofício e gera documentos inchados com dezenas de megabytes.
+            </p>
+            <p class="text-slate-700 leading-relaxed mb-4">
+                O motor de junção do KeepPDF atua diretamente nos fluxos de dados internos do PDF (Low-Level Stream Concatenation):
+            </p>
+            <ul class="list-disc pl-6 space-y-2 text-slate-700 mb-6">
+                <li><strong>Preservação Integral de Vetores e Fontes:</strong> O texto pesquisável não é transformado em imagem. Você continua conseguindo usar <code>Ctrl + F</code> para encontrar palavras-chave dentro do documento final unificado.</li>
+                <li><strong>Respeito à Orientação de Cada Folha:</strong> Se o seu diploma for horizontal (paisagem) e o histórico escolar for vertical (retrato), ambas as folhas mantêm suas dimensões individuais perfeitas.</li>
+                <li><strong>Interface Visual de Arrastar e Soltar:</strong> Visualize miniaturas de cada arquivo, reposicione blocos inteiros com o mouse ou o dedo no celular, e adicione novos PDFs a qualquer instante.</li>
+                <li><strong>Velocidade sem Depender da Conexão:</strong> Como não há upload de arquivos pesados para a nuvem, a compilação de 15 documentos leva meros segundos.</li>
+            </ul>
+
+            <h3 class="text-xl font-bold text-slate-900 mt-8 mb-4">
+                Segurança Jurídica e Proteção Total de Dados (LGPD)
+            </h3>
+            <p class="text-slate-700 leading-relaxed mb-4">
+                Dossiês de concursos e peças judiciais contêm dados ultrassensíveis protegidos pela Lei Geral de Proteção de Dados (Lei nº 13.709/2018): certidões de antecedentes criminais, dados patrimoniais do IRPF, diagnósticos médicos de laudos periciais e assinaturas de autoridades.
+            </p>
+            <p class="text-slate-700 leading-relaxed mb-6">
+                Ao utilizar conversores tradicionais gratuitos, seus dados sigilosos são enviados para servidores espalhados pelo mundo, sujeitos a vazamentos e mineração de dados. <strong>No KeepPDF, seus arquivos nunca saem da sua máquina.</strong> Nossa tecnologia utiliza WebAssembly diretamente no seu navegador Chrome, Edge, Firefox ou Safari. O documento é processado na memória RAM local e nada é enviado pela rede.
+            </p>
+
+            <h3 class="text-xl font-bold text-slate-900 mt-8 mb-4">
+                Recomendações Finais Antes do Upload
+            </h3>
+            <div class="space-y-4 my-6">
+                <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+                    <h5 class="font-bold text-slate-900 text-sm mb-1">1. Verifique o Tamanho Total do Arquivo Unificado</h5>
+                    <p class="text-slate-600 text-sm">
+                        Se o arquivo final ultrapassar o limite estipulado pelo PJe (geralmente 1.5MB a 3MB) ou Gov.br (1MB a 2MB), passe o documento pela nossa ferramenta <a href="/pt/comprimir-pdf-1mb-gov-br" class="text-emerald-700 font-semibold underline">Comprimir PDF</a> para ajustá-lo instantaneamente.
+                    </p>
+                </div>
+                <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+                    <h5 class="font-bold text-slate-900 text-sm mb-1">2. Confira a Orientação de Todas as Páginas</h5>
+                    <p class="text-slate-600 text-sm">
+                        Abra o arquivo gerado e verifique se nenhuma certidão ficou de cabeça para baixo. Se precisar corrigir uma folha específica, utilize a ferramenta <a href="/pt/organize" class="text-emerald-700 font-semibold underline">Organizar PDF</a> para girar apenas a página necessária.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Internal Linking Section -->
+            <div class="mt-12 p-6 rounded-2xl bg-emerald-50/50 border border-emerald-100">
+                <h4 class="font-bold text-slate-900 mb-3 text-base">Ferramentas de PDF Mais Utilizadas no Brasil:</h4>
+                <div class="flex flex-wrap gap-3">
+                    <a href="/pt/comprimir-pdf-1mb-gov-br" class="inline-flex items-center gap-1.5 text-xs md:text-sm font-semibold text-emerald-800 bg-white px-3.5 py-2 rounded-xl border border-emerald-200 hover:border-emerald-400 hover:shadow-sm transition-all">
+                        📄 Comprimir PDF para 1MB (PJe &amp; Gov.br) &rarr;
+                    </a>
+                    <a href="/pt/split" class="inline-flex items-center gap-1.5 text-xs md:text-sm font-semibold text-emerald-800 bg-white px-3.5 py-2 rounded-xl border border-emerald-200 hover:border-emerald-400 hover:shadow-sm transition-all">
+                        ✂️ Extrair e Dividir Páginas de PDF &rarr;
+                    </a>
+                    <a href="/pt/organize" class="inline-flex items-center gap-1.5 text-xs md:text-sm font-semibold text-emerald-800 bg-white px-3.5 py-2 rounded-xl border border-emerald-200 hover:border-emerald-400 hover:shadow-sm transition-all">
+                        📑 Girar e Reorganizar Páginas de PDF &rarr;
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </article>
+
+    <!-- FAQ Section -->
+    <section class="py-16 bg-slate-50 border-t border-slate-200">
+        <div class="container-custom max-w-3xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <span class="text-xs uppercase font-extrabold tracking-wider text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
+                    Tira-Dúvidas
+                </span>
+                <h2 class="text-2xl md:text-3xl font-black text-slate-900 mt-2">
+                    Perguntas Frequentes sobre Junção de PDFs
+                </h2>
+                <p class="text-slate-500 text-sm mt-1">Orientações para concurseiros, advogados e estudantes</p>
+            </div>
+
+            <div class="space-y-4">
+                {faqSchema.mainEntity.map((item) => (
+                    <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                        <h3 class="font-bold text-slate-900 text-base mb-2">{item.name}</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">{item.acceptedAnswer.text}</p>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    <CookieBanner client:idle dict={dict} slot="cookie-banner" />
+</Layout>

@@ -1,0 +1,301 @@
+---
+export const prerender = true;
+import Layout from '../../layouts/Layout.astro';
+import { getDictionary } from '../../i18n/dictionary';
+import Navbar from '../../components/landing/Navbar';
+import CookieBanner from '../../components/landing/CookieBanner';
+import CompressClient from '../../components/tools/CompressClient';
+
+const lang = 'es';
+const dict = getDictionary(lang);
+
+const seoTitle = "Comprimir PDF para el SAT, Sede Electrónica y Trámites Oficiales Online | KeepPDF";
+const seoDescription = "Comprime tus archivos PDF para el SAT (México), Sede Electrónica (España) y trámites oficiales sin perder nitidez en sellos ni firmas. 100% privado en tu navegador.";
+
+const howToSchema = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "Cómo Comprimir un PDF para el SAT o la Sede Electrónica",
+    "description": "Guía práctica para reducir el tamaño de tus documentos oficiales a menos de 1MB, 2MB o 5MB manteniendo intacta la legibilidad de sellos fiscales y firmas digitales.",
+    "step": [
+        {
+            "@type": "HowToStep",
+            "position": 1,
+            "name": "Selecciona tu Documento Oficial",
+            "text": "Haz clic en 'Seleccionar Archivo' o arrastra tu declaración, constancia de situación fiscal o expediente administrativo."
+        },
+        {
+            "@type": "HowToStep",
+            "position": 2,
+            "name": "Elige el Tamaño Objetivo Deseado",
+            "text": "Haz clic en el ajuste '< 500 KB' o '< 1 MB' para activar el presupuesto dinámico de bytes."
+        },
+        {
+            "@type": "HowToStep",
+            "position": 3,
+            "name": "Descarga tu Archivo Optimizado",
+            "text": "Haz clic en 'Comprimir PDF Ahora' y obtén de inmediato tu documento listo y validado para su carga en el portal tributario o administrativo."
+        }
+    ]
+};
+
+const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "¿Por qué el SAT y la Sede Electrónica rechazan archivos PDF pesados?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Tanto el SAT en México como la Sede Electrónica y Extranjería en España reciben millones de expedientes al año. Para evitar caídas en sus plataformas gubernamentales durante fechas límite de declaraciones u oposiciones, los portales aplican filtros estrictos que bloquean archivos que superen los 1MB, 2MB o 4MB."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "¿Se borrará el código QR o el sello digital de mi constancia fiscal al comprimir?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No con KeepPDF. Nuestro algoritmo utiliza compresión adaptativa de alto contraste que preserva bordes afilados en códigos QR, sellos de tiempo, firmas manuscritas y cadenas digitales del SAT, reduciendo únicamente el ruido de fondo y elementos innecesarios del documento escaneado."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "¿Es seguro comprimir declaraciones tributarias y nóminas en KeepPDF?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Totalmente. En estricto cumplimiento con el RGPD europeo y las leyes de protección de datos personales de Iberoamérica, KeepPDF no envía tus documentos a ningún servidor. Toda la compresión se procesa de forma 100% local en la memoria de tu propio navegador mediante WebAssembly."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "¿Qué hacer si el portal del SAT indica 'Archivo dañado o formato no soportado'?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Este fallo suele ocurrir cuando el archivo tiene contraseñas activas o metadatos corruptos de escáneres antiguos. KeepPDF recompila el documento generando una versión estándar limpia y compatible con todos los portales de la administración pública."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "¿Puedo comprimir documentos de varias páginas como estados de cuenta bancarios?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Sí. KeepPDF calcula un presupuesto de compresión por cada página para que un estado de cuenta o contrato de 5 a 10 páginas se reduzca de manera armónica sin que ninguna hoja quede ilegible."
+            }
+        }
+    ]
+};
+---
+
+<Layout lang={lang} dict={dict} title={seoTitle} description={seoDescription} canonical="https://keep-pdf.online/es/comprimir-pdf-sat-tramites">
+    <Navbar client:load lang={lang} dict={dict} slot="navbar" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden pt-24 pb-16" style="background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #3730a3 100%);">
+        <div class="absolute inset-0 opacity-15">
+            <div class="absolute top-10 left-1/4 w-80 h-80 bg-indigo-500 rounded-full filter blur-3xl animate-pulse"></div>
+            <div class="absolute bottom-10 right-1/4 w-96 h-96 bg-cyan-400 rounded-full filter blur-3xl animate-pulse" style="animation-delay: 1.5s;"></div>
+        </div>
+        <div class="container-custom max-w-4xl mx-auto relative z-10 text-center px-4">
+            <span class="inline-flex items-center gap-2 bg-indigo-500/10 border border-indigo-400/30 text-indigo-300 text-xs md:text-sm font-semibold px-4 py-2 rounded-full mb-6 backdrop-blur-md">
+                🏛️ Estándar Oficial para Trámites Gubernamentales — 100% en tu Navegador
+            </span>
+            <h1 class="text-3xl md:text-5xl lg:text-6xl font-black text-white leading-tight mb-4 tracking-tight">
+                Comprimir PDF para el SAT y Trámites
+                <span class="block text-transparent bg-clip-text bg-gradient-to-r from-indigo-200 via-cyan-200 to-teal-200 text-xl md:text-3xl font-bold mt-2">
+                    Ajuste Preciso para SAT, Sede Electrónica y Universidades
+                </span>
+            </h1>
+            <p class="text-slate-300 text-base md:text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
+                Reduce el peso de declaraciones, identificaciones, títulos y actas a menos de 500 KB, 1 MB o 2 MB. Sellos y firmas 100% nítidos, sin marcas de agua y con total privacidad.
+            </p>
+
+            <div class="flex flex-wrap justify-center gap-3 text-xs md:text-sm font-medium text-slate-200">
+                <span class="bg-white/10 backdrop-blur-sm px-3.5 py-1.5 rounded-lg border border-white/10 flex items-center gap-1.5">
+                    <span class="text-cyan-400 font-bold">✓</span> Compatible con el SAT (México)
+                </span>
+                <span class="bg-white/10 backdrop-blur-sm px-3.5 py-1.5 rounded-lg border border-white/10 flex items-center gap-1.5">
+                    <span class="text-cyan-400 font-bold">✓</span> Sede Electrónica y Extranjería (España)
+                </span>
+                <span class="bg-white/10 backdrop-blur-sm px-3.5 py-1.5 rounded-lg border border-white/10 flex items-center gap-1.5">
+                    <span class="text-cyan-400 font-bold">✓</span> Admisión UNAM, IPN y Oposiciones
+                </span>
+                <span class="bg-white/10 backdrop-blur-sm px-3.5 py-1.5 rounded-lg border border-white/10 flex items-center gap-1.5">
+                    <span class="text-cyan-400 font-bold">✓</span> Sin Subir a Servidores (Privado)
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Compressor Tool Section -->
+    <section class="py-12 bg-slate-50 border-b border-slate-200">
+        <div class="container-custom max-w-4xl mx-auto px-4">
+            <div class="bg-white p-6 md:p-8 rounded-3xl shadow-xl border border-slate-100">
+                <div class="mb-6 text-center">
+                    <span class="text-xs uppercase font-extrabold tracking-wider text-indigo-700 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-200">
+                        Compresor de Documentos Oficiales
+                    </span>
+                    <h2 class="text-2xl font-bold text-slate-900 mt-2">Comprime tu Archivo PDF para Trámites</h2>
+                    <p class="text-sm text-slate-500">Sube tu documento, selecciona el ajuste objetivo y descárgalo listo en segundos.</p>
+                </div>
+                <CompressClient client:load dict={dict} lang="es" />
+            </div>
+        </div>
+    </section>
+
+    <!-- Detailed 500+ Word Guide Section -->
+    <article class="py-16 bg-white">
+        <div class="container-custom max-w-4xl mx-auto px-4 prose prose-slate max-w-none">
+            
+            <div class="border-l-4 border-indigo-600 pl-6 mb-12">
+                <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 mb-2">
+                    Límites de Carga en Plataformas Oficiales de México, España y Latinoamérica
+                </h2>
+                <p class="text-slate-600 leading-relaxed">
+                    Al realizar trámites tributarios ante el <strong>SAT (Servicio de Administración Tributaria en México)</strong>, gestiones de visados y arraigo en la <strong>Sede Electrónica de Extranjería en España</strong>, inscripción a oposiciones públicas o entrega de documentos en universidades como la <strong>UNAM o el IPN</strong>, es habitual toparse con el frustrante mensaje: <em>"El archivo seleccionado sobrepasa el tamaño máximo permitido para este trámite"</em>.
+                </p>
+            </div>
+
+            <p class="text-slate-700 leading-relaxed mb-6">
+                Los sistemas informáticos de la administración pública procesan millones de declaraciones, recibos y solicitudes al mes. Con el propósito de proteger sus bases de datos contra colapsos y reducir el tráfico en servidores gubernamentales, las autoridades imponen límites estrictos que van desde <strong>1 MB hasta 4 MB por archivo</strong>. Si tu expediente escaneado pesa apenas 1.05 MB, la plataforma denegará automáticamente la subida, poniendo en riesgo el cumplimiento de tus plazos legales.
+            </p>
+
+            <h3 class="text-xl font-bold text-slate-900 mt-8 mb-4">
+                Límites Oficiales de Carga por Portal y País
+            </h3>
+            <div class="overflow-x-auto my-6">
+                <table class="w-full text-left border-collapse border border-slate-200 rounded-xl overflow-hidden text-sm">
+                    <thead>
+                        <tr class="bg-slate-100 text-slate-900 font-semibold">
+                            <th class="p-3 border border-slate-200">Organismo / Portal</th>
+                            <th class="p-3 border border-slate-200">Trámites Comunes</th>
+                            <th class="p-3 border border-slate-200">Tamaño Máximo Permitido</th>
+                            <th class="p-3 border border-slate-200">Requisito Crítico</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-slate-600">
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 border border-slate-200 font-medium text-slate-900">SAT México (Buzón Tributario)</td>
+                            <td class="p-3 border border-slate-200">Constancia fiscal, declaraciones, aclaraciones</td>
+                            <td class="p-3 border border-slate-200 text-indigo-700 font-bold">&le; 1 MB a 4 MB por archivo</td>
+                            <td class="p-3 border border-slate-200">Código QR y cadena original perfectamente legibles</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 border border-slate-200 font-medium text-slate-900">Sede Electrónica España (AGE / Red SARA)</td>
+                            <td class="p-3 border border-slate-200">Extranjería (NIE, TIE), Tasa 790, Oposiciones</td>
+                            <td class="p-3 border border-slate-200 text-indigo-700 font-bold">&le; 4 MB a 5 MB (Geral) / 1 MB autonómico</td>
+                            <td class="p-3 border border-slate-200">Sin contraseñas y compatible con Autofirma</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 border border-slate-200 font-medium text-slate-900">Universidades (UNAM, IPN, UAM, UBA)</td>
+                            <td class="p-3 border border-slate-200">Certificado de bachillerato, actas, titulación</td>
+                            <td class="p-3 border border-slate-200 text-indigo-700 font-bold">&le; 1 MB a 2 MB</td>
+                            <td class="p-3 border border-slate-200">Ambas caras en un solo documento sin cortes</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 border border-slate-200 font-medium text-slate-900">IMSS / Infonavit / Afore</td>
+                            <td class="p-3 border border-slate-200">Semanas cotizadas, comprobante de nómina</td>
+                            <td class="p-3 border border-slate-200 text-indigo-700 font-bold">&le; 2 MB</td>
+                            <td class="p-3 border border-slate-200">NSS y RFC visibles sin borrones</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="text-xl font-bold text-slate-900 mt-8 mb-4">
+                El Secreto de Comprimir sin Perder Sellos ni Códigos QR
+            </h3>
+            <p class="text-slate-700 leading-relaxed mb-4">
+                Cuando escaneas un acta de nacimiento, título universitario o estado de cuenta bancario con una impresora doméstica o una app móvil (como CamScanner o Adobe Scan), el dispositivo suele capturar en 300 o 600 DPI a color de 24 bits. Una sola hoja puede pesar hasta <strong>10 megabytes</strong> sin motivo real.
+            </p>
+            <p class="text-slate-700 leading-relaxed mb-4">
+                Muchos compresores en línea baratos bajan la resolución global de manera descuidada, lo que resulta en un código QR del SAT ilegible o una firma digital rechazada por los validadores automáticos del gobierno.
+            </p>
+            <p class="text-slate-700 leading-relaxed mb-4">
+                <strong>KeepPDF utiliza un sistema de optimización selectiva por capas:</strong>
+            </p>
+            <ul class="list-disc pl-6 space-y-2 text-slate-700 mb-6">
+                <li><strong>Retención de Bordes de Contraste Fuerte:</strong> Los caracteres de texto, firmas con bolígrafo y sellos oficiales de tinta forman parte de las frecuencias altas de imagen. KeepPDF protege estas áreas con algoritmos de preservación de contorno, mientras comprime fuertemente las texturas del papel en blanco.</li>
+                <li><strong>Eliminación de Metadatos Ocultos:</strong> Limpia metadatos de cámaras, perfiles de color no estándar e historiales de edición que inflan el tamaño del PDF innecesariamente.</li>
+                <li><strong>Presupuesto Seguro de Bytes:</strong> Al pulsar el ajuste <code>&lt; 1 MB</code> o <code>&lt; 500 KB</code>, KeepPDF aplica una cota inferior de seguridad (ej. 920 KB para la meta de 1 MB), impidiendo que el archivo sobrepase el límite por un margen microscópico de bytes.</li>
+            </ul>
+
+            <div class="bg-indigo-50 border-l-4 border-indigo-600 p-5 rounded-r-2xl my-8">
+                <h4 class="text-indigo-950 font-bold text-base mb-1">🛡️ Privacidad Absoluta de Datos Fiscales y Personales</h4>
+                <p class="text-indigo-800 text-sm leading-relaxed">
+                    Tus declaraciones de impuestos, cédulas profesionales, recibos de nómina y números de identificación (RFC, CURP, DNI, NIE) contienen información altamente protegida por las normativas de protección de datos (RGPD europeo y legislaciones locales). Enviar estos archivos a herramientas en la nube tradicionales expone tu información confidencial. En KeepPDF, <strong>todo el procesamiento se realiza en la memoria local de tu navegador</strong> mediante WebAssembly. Ningún documento se transmite por internet a nuestros servidores.
+                </p>
+            </div>
+
+            <h3 class="text-xl font-bold text-slate-900 mt-8 mb-4">
+                Resolución de Problemas Frecuentes en el Portal del SAT y Sede Electrónica
+            </h3>
+            <div class="space-y-4 my-6">
+                <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+                    <h5 class="font-bold text-slate-900 text-sm mb-1">❌ Error: "El archivo sobrepasa el tamaño límite"</h5>
+                    <p class="text-slate-600 text-sm">
+                        Utiliza el preset <code>&lt; 1 MB</code> o <code>&lt; 500 KB</code> de KeepPDF. Nuestro algoritmo ajustará el archivo dejándolo por debajo del umbral exacto que exige el validador del SAT o de la Sede Electrónica.
+                    </p>
+                </div>
+                <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+                    <h5 class="font-bold text-slate-900 text-sm mb-1">❌ Error: "Documento protegido con clave de seguridad"</h5>
+                    <p class="text-slate-600 text-sm">
+                        Los estados de cuenta bancarios de bancos como BBVA, Santander, Banorte o Caixa suelen venir encriptados con una contraseña. Debes eliminar la contraseña antes de subir el archivo, ya que los portales tributarios no admiten archivos con cifrado activo.
+                    </p>
+                </div>
+                <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+                    <h5 class="font-bold text-slate-900 text-sm mb-1">❌ Error: "Se requiere un solo archivo con ambas caras"</h5>
+                    <p class="text-slate-600 text-sm">
+                        Si tienes el anverso y reverso de tu identificación o título en archivos PDF separados, utiliza primero nuestra herramienta <a href="/es/unir-pdf-gratis" class="text-indigo-700 font-semibold underline">Unir PDF Gratis</a> y luego comprime el archivo unificado resultante.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Internal Linking Section -->
+            <div class="mt-12 p-6 rounded-2xl bg-indigo-50/50 border border-indigo-100">
+                <h4 class="font-bold text-slate-900 mb-3 text-base">Herramientas Recomendadas para Trámites Oficiales:</h4>
+                <div class="flex flex-wrap gap-3">
+                    <a href="/es/unir-pdf-gratis" class="inline-flex items-center gap-1.5 text-xs md:text-sm font-semibold text-indigo-800 bg-white px-3.5 py-2 rounded-xl border border-indigo-200 hover:border-indigo-400 hover:shadow-sm transition-all">
+                        🔗 Unir Constancias y Documentos &rarr;
+                    </a>
+                    <a href="/es/split" class="inline-flex items-center gap-1.5 text-xs md:text-sm font-semibold text-indigo-800 bg-white px-3.5 py-2 rounded-xl border border-indigo-200 hover:border-indigo-400 hover:shadow-sm transition-all">
+                        ✂️ Extraer Páginas Específicas &rarr;
+                    </a>
+                    <a href="/es/pricing" class="inline-flex items-center gap-1.5 text-xs md:text-sm font-semibold text-indigo-800 bg-white px-3.5 py-2 rounded-xl border border-indigo-200 hover:border-indigo-400 hover:shadow-sm transition-all">
+                        💳 100% Gratuito Sin Suscripción Mensual &rarr;
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </article>
+
+    <!-- FAQ Section -->
+    <section class="py-16 bg-slate-50 border-t border-slate-200">
+        <div class="container-custom max-w-3xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <span class="text-xs uppercase font-extrabold tracking-wider text-indigo-700 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-200">
+                    Preguntas Frecuentes
+                </span>
+                <h2 class="text-2xl md:text-3xl font-black text-slate-900 mt-2">
+                    Dudas Habituales sobre Compresión para el SAT y Trámites
+                </h2>
+                <p class="text-slate-500 text-sm mt-1">Soluciones directas para ciudadanos, contribuyentes y opositores</p>
+            </div>
+
+            <div class="space-y-4">
+                {faqSchema.mainEntity.map((item) => (
+                    <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                        <h3 class="font-bold text-slate-900 text-base mb-2">{item.name}</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">{item.acceptedAnswer.text}</p>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    <CookieBanner client:idle dict={dict} slot="cookie-banner" />
+</Layout>

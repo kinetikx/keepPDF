@@ -59,6 +59,24 @@ const getTargetPresets = (lang = "en") => {
                 { id: "2mb", label: "< 2 MB", sub: "Portofolio", kb: 2048 },
                 { id: "5mb", label: "< 5 MB", sub: "Batas Instansi", kb: 5120 },
             ];
+        case "pt":
+            return [
+                { id: "auto", label: "Automático", sub: "Equilíbrio", kb: null },
+                { id: "100kb", label: "< 100 KB", sub: "Foto & Assinatura", kb: 100 },
+                { id: "500kb", label: "< 500 KB", sub: "Gov.br & Diplomas", kb: 500 },
+                { id: "1mb", label: "< 1 MB", sub: "PJe & Tribunais", kb: 1024 },
+                { id: "2mb", label: "< 2 MB", sub: "Concursos & SISU", kb: 2048 },
+                { id: "5mb", label: "< 5 MB", sub: "Limite Portal", kb: 5120 },
+            ];
+        case "es":
+            return [
+                { id: "auto", label: "Automático", sub: "Equilibrio", kb: null },
+                { id: "100kb", label: "< 100 KB", sub: "Foto / Firma", kb: 100 },
+                { id: "500kb", label: "< 500 KB", sub: "SAT & Trámites", kb: 500 },
+                { id: "1mb", label: "< 1 MB", sub: "Universidades", kb: 1024 },
+                { id: "2mb", label: "< 2 MB", sub: "Sede Electrónica", kb: 2048 },
+                { id: "5mb", label: "< 5 MB", sub: "Límite Máximo", kb: 5120 },
+            ];
         default:
             return [
                 { id: "auto", label: "Auto", sub: "Smart Balance", kb: null },
@@ -375,6 +393,10 @@ export default function Compressor({ file, onBack, dict, lang = "en" }) {
                                     ? `Hedef Boyut Karşılandı: ${formatSize(newSize)} (< ${selectedTargetKb} KB)`
                                     : lang === "id"
                                     ? `Target Tercapai: ${formatSize(newSize)} (< ${selectedTargetKb} KB)`
+                                    : lang === "pt"
+                                    ? `Meta Atingida: ${formatSize(newSize)} (< ${selectedTargetKb} KB)`
+                                    : lang === "es"
+                                    ? `Meta Alcanzada: ${formatSize(newSize)} (< ${selectedTargetKb} KB)`
                                     : `Target Achieved: ${formatSize(newSize)} (< ${selectedTargetKb} KB)`}
                             </span>
                         </div>
@@ -400,13 +422,25 @@ export default function Compressor({ file, onBack, dict, lang = "en" }) {
                     ) : (
                         <div className="p-4 bg-slate-50 rounded-xl text-sm text-slate-600 mt-4">
                             <p className="font-medium text-slate-800 mb-1">
-                                {lang === "tr" ? "Dosya Boyutu" : lang === "id" ? "Ukuran Berkas" : "File Size"}: {formatSize(originalSize)}
+                                {lang === "tr"
+                                    ? "Dosya Boyutu"
+                                    : lang === "id"
+                                    ? "Ukuran Berkas"
+                                    : lang === "pt"
+                                    ? "Tamanho do Arquivo"
+                                    : lang === "es"
+                                    ? "Tamaño del Archivo"
+                                    : "File Size"}: {formatSize(originalSize)}
                             </p>
                             <p className="text-xs text-slate-500">
                                 {lang === "tr"
                                     ? "Bu belge zaten minimum dosya boyutunda ve en verimli şekilde optimize edilmiştir."
                                     : lang === "id"
                                     ? "Dokumen ini sudah dalam ukuran file minimum dan teroptimalkan dengan sangat baik."
+                                    : lang === "pt"
+                                    ? "Este documento já está no tamanho mínimo e perfeitamente otimizado."
+                                    : lang === "es"
+                                    ? "Este documento ya se encuentra en su tamaño mínimo y óptimo."
                                     : "This document is already at minimum file size and efficiently optimized."}
                             </p>
                         </div>
@@ -429,7 +463,15 @@ export default function Compressor({ file, onBack, dict, lang = "en" }) {
                 {/* Tool-to-Tool Retention Chain (Next Actions) */}
                 <div className="pt-5 border-t border-slate-100 text-left">
                     <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">
-                        {lang === "tr" ? "Bu PDF ile sıradaki işlem:" : lang === "id" ? "Langkah berikutnya untuk PDF ini:" : "Next action with this PDF:"}
+                        {lang === "tr"
+                            ? "Bu PDF ile sıradaki işlem:"
+                            : lang === "id"
+                            ? "Langkah berikutnya untuk PDF ini:"
+                            : lang === "pt"
+                            ? "Próxima ação com este PDF:"
+                            : lang === "es"
+                            ? "Siguiente acción con este PDF:"
+                            : "Next action with this PDF:"}
                     </p>
                     <div className="grid grid-cols-3 gap-2.5">
                         <a
@@ -438,7 +480,15 @@ export default function Compressor({ file, onBack, dict, lang = "en" }) {
                         >
                             <Scissors size={18} className="mx-auto text-slate-500 group-hover:text-indigo-600 mb-1" />
                             <span className="block text-xs font-bold text-slate-700 group-hover:text-indigo-600">
-                                {lang === "tr" ? "Sayfaları Böl" : lang === "id" ? "Bagi Halaman" : "Split Pages"}
+                                {lang === "tr"
+                                    ? "Sayfaları Böl"
+                                    : lang === "id"
+                                    ? "Bagi Halaman"
+                                    : lang === "pt"
+                                    ? "Dividir Páginas"
+                                    : lang === "es"
+                                    ? "Dividir Páginas"
+                                    : "Split Pages"}
                             </span>
                         </a>
                         <a
@@ -447,7 +497,15 @@ export default function Compressor({ file, onBack, dict, lang = "en" }) {
                         >
                             <Layers size={18} className="mx-auto text-slate-500 group-hover:text-purple-600 mb-1" />
                             <span className="block text-xs font-bold text-slate-700 group-hover:text-purple-600">
-                                {lang === "tr" ? "Sayfa Sırala" : lang === "id" ? "Atur Halaman" : "Organize"}
+                                {lang === "tr"
+                                    ? "Sayfa Sırala"
+                                    : lang === "id"
+                                    ? "Atur Halaman"
+                                    : lang === "pt"
+                                    ? "Organizar"
+                                    : lang === "es"
+                                    ? "Organizar"
+                                    : "Organize"}
                             </span>
                         </a>
                         <a
@@ -456,7 +514,15 @@ export default function Compressor({ file, onBack, dict, lang = "en" }) {
                         >
                             <ImageIcon size={18} className="mx-auto text-slate-500 group-hover:text-pink-600 mb-1" />
                             <span className="block text-xs font-bold text-slate-700 group-hover:text-pink-600">
-                                {lang === "tr" ? "JPG'ye Çevir" : lang === "id" ? "Ubah ke JPG" : "To JPG"}
+                                {lang === "tr"
+                                    ? "JPG'ye Çevir"
+                                    : lang === "id"
+                                    ? "Ubah ke JPG"
+                                    : lang === "pt"
+                                    ? "Para JPG"
+                                    : lang === "es"
+                                    ? "A JPG"
+                                    : "To JPG"}
                             </span>
                         </a>
                     </div>
@@ -470,6 +536,10 @@ export default function Compressor({ file, onBack, dict, lang = "en" }) {
                                 ? "KeepPDF ile PDF dosyamı ücretsiz ve anında küçülttüm, sen de dene: https://keep-pdf.online"
                                 : lang === "id"
                                 ? "Saya baru saja mengompres berkas PDF dengan cepat dan aman pakai KeepPDF, coba juga: https://keep-pdf.online"
+                                : lang === "pt"
+                                ? "Comprimi meu arquivo PDF de forma rápida e segura no KeepPDF, experimente: https://keep-pdf.online"
+                                : lang === "es"
+                                ? "Comprimí mi archivo PDF gratis y al instante con KeepPDF, pruébalo aquí: https://keep-pdf.online"
                                 : "I compressed my PDF file instantly and privately with KeepPDF, check it out: https://keep-pdf.online"
                         )}`}
                         target="_blank"
@@ -488,13 +558,27 @@ export default function Compressor({ file, onBack, dict, lang = "en" }) {
                                     ? "Link kopyalandı! Arkadaşlarınızla paylaşabilirsiniz."
                                     : lang === "id"
                                     ? "Tautan berhasil disalin! Bagikan ke teman atau rekan Anda."
+                                    : lang === "pt"
+                                    ? "Link copiado! Compartilhe com seus amigos ou colegas."
+                                    : lang === "es"
+                                    ? "¡Enlace copiado! Compártelo con tus amigos o colegas."
                                     : "Link copied! Share it with your friends."
                             );
                         }}
                         className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-lg transition-colors cursor-pointer"
                     >
                         <Copy size={13} />
-                        <span>{lang === "tr" ? "Linki Kopyala" : lang === "id" ? "Salin Tautan" : "Copy Link"}</span>
+                        <span>
+                            {lang === "tr"
+                                ? "Linki Kopyala"
+                                : lang === "id"
+                                ? "Salin Tautan"
+                                : lang === "pt"
+                                ? "Copiar Link"
+                                : lang === "es"
+                                ? "Copiar Enlace"
+                                : "Copy Link"}
+                        </span>
                     </button>
                 </div>
             </div>

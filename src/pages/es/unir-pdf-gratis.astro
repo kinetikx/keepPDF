@@ -1,0 +1,265 @@
+---
+export const prerender = true;
+import Layout from '../../layouts/Layout.astro';
+import { getDictionary } from '../../i18n/dictionary';
+import Navbar from '../../components/landing/Navbar';
+import CookieBanner from '../../components/landing/CookieBanner';
+import MergeClient from '../../components/tools/MergeClient';
+
+const lang = 'es';
+const dict = getDictionary(lang);
+
+const seoTitle = "Unir PDF Gratis Online — Combinar Documentos para Trámites y Empleo | KeepPDF";
+const seoDescription = "Une varios archivos PDF en un solo documento online y gratis. Perfecto para expedientes de extranjería, trámites del SAT, oposiciones y candidaturas de empleo. 100% privado en tu navegador.";
+
+const howToSchema = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "Cómo Unir Múltiples Archivos PDF en un Solo Documento Oficial",
+    "description": "Pasos sencillos para combinar constancias, certificados, contratos y solicitudes en un archivo PDF ordenado sin subir información confidencial a servidores externos.",
+    "step": [
+        {
+            "@type": "HowToStep",
+            "position": 1,
+            "name": "Selecciona tus Archivos PDF",
+            "text": "Arrastra los documentos PDF o pulsa el botón de selección para cargar todos los archivos que necesitas compilar."
+        },
+        {
+            "@type": "HowToStep",
+            "position": 2,
+            "name": "Ordena la Secuencia de las Páginas",
+            "text": "Arrastra los bloques de archivo para posicionarlos en el orden exacto exigido por la convocatoria o la administración pública."
+        },
+        {
+            "@type": "HowToStep",
+            "position": 3,
+            "name": "Une y Descarga tu PDF",
+            "text": "Haz clic en 'Unir PDFs' y descarga tu documento combinado de forma inmediata en menos de 2 segundos."
+        }
+    ]
+};
+
+const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "¿Cómo combinar mi título universitario y el certificado de calificaciones en un solo PDF?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Solo tienes que seleccionar ambos archivos PDF en KeepPDF. En la pantalla de vista previa, coloca el título como primer documento y las calificaciones a continuación. Pulsa 'Unir PDFs' para generar un único archivo listo para presentar."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "¿Existe un límite de documentos que puedo juntar a la vez?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "En KeepPDF no hay límites. Puedes unir 2, 10 o más de 30 archivos PDF simultáneamente sin ningún coste y sin marcas de agua."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "¿Se guardan mis documentos en algún servidor durante la unión?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. A diferencia de otros conversores online, KeepPDF realiza toda la unión de forma local en la memoria de tu propio navegador mediante WebAssembly. Tus datos personales y fiscales jamás se transfieren a internet."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "¿Qué hago si el archivo unido supera el límite permitido por la plataforma?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Una vez unido el documento, puedes pasarlo directamente por nuestra herramienta 'Comprimir PDF' para ajustar su peso por debajo de 1MB, 2MB o 5MB según lo que exija el portal correspondiente."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "¿Se respetan las páginas horizontales y verticales al unir?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Sí. KeepPDF respeta la orientación original de cada hoja (tanto vertical como apaisada/horizontal), garantizando que diplomas o tablas anchas no se deformen ni se corten."
+            }
+        }
+    ]
+};
+---
+
+<Layout lang={lang} dict={dict} title={seoTitle} description={seoDescription} canonical="https://keep-pdf.online/es/unir-pdf-gratis">
+    <Navbar client:load lang={lang} dict={dict} slot="navbar" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden pt-24 pb-16" style="background: linear-gradient(135deg, #09172a 0%, #1e1b4b 50%, #1e293b 100%);">
+        <div class="absolute inset-0 opacity-15">
+            <div class="absolute top-10 left-1/3 w-80 h-80 bg-indigo-500 rounded-full filter blur-3xl animate-pulse"></div>
+            <div class="absolute bottom-10 right-1/4 w-96 h-96 bg-teal-400 rounded-full filter blur-3xl animate-pulse" style="animation-delay: 1.5s;"></div>
+        </div>
+        <div class="container-custom max-w-4xl mx-auto relative z-10 text-center px-4">
+            <span class="inline-flex items-center gap-2 bg-indigo-500/10 border border-indigo-400/30 text-indigo-300 text-xs md:text-sm font-semibold px-4 py-2 rounded-full mb-6 backdrop-blur-md">
+                ⚡ Rápido, Ordenado y 100% en tu Navegador
+            </span>
+            <h1 class="text-3xl md:text-5xl lg:text-6xl font-black text-white leading-tight mb-4 tracking-tight">
+                Unir PDF Gratis Online
+                <span class="block text-transparent bg-clip-text bg-gradient-to-r from-indigo-200 via-sky-200 to-teal-200 text-xl md:text-3xl font-bold mt-2">
+                    Combina Documentos para Trámites, Oposiciones y Empleo
+                </span>
+            </h1>
+            <p class="text-slate-300 text-base md:text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
+                Combina varios archivos PDF sueltos en un único documento limpio y ordenado al instante. Ideal para expedientes de extranjería, solicitudes de becas y trámites gubernamentales.
+            </p>
+
+            <div class="flex flex-wrap justify-center gap-3 text-xs md:text-sm font-medium text-slate-200">
+                <span class="bg-white/10 backdrop-blur-sm px-3.5 py-1.5 rounded-lg border border-white/10 flex items-center gap-1.5">
+                    <span class="text-teal-400 font-bold">✓</span> Reordena con Arrastrar y Soltar
+                </span>
+                <span class="bg-white/10 backdrop-blur-sm px-3.5 py-1.5 rounded-lg border border-white/10 flex items-center gap-1.5">
+                    <span class="text-teal-400 font-bold">✓</span> Sin Límites de Páginas ni Archivos
+                </span>
+                <span class="bg-white/10 backdrop-blur-sm px-3.5 py-1.5 rounded-lg border border-white/10 flex items-center gap-1.5">
+                    <span class="text-teal-400 font-bold">✓</span> Sin Marcas de Agua
+                </span>
+                <span class="bg-white/10 backdrop-blur-sm px-3.5 py-1.5 rounded-lg border border-white/10 flex items-center gap-1.5">
+                    <span class="text-teal-400 font-bold">✓</span> Cumplimiento Estricto del RGPD
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Merge Tool Section -->
+    <section class="py-12 bg-slate-50 border-b border-slate-200">
+        <div class="container-custom max-w-4xl mx-auto px-4">
+            <div class="bg-white p-6 md:p-8 rounded-3xl shadow-xl border border-slate-100">
+                <MergeClient client:load dict={dict} />
+            </div>
+        </div>
+    </section>
+
+    <!-- Detailed 500+ Word Guide Section -->
+    <article class="py-16 bg-white">
+        <div class="container-custom max-w-4xl mx-auto px-4 prose prose-slate max-w-none">
+            
+            <div class="border-l-4 border-indigo-600 pl-6 mb-12">
+                <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 mb-2">
+                    La Importancia del Expediente Único en Convocatorias y Trámites Administrativos
+                </h2>
+                <p class="text-slate-600 leading-relaxed">
+                    Tanto al presentar solicitudes de residencia y arraigo en las <strong>Oficinas de Extranjería en España</strong>, como al postularte a <strong>oposiciones de la administración pública</strong> o entregar expedientes de titulación y empleo en <strong>México y Latinoamérica</strong>, los organismos oficiales exigen de manera casi unánime un <strong>"Expediente Digital Único en formato PDF"</strong>.
+                </p>
+            </div>
+
+            <p class="text-slate-700 leading-relaxed mb-6">
+                Entregar documentos fraccionados o desordenados es una de las razones más comunes de requerimiento de subsanación o rechazo directo por parte de los funcionarios evaluadores. Un expediente estructurado con claridad agiliza la revisión y demuestra rigor profesional ante el comité evaluador o tribunal de oposiciones.
+            </p>
+
+            <h3 class="text-xl font-bold text-slate-900 mt-8 mb-4">
+                Estructura Recomendada para Expedientes de Extranjería y Empleo
+            </h3>
+            <p class="text-slate-700 leading-relaxed mb-4">
+                A continuación se detalla el orden estándar más valorado por los departamentos de recursos humanos y oficinas consulares:
+            </p>
+            <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 my-6">
+                <ol class="list-decimal pl-5 space-y-3 text-slate-700 text-sm leading-relaxed">
+                    <li><strong>Página 1 &mdash; Formulario Oficial de Solicitud (Modelo EX, solicitud formal):</strong> Debidamente firmado manual o digitalmente.</li>
+                    <li><strong>Página 2 &mdash; Justificante de Pago de Tasas (Tasa 790 o similar):</strong> Con el sello o validación mecánica bancaria visible.</li>
+                    <li><strong>Páginas 3 a 5 &mdash; Copia Completa de Identificación o Pasaporte:</strong> Todas las páginas de datos biográficos y sellos consulares.</li>
+                    <li><strong>Página 6 &mdash; Certificado de Empadronamiento o Comprobante de Domicilio:</strong> Con fecha de expedición inferior a 3 meses.</li>
+                    <li><strong>Páginas siguientes &mdash; Certificado de Antecedentes Penales:</strong> Con apostilla de La Haya y traducción jurada oficial.</li>
+                    <li><strong>Acreditación de Medios Económicos / Contrato Laboral:</strong> Contrato de trabajo registrado y últimas nóminas o balances.</li>
+                    <li><strong>Títulos Académicos y Certificaciones Oficiales:</strong> Copia del título oficial y equivalencias de homologación.</li>
+                </ol>
+            </div>
+
+            <h3 class="text-xl font-bold text-slate-900 mt-8 mb-4">
+                Ventajas Técnicas del Compilador de KeepPDF
+            </h3>
+            <p class="text-slate-700 leading-relaxed mb-4">
+                Una práctica común pero perjudicial es pegar capturas de pantalla de documentos en Word y exportar a PDF. Este método reduce la nitidez tipográfica, distorsiona los márgenes reglamentarios y crea documentos sobredimensionados de 40 MB que son rechazados por las sedes electrónicas.
+            </p>
+            <p class="text-slate-700 leading-relaxed mb-4">
+                El motor de unión de KeepPDF opera directamente sobre la estructura binaria de los documentos PDF:
+            </p>
+            <ul class="list-disc pl-6 space-y-2 text-slate-700 mb-6">
+                <li><strong>Preservación Absoluta de Capas de Texto y Búsqueda:</strong> El texto no se rasteriza como foto fija. Puedes seguir seleccionando texto, copiando números de expediente y buscando mediante <code>Ctrl + F</code>.</li>
+                <li><strong>Respeto a Diferentes Orientaciones:</strong> Si un certificado es apaisado (horizontal) y el resto del expediente es vertical, cada hoja conserva sus dimensiones independientes sin cortes.</li>
+                <li><strong>Control Intuitivo por Arrastre:</strong> Reordena los archivos de izquierda a derecha con el cursor o el dedo en la pantalla táctil de tu teléfono móvil.</li>
+                <li><strong>Sin Latencia de Red:</strong> Dado que el proceso no requiere enviar megabytes a un servidor remoto, la unión de 10 documentos concluye en apenas 1 o 2 segundos.</li>
+            </ul>
+
+            <h3 class="text-xl font-bold text-slate-900 mt-8 mb-4">
+                Seguridad Jurídica y Privacidad de Datos (RGPD)
+            </h3>
+            <p class="text-slate-700 leading-relaxed mb-4">
+                Los expedientes administrativos albergan datos de alto valor protegido: números de pasaporte, antecedentes penales, estados de cuenta bancarios, direcciones familiares y sellos consulares.
+            </p>
+            <p class="text-slate-700 leading-relaxed mb-6">
+                Al usar conversores tradicionales en la nube, tus datos sensibles se transmiten a servidores externos con riesgos asociados de rastreo y almacenamiento no autorizado. <strong>En KeepPDF, tus archivos nunca abandonan tu ordenador o teléfono.</strong> Toda la ejecución se realiza de manera 100% local en tu navegador mediante WebAssembly. Puedes incluso apagar tu conexión a internet una vez cargada la web y seguir combinando documentos con total normalidad.
+            </p>
+
+            <h3 class="text-xl font-bold text-slate-900 mt-8 mb-4">
+                Comprobaciones Previas a la Presentación Oficial
+            </h3>
+            <div class="space-y-4 my-6">
+                <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+                    <h5 class="font-bold text-slate-900 text-sm mb-1">1. Revisa el Tamaño del Archivo Final</h5>
+                    <p class="text-slate-600 text-sm">
+                        Si el archivo combinado sobrepasa el límite del portal (generalmente 2 MB o 4 MB en Sede Electrónica), utiliza nuestra herramienta <a href="/es/comprimir-pdf-sat-tramites" class="text-indigo-700 font-semibold underline">Comprimir PDF</a> para reducirlo al tamaño idóneo.
+                    </p>
+                </div>
+                <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+                    <h5 class="font-bold text-slate-900 text-sm mb-1">2. Verifica el Sentido de Cada Página</h5>
+                    <p class="text-slate-600 text-sm">
+                        Comprueba que ninguna página haya quedado invertida o de lado. Si necesitas girar una hoja suelta, recurre a la herramienta <a href="/es/organize" class="text-indigo-700 font-semibold underline">Organizar PDF</a> antes de firmar electrónicamente el trámite.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Internal Linking Section -->
+            <div class="mt-12 p-6 rounded-2xl bg-indigo-50/50 border border-indigo-100">
+                <h4 class="font-bold text-slate-900 mb-3 text-base">Herramientas Recomendadas para Gestión de Expedientes:</h4>
+                <div class="flex flex-wrap gap-3">
+                    <a href="/es/comprimir-pdf-sat-tramites" class="inline-flex items-center gap-1.5 text-xs md:text-sm font-semibold text-indigo-800 bg-white px-3.5 py-2 rounded-xl border border-indigo-200 hover:border-indigo-400 hover:shadow-sm transition-all">
+                        📄 Comprimir PDF para el SAT &amp; Sede Electrónica &rarr;
+                    </a>
+                    <a href="/es/split" class="inline-flex items-center gap-1.5 text-xs md:text-sm font-semibold text-indigo-800 bg-white px-3.5 py-2 rounded-xl border border-indigo-200 hover:border-indigo-400 hover:shadow-sm transition-all">
+                        ✂️ Extraer Páginas de Expedientes &rarr;
+                    </a>
+                    <a href="/es/organize" class="inline-flex items-center gap-1.5 text-xs md:text-sm font-semibold text-indigo-800 bg-white px-3.5 py-2 rounded-xl border border-indigo-200 hover:border-indigo-400 hover:shadow-sm transition-all">
+                        📑 Girar y Reordenar Páginas de PDF &rarr;
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </article>
+
+    <!-- FAQ Section -->
+    <section class="py-16 bg-slate-50 border-t border-slate-200">
+        <div class="container-custom max-w-3xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <span class="text-xs uppercase font-extrabold tracking-wider text-indigo-700 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-200">
+                    Dudas Frecuentes
+                </span>
+                <h2 class="text-2xl md:text-3xl font-black text-slate-900 mt-2">
+                    Preguntas Frecuentes sobre la Unión de Documentos
+                </h2>
+                <p class="text-slate-500 text-sm mt-1">Aclaraciones útiles para aspirantes a oposiciones, trámites consulares y estudiantes</p>
+            </div>
+
+            <div class="space-y-4">
+                {faqSchema.mainEntity.map((item) => (
+                    <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                        <h3 class="font-bold text-slate-900 text-base mb-2">{item.name}</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">{item.acceptedAnswer.text}</p>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    <CookieBanner client:idle dict={dict} slot="cookie-banner" />
+</Layout>

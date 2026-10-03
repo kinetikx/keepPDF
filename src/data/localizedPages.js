@@ -14,6 +14,8 @@ export const hreflangGroups = {
         et: '/et/uhenda-pdf-tasuta',
         lv: '/lv/apvienot-pdf-bezmaksas',
         id: '/id/gabung-pdf-gratis',
+        pt: '/pt/juntar-pdf-gratis',
+        es: '/es/unir-pdf-gratis',
     },
     split: {
         en: '/en/split',
@@ -22,6 +24,8 @@ export const hreflangGroups = {
         et: '/et/tukkelda-pdf-tasuta',
         lv: '/lv/sadalit-pdf-bezmaksas',
         id: '/id/split',
+        pt: '/pt/split',
+        es: '/es/split',
     },
     compress: {
         en: '/en/compress',
@@ -30,6 +34,8 @@ export const hreflangGroups = {
         et: '/et/tihenda-pdf-tasuta',
         lv: '/lv/saspiest-pdf-bezmaksas',
         id: '/id/kompres-pdf-200kb-cpns',
+        pt: '/pt/comprimir-pdf-1mb-gov-br',
+        es: '/es/comprimir-pdf-sat-tramites',
     },
     edit: {
         en: '/en/edit-pdf',
@@ -38,6 +44,8 @@ export const hreflangGroups = {
         et: '/et/muuda-pdf-veebi-tasuta',
         lv: '/lv/rediget-pdf-tiesaiste',
         id: '/id/edit-pdf',
+        pt: '/pt/edit-pdf',
+        es: '/es/edit-pdf',
     },
 };
 
