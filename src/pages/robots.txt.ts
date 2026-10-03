@@ -5,7 +5,6 @@ User-agent: *
 Allow: /
 Disallow: /admin
 Disallow: /admin/
-Disallow: /_astro/
 Disallow: /*.json$
 
 # Sitemap

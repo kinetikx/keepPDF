@@ -1,0 +1,173 @@
+﻿---
+export const prerender = true;
+import Layout from '../../layouts/Layout.astro';
+import { getDictionary } from '../../i18n/dictionary';
+import Navbar from '../../components/landing/Navbar';
+import CookieBanner from '../../components/landing/CookieBanner';
+import SplitClient from '../../components/tools/SplitClient';
+
+const lang = 'tr';
+const dict = getDictionary(lang);
+
+const seoTitle = "PDF Böl Ücretsiz — PDF Sayfalarını Ayır ve Çıkar | KeepPDF";
+const seoDescription = "PDF sayfalarını ücretsiz ve güvenli bir şekilde bölün. Belirli sayfaları veya sayfa aralıklarını sunucuya yüklemeden tarayıcınızda çıkarın.";
+
+const howToSchema = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "PDF Dosyalarını Ücretsiz Bölmenin 3 Kolay Adımı",
+    "description": "KeepPDF ile PDF belgelerinden dilediğiniz sayfaları kolayca ayırın.",
+    "step": [
+        {
+            "@type": "HowToStep",
+            "position": 1,
+            "name": "PDF Belgenizi Yükleyin",
+            "text": "Bölmek istediğiniz PDF dosyasını seçin veya sürükleyip bırakın."
+        },
+        {
+            "@type": "HowToStep",
+            "position": 2,
+            "name": "Sayfaları Seçin",
+            "text": "Ayrıştırmak istediğiniz sayfaları tıklayarak seçin."
+        },
+        {
+            "@type": "HowToStep",
+            "position": 3,
+            "name": "Bölün ve İndirin",
+            "text": "\"Sayfaları Çıkar\" butonuna tıklayarak seçtiğiniz sayfaları yeni bir PDF olarak kaydedin."
+        }
+    ]
+};
+
+const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "PDF içinden sadece belirli sayfaları alabilir miyim?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Evet! KeepPDF sayfa önizlemeleri üzerinden tek bir sayfayı veya istediğiniz birden çok sayfayı kolayca seçip ayrı bir PDF olarak kaydedebilirsiniz."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Bölme işlemi sırasında dosya kalitesi düşer mi?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Hayır, sayfalar orijinal çözünürlük ve kalitelerini %100 koruyarak yeni PDF belgesine aktarılır."
+            }
+        }
+    ]
+};
+---
+
+<Layout lang={lang} dict={dict} title={seoTitle} description={seoDescription}>
+    <Navbar client:load lang={lang} dict={dict} slot="navbar" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden pt-24 pb-16" style="background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4338ca 100%);">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-20 left-10 w-72 h-72 bg-orange-400 rounded-full filter blur-3xl animate-pulse"></div>
+            <div class="absolute bottom-10 right-20 w-96 h-96 bg-amber-400 rounded-full filter blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
+        </div>
+        <div class="container-custom max-w-4xl mx-auto relative z-10 text-center px-4">
+            <span class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white/90 text-sm font-medium px-4 py-2 rounded-full border border-white/20 mb-6">
+                🔒 %100 Gizli — Tarayıcı tabanlı güvenli sayfa ayırma
+            </span>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-6" style="letter-spacing: -0.03em;">
+                PDF Böl Ücretsiz
+                <span class="block text-indigo-300 text-2xl md:text-3xl font-semibold mt-3">İstediğiniz Sayfaları Saniyeler İçinde Ayırın</span>
+            </h1>
+            <div class="flex flex-wrap justify-center gap-4 mb-8">
+                <div class="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-xl text-white/80 text-sm">
+                    <span class="text-green-400">✓</span> Ücretsiz & Limitsiz
+                </div>
+                <div class="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-xl text-white/80 text-sm">
+                    <span class="text-green-400">✓</span> Kayıt gerekmez
+                </div>
+                <div class="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-xl text-white/80 text-sm">
+                    <span class="text-green-400">✓</span> Sıfır veri kaybı
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool -->
+    <section class="py-12 bg-slate-50">
+        <div class="container-custom max-w-4xl mx-auto px-4">
+            <SplitClient client:load dict={dict} />
+        </div>
+    </section>
+
+    <!-- How To Section -->
+    <section class="py-20 bg-white">
+        <div class="container-custom max-w-5xl mx-auto px-4">
+            <div class="text-center mb-14">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">PDF Nasıl Bölünür? 3 Kolay Adım</h2>
+                <p class="text-lg text-slate-500 max-w-2xl mx-auto">KeepPDF ile sayfaları kolayca seçin ve ayırın.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="relative bg-gradient-to-br from-orange-50 to-white rounded-2xl p-8 border border-orange-100 shadow-sm hover:shadow-lg transition-shadow">
+                    <div class="absolute -top-4 -left-4 w-12 h-12 bg-orange-600 text-white rounded-xl flex items-center justify-center text-lg font-bold shadow-lg">1</div>
+                    <div class="text-4xl mb-4 mt-2">📂</div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">PDF'i Yükleyin</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">Bölmek istediğiniz PDF dosyasını seçin.</p>
+                </div>
+                <div class="relative bg-gradient-to-br from-amber-50 to-white rounded-2xl p-8 border border-amber-100 shadow-sm hover:shadow-lg transition-shadow">
+                    <div class="absolute -top-4 -left-4 w-12 h-12 bg-amber-600 text-white rounded-xl flex items-center justify-center text-lg font-bold shadow-lg">2</div>
+                    <div class="text-4xl mb-4 mt-2">✂️</div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Sayfaları Seçin</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">İhtiyacınız olan sayfaları önizleme üzerinden işaretleyin.</p>
+                </div>
+                <div class="relative bg-gradient-to-br from-emerald-50 to-white rounded-2xl p-8 border border-emerald-100 shadow-sm hover:shadow-lg transition-shadow">
+                    <div class="absolute -top-4 -left-4 w-12 h-12 bg-emerald-600 text-white rounded-xl flex items-center justify-center text-lg font-bold shadow-lg">3</div>
+                    <div class="text-4xl mb-4 mt-2">⬇️</div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">İndirin</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">Yeni ayrılmış PDF belgenizi anında indirin.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-20 bg-slate-50 border-t border-slate-100">
+        <div class="container-custom max-w-3xl mx-auto px-4">
+            <div class="text-center mb-14">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Sıkça Sorulan Sorular</h2>
+                <p class="text-lg text-slate-500">PDF bölme hakkında merak edilenler</p>
+            </div>
+            <div class="space-y-4">
+                <div class="bg-white rounded-2xl p-6 border border-slate-200">
+                    <h3 class="font-bold text-slate-900 mb-2">PDF içinden sadece belirli sayfaları alabilir miyim?</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">Evet! KeepPDF sayfa önizlemeleri üzerinden tek bir sayfayı veya istediğiniz birden çok sayfayı kolayca seçip ayrı bir PDF olarak kaydedebilirsiniz.</p>
+                </div>
+                <div class="bg-white rounded-2xl p-6 border border-slate-200">
+                    <h3 class="font-bold text-slate-900 mb-2">Bölme işlemi sırasında dosya kalitesi düşer mi?</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">Hayır, sayfalar orijinal çözünürlük ve kalitelerini %100 koruyarak yeni PDF belgesine aktarılır.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Links -->
+    <section class="py-12 bg-white border-t border-slate-200">
+        <div class="container-custom max-w-4xl mx-auto px-4 text-center">
+            <h3 class="font-bold text-slate-700 mb-4 text-sm uppercase tracking-wider">İlgili Araçlar</h3>
+            <div class="flex flex-wrap justify-center gap-3">
+                <a href="/tr/pdf-birlestir-ucretsiz" class="inline-flex items-center gap-2 bg-slate-50 px-4 py-2 rounded-xl border border-slate-200 text-sm font-medium text-slate-700 hover:text-brand-600 hover:border-brand-200 transition-all shadow-sm">
+                    🔗 PDF Birleştir
+                </a>
+                <a href="/tr/pdf-sikistir-ucretsiz" class="inline-flex items-center gap-2 bg-slate-50 px-4 py-2 rounded-xl border border-slate-200 text-sm font-medium text-slate-700 hover:text-brand-600 hover:border-brand-200 transition-all shadow-sm">
+                    📦 PDF Sıkıştır
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <CookieBanner client:idle dict={dict} slot="cookie-banner" />
+</Layout>

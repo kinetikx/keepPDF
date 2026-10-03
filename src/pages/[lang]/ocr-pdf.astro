@@ -1,4 +1,4 @@
----
+﻿---
 export const prerender = true;
 import Layout from '../../layouts/Layout.astro';
 import { getDictionary, locales } from '../../i18n/dictionary';
@@ -20,8 +20,8 @@ const howToSchema = buildHowToSchema('ocr-pdf', lang);
 
 <Layout lang={lang} dict={dict} title={dict.metadata.ocrPdf.title} description={dict.metadata.ocrPdf.description} howToSchema={howToSchema}>
   <Navbar client:load lang={lang} dict={dict} slot="navbar" />
-  <ComingSoon client:load title={dict.tools.ocr.title} description={lang === 'tr' ? 'OCR özelliği çok yakında geliyor.' : 'OCR feature coming very soon.'} lang={lang} />
+  <ComingSoon client:idle title={dict.tools.ocr.title} description={lang === 'tr' ? 'OCR özelliği çok yakında geliyor.' : 'OCR feature coming very soon.'} lang={lang} />
   <HowToSection client:visible slug="ocr-pdf" lang={lang} />
   <UseCaseSection client:visible slug="ocr-pdf" lang={lang} />
-  <CookieBanner client:load dict={dict} slot="cookie-banner" />
+  <CookieBanner client:idle dict={dict} slot="cookie-banner" />
 </Layout>

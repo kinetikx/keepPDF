@@ -44,7 +44,7 @@ export default function MergeInterface({ children, dict }) {
                 }
             }
 
-            const mergedPdfBytes = await mergedPdf.save();
+            const mergedPdfBytes = await mergedPdf.save({ useObjectStreams: true });
             const blob = new Blob([mergedPdfBytes], { type: "application/pdf" });
             const url = URL.createObjectURL(blob);
 
@@ -54,7 +54,7 @@ export default function MergeInterface({ children, dict }) {
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-            URL.revokeObjectURL(url);
+            setTimeout(() => URL.revokeObjectURL(url), 10000);
         } catch (error) {
             console.error("Error merging PDFs:", error);
             alert("Error merging PDFs. Please check the console for details.");

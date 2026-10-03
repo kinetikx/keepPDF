@@ -10,7 +10,13 @@ export default function CompressClient({ dict }) {
         <section className="py-20 bg-slate-50 min-h-screen">
             <div className="container-custom max-w-4xl mx-auto">
                 <div className="text-center mb-12"><h1 className="text-4xl font-bold text-slate-900 mb-4">{dict?.metadata?.compress?.h1 || dict?.tools?.compress?.title}</h1><p className="text-slate-500 text-lg max-w-2xl mx-auto">{dict?.tools?.compress?.description}</p></div>
-                <PDFDropzone onFileSelect={handleFileSelect} title={dict?.common?.clickToUpload} limit={dict?.common?.limit} buttonText={dict?.common?.browse} />
+                <PDFDropzone
+                    onFileSelect={handleFileSelect}
+                    title={dict?.common?.clickToUpload}
+                    limit={dict?.common?.limit}
+                    buttonText={dict?.common?.browse}
+                    securityBadge={`${dict?.hero?.trustBanner?.secureTitle || "100% Private"} · ${dict?.hero?.trustBanner?.secureDesc || "Files never leave your browser"}`}
+                />
             </div>
         </section>
     );

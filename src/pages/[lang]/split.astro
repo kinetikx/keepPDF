@@ -1,4 +1,4 @@
----
+﻿---
 export const prerender = true;
 import Layout from '../../layouts/Layout.astro';
 import { getDictionary, locales } from '../../i18n/dictionary';
@@ -23,6 +23,6 @@ const howToSchema = buildHowToSchema('split', lang);
   <SplitClient client:load dict={dict} />
   <HowToSection client:visible slug="split" lang={lang} />
   <UseCaseSection client:visible slug="split" lang={lang} />
-  <CookieBanner client:load dict={dict} slot="cookie-banner" />
+  <CookieBanner client:idle dict={dict} slot="cookie-banner" />
 </Layout>
 

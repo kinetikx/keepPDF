@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { CloudUpload, FileText, Upload, Plus } from "lucide-react";
+import { CloudUpload, FileText, Upload, Plus, ShieldCheck } from "lucide-react";
 import { cn } from "../../lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -31,7 +31,9 @@ export default function PDFDropzone({ onFileSelect, ...props }) {
 
             const files = [...e.dataTransfer.files];
             if (files && files.length > 0) {
-                const pdfFiles = files.filter((file) => file.type === "application/pdf");
+                const pdfFiles = files.filter(
+                    (file) => file.type === "application/pdf" || file.name.toLowerCase().endsWith(".pdf")
+                );
 
                 if (pdfFiles.length > 0) {
                     onFileSelect?.(pdfFiles);
@@ -48,6 +50,7 @@ export default function PDFDropzone({ onFileSelect, ...props }) {
         if (files && files.length > 0) {
             onFileSelect?.(files);
         }
+        e.target.value = "";
     }, [onFileSelect]);
 
     return (
@@ -202,6 +205,12 @@ export default function PDFDropzone({ onFileSelect, ...props }) {
                         <Plus size={18} strokeWidth={2.5} />
                         {props.buttonText || "Select Files"}
                     </motion.button>
+                </div>
+
+                {/* 100% Client-Side Privacy Badge */}
+                <div className="mt-5 z-20 flex items-center gap-1.5 text-xs text-slate-500 bg-slate-50/90 border border-slate-200/80 px-3.5 py-1.5 rounded-full font-medium shadow-sm">
+                    <ShieldCheck size={14} className="text-emerald-500 shrink-0" />
+                    <span>{props.securityBadge || "100% Private · Processed locally in your browser, never uploaded"}</span>
                 </div>
 
             </div>

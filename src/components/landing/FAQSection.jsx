@@ -7,7 +7,7 @@ import {
 
 export default function FAQSection({ dict }) {
     return (
-        <section className="py-20 bg-slate-50">
+        <section id="faq" className="py-20 bg-slate-50">
             <div className="container-custom max-w-4xl">
                 <div className="text-center mb-16">
                     <h2 className="text-3xl font-bold text-slate-900 sm:text-4xl mb-4">

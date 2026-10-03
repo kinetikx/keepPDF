@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import JSZip from "jszip";
-import { ArrowLeft, Loader2, Image as ImageIcon, Download, Check } from "lucide-react";
+import { ArrowLeft, Loader2, Image as ImageIcon, Download, Check, Share2, Copy } from "lucide-react";
 import { Button } from "../ui/button";
 import { cn } from "../../lib/utils";
 import { motion } from "framer-motion";
@@ -21,34 +21,59 @@ export default function PdfToImage({ file, onBack }) {
     const [progress, setProgress] = useState(0);
     const [zipUrl, setZipUrl] = useState(null);
     const [convertedCount, setConvertedCount] = useState(0);
+    const [loadCount, setLoadCount] = useState({ current: 0, total: 0 });
+
+    useEffect(() => {
+        return () => {
+            if (zipUrl) URL.revokeObjectURL(zipUrl);
+        };
+    }, [zipUrl]);
 
     useEffect(() => {
         if (!file) return;
+        let isCancelled = false;
         const loadPDF = async () => {
             try {
                 setStatus("loading");
                 const pdfjs = await getPdfjs();
                 const arrayBuffer = await file.arrayBuffer();
                 const pdf = await pdfjs.getDocument(arrayBuffer).promise;
-                const pagePromises = [];
-                for (let i = 1; i <= pdf.numPages; i++) pagePromises.push(pdf.getPage(i));
-                const pdfPages = await Promise.all(pagePromises);
-                const renderedPages = await Promise.all(
-                    pdfPages.map(async (page, index) => {
-                        const viewport = page.getViewport({ scale: 0.5 });
-                        const canvas = document.createElement("canvas");
-                        const context = canvas.getContext("2d");
-                        canvas.height = viewport.height; canvas.width = viewport.width;
-                        await page.render({ canvasContext: context, viewport }).promise;
-                        return { id: index + 1, image: canvas.toDataURL(), pageNumber: index + 1 };
-                    })
-                );
-                setPages(renderedPages);
-                setSelectedPages(new Set(renderedPages.map(p => p.id)));
-                setStatus("selecting");
-            } catch (error) { console.error("Error loading PDF:", error); setStatus("error"); }
+                if (isCancelled) return;
+                setLoadCount({ current: 0, total: pdf.numPages });
+
+                const canvas = document.createElement("canvas");
+                const context = canvas.getContext("2d", { alpha: false });
+                const renderedPages = [];
+
+                for (let i = 1; i <= pdf.numPages; i++) {
+                    if (isCancelled) return;
+                    const page = await pdf.getPage(i);
+                    const viewport = page.getViewport({ scale: 0.35 });
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
+                    await page.render({ canvasContext: context, viewport }).promise;
+
+                    renderedPages.push({
+                        id: i,
+                        image: canvas.toDataURL("image/jpeg", 0.65),
+                        pageNumber: i
+                    });
+                    page.cleanup();
+                    setLoadCount({ current: i, total: pdf.numPages });
+                }
+
+                if (!isCancelled) {
+                    setPages(renderedPages);
+                    setSelectedPages(new Set(renderedPages.map(p => p.id)));
+                    setStatus("selecting");
+                }
+            } catch (error) {
+                console.error("Error loading PDF:", error);
+                if (!isCancelled) setStatus("error");
+            }
         };
         loadPDF();
+        return () => { isCancelled = true; };
     }, [file]);
 
     const togglePage = (id) => { setSelectedPages(prev => { const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n; }); };
@@ -65,17 +90,20 @@ export default function PdfToImage({ file, onBack }) {
             const imgFolder = zip.folder("images");
             const pagesToConvert = Array.from(selectedPages).sort((a, b) => a - b);
             setConvertedCount(pagesToConvert.length);
+
+            const canvas = document.createElement("canvas");
+            const context = canvas.getContext("2d", { alpha: false });
+
             for (let i = 0; i < pagesToConvert.length; i++) {
                 const pageNum = pagesToConvert[i];
                 setProgress(Math.round((i / pagesToConvert.length) * 100));
                 const page = await pdf.getPage(pageNum);
                 const viewport = page.getViewport({ scale: 2.0 });
-                const canvas = document.createElement("canvas");
-                const context = canvas.getContext("2d");
                 canvas.width = viewport.width; canvas.height = viewport.height;
                 await page.render({ canvasContext: context, viewport }).promise;
                 const blob = await new Promise(resolve => canvas.toBlob(resolve, "image/jpeg", 0.9));
                 imgFolder.file(`page-${pageNum.toString().padStart(3, "0")}.jpg`, blob);
+                page.cleanup();
             }
             setProgress(100);
             const content = await zip.generateAsync({ type: "blob" });
@@ -84,14 +112,54 @@ export default function PdfToImage({ file, onBack }) {
         } catch (error) { console.error("Error converting:", error); setStatus("error"); }
     };
 
-    if (status === "loading") return (<div className="flex flex-col items-center justify-center p-12 space-y-4 min-h-[50vh]"><Loader2 className="w-8 h-8 animate-spin text-indigo-600" /><p className="text-slate-500">Loading PDF Pages...</p></div>);
+    if (status === "loading") {
+        return (
+            <div className="flex flex-col items-center justify-center p-12 space-y-4 min-h-[50vh]">
+                <Loader2 className="w-8 h-8 animate-spin text-indigo-600" />
+                <p className="text-slate-500 font-medium">
+                    Loading PDF Pages...
+                    {loadCount.total > 0 && ` (${loadCount.current}/${loadCount.total})`}
+                </p>
+                {loadCount.total > 0 && (
+                    <div className="w-48 bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                        <div
+                            className="bg-indigo-600 h-full transition-all duration-150"
+                            style={{ width: `${(loadCount.current / loadCount.total) * 100}%` }}
+                        />
+                    </div>
+                )}
+            </div>
+        );
+    }
     if (status === "complete") return (
         <div className="max-w-md mx-auto bg-white p-8 rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 text-center space-y-6 mt-12">
             <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4"><ImageIcon size={32} /></div>
             <div><h3 className="text-xl font-bold text-slate-900 mb-2">Conversion Ready!</h3><p className="text-slate-500">Successfully converted {convertedCount} pages to images.</p></div>
             <div className="grid gap-3">
-                <a href={zipUrl} download={`${file.name.replace(".pdf", "")}-images.zip`} className="w-full"><Button className="w-full bg-green-600 hover:bg-green-700 h-12 text-lg"><Download className="mr-2" size={20} />Download ZIP</Button></a>
+                <a href={zipUrl} download={`${file.name.replace(/\.pdf$/i, "")}-images.zip`} className="w-full"><Button className="w-full bg-green-600 hover:bg-green-700 h-12 text-lg"><Download className="mr-2" size={20} />Download ZIP</Button></a>
                 <Button variant="ghost" onClick={onBack} className="text-slate-500">Convert Another File</Button>
+            </div>
+            <div className="pt-3 border-t border-slate-100 flex items-center justify-center gap-2">
+                <a
+                    href={`https://api.whatsapp.com/send?text=${encodeURIComponent("KeepPDF ile PDF sayfalarımı ücretsiz ve anında resme dönüştürdüm: https://keep-pdf.online")}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-xs font-semibold rounded-lg transition-colors"
+                >
+                    <Share2 size={13} />
+                    <span>WhatsApp</span>
+                </a>
+                <button
+                    type="button"
+                    onClick={() => {
+                        navigator.clipboard.writeText("https://keep-pdf.online");
+                        alert("Link kopyalandı! Arkadaşlarınızla paylaşabilirsiniz.");
+                    }}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-lg transition-colors"
+                >
+                    <Copy size={13} />
+                    <span>Linki Kopyala</span>
+                </button>
             </div>
         </div>
     );

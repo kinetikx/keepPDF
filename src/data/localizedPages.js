@@ -9,28 +9,28 @@
 export const hreflangGroups = {
     merge: {
         en: '/en/merge-pdf',
-        tr: '/tr/merge-pdf',
+        tr: '/tr/pdf-birlestir-ucretsiz',
         sq: '/sq/bashko-pdf-falas',
         et: '/et/uhenda-pdf-tasuta',
         lv: '/lv/apvienot-pdf-bezmaksas',
     },
     split: {
         en: '/en/split',
-        tr: '/tr/split',
+        tr: '/tr/pdf-bol-ucretsiz',
         sq: '/sq/ndaj-pdf-falas-online',
         et: '/et/tukkelda-pdf-tasuta',
         lv: '/lv/sadalit-pdf-bezmaksas',
     },
     compress: {
         en: '/en/compress',
-        tr: '/tr/compress',
+        tr: '/tr/pdf-sikistir-ucretsiz',
         sq: '/sq/kompriso-pdf-pa-regjistrim',
         et: '/et/tihenda-pdf-tasuta',
         lv: '/lv/saspiest-pdf-bezmaksas',
     },
     edit: {
         en: '/en/edit-pdf',
-        tr: '/tr/edit-pdf',
+        tr: '/tr/pdf-duzenle-ucretsiz',
         sq: '/sq/redakto-pdf-online-falas',
         et: '/et/muuda-pdf-veebi-tasuta',
         lv: '/lv/rediget-pdf-tiesaiste',

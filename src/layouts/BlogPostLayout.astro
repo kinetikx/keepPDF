@@ -40,11 +40,13 @@ if (post.data.image) {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#4f46e5" />
     <title>{post.data.title}</title>
     <meta name="description" content={post.data.description} />
     <meta name="keywords" content={post.data.tags?.join(', ')} />
     <meta name="author" content={post.data.author} />
     <link rel="icon" href="/brand-logo.svg" />
+    <link rel="manifest" href="/site.webmanifest" />
     <link rel="canonical" href={`https://keep-pdf.online${currentPath}`} />
 
     <!-- hreflang for translations -->
@@ -52,6 +54,11 @@ if (post.data.image) {
       <link rel="alternate" hreflang={t.lang} href={`https://keep-pdf.online/${t.lang}/blog/${t.slug}`} />
     ))}
     <link rel="alternate" hreflang={lang} href={`https://keep-pdf.online${currentPath}`} />
+    {(() => {
+      const enTranslation = translations?.find(t => t.lang === 'en');
+      const xDefaultHref = lang === 'en' ? `https://keep-pdf.online${currentPath}` : (enTranslation ? `https://keep-pdf.online/en/blog/${enTranslation.slug}` : `https://keep-pdf.online${currentPath}`);
+      return <link rel="alternate" hreflang="x-default" href={xDefaultHref} />;
+    })()}
 
     <!-- Open Graph -->
     <meta property="og:title" content={post.data.title} />

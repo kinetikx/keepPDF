@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { FileText, Loader2, Download, AlertCircle } from "lucide-react";
-import { Document, Packer, Paragraph } from "docx";
-import saveAs from "file-saver";
 
 export default function PdfToWord({ dict }) {
     const [file, setFile] = useState(null);
@@ -11,8 +9,13 @@ export default function PdfToWord({ dict }) {
 
     const handleFileChange = (e) => {
         const selectedFile = e.target.files[0];
-        if (selectedFile && selectedFile.type === "application/pdf") { setFile(selectedFile); setError(null); }
-        else { setError(dict?.tools?.pdfToWord?.editor?.error); }
+        if (selectedFile && (selectedFile.type === "application/pdf" || selectedFile.name.toLowerCase().endsWith(".pdf"))) {
+            setFile(selectedFile);
+            setError(null);
+        } else if (selectedFile) {
+            setError(dict?.tools?.pdfToWord?.editor?.error);
+        }
+        e.target.value = "";
     };
 
     const convertToWord = async () => {
@@ -28,10 +31,13 @@ export default function PdfToWord({ dict }) {
                 const page = await pdf.getPage(i);
                 const textContent = await page.getTextContent();
                 extractedText.push(textContent.items.map(item => item.str).join(" "));
+                page.cleanup();
             }
+            const { Document, Packer, Paragraph } = await import("docx");
             const doc = new Document({ sections: [{ properties: {}, children: extractedText.map(text => new Paragraph({ text, spacing: { after: 200 } })) }] });
             const blob = await Packer.toBlob(doc);
-            saveAs(blob, file.name.replace(".pdf", ".docx"));
+            const { default: saveAs } = await import("file-saver");
+            saveAs(blob, file.name.replace(/\.pdf$/i, ".docx"));
         } catch (err) { console.error("Conversion failed:", err); setError(dict?.tools?.pdfToWord?.editor?.conversionError); }
         finally { setIsConverting(false); }
     };

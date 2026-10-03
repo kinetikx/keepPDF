@@ -2,7 +2,36 @@ import { motion } from "framer-motion";
 import { Clock, ArrowLeft } from "lucide-react";
 import { Button } from "./button";
 
-export default function ComingSoon({ title, description, lang }) {
+const badgeLabels = {
+    tr: "Yakında",
+    en: "Coming Soon",
+    sq: "Së shpejti",
+    et: "Tulekul",
+    lv: "Drīzumā",
+};
+
+const backLabels = {
+    tr: "Ana Sayfaya Dön",
+    en: "Back to Home",
+    sq: "Kthehu në Ballinë",
+    et: "Tagasi Avalehele",
+    lv: "Atpakaļ uz sākumlapu",
+};
+
+const defaultDescriptions = {
+    tr: "Bu özellik üzerinde çalışmalarımız devam ediyor. Çok yakında hizmetinizde olacak!",
+    en: "We are actively working on this tool. It will be available very soon!",
+    sq: "Po punojmë për këtë mjet. Do të jetë në shërbimin tuaj shumë shpejt!",
+    et: "Töötame selle tööriista kallal. See on varsti teie teenistuses!",
+    lv: "Mēs aktīvi strādājam pie šī rīka. Tas drīz būs pieejams!",
+};
+
+export default function ComingSoon({ title, description, lang, dict }) {
+    const currentLang = lang || 'en';
+    const badgeText = dict?.common?.comingSoon || badgeLabels[currentLang] || badgeLabels.en;
+    const descText = description || defaultDescriptions[currentLang] || defaultDescriptions.en;
+    const backText = backLabels[currentLang] || backLabels.en;
+
     return (
         <main className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-4">
             <motion.div
@@ -19,17 +48,17 @@ export default function ComingSoon({ title, description, lang }) {
                 </h1>
 
                 <div className="inline-block bg-amber-100 text-amber-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-4">
-                    Yakında
+                    {badgeText}
                 </div>
 
                 <p className="text-slate-500 mb-8 leading-relaxed">
-                    {description || "Bu özellik üzerinde çalışmalarımız devam ediyor. Çok yakında hizmetinizde olacak!"}
+                    {descText}
                 </p>
 
-                <a href={`/${lang || 'en'}`}>
+                <a href={`/${currentLang}`}>
                     <Button variant="outline" className="w-full gap-2">
                         <ArrowLeft size={16} />
-                        Ana Sayfaya Dön
+                        {backText}
                     </Button>
                 </a>
             </motion.div>

@@ -1,4 +1,4 @@
----
+﻿---
 export const prerender = true;
 import Layout from '../../layouts/Layout.astro';
 import { getDictionary, locales } from '../../i18n/dictionary';
@@ -20,8 +20,8 @@ const howToSchema = buildHowToSchema('pdf-to-txt', lang);
 
 <Layout lang={lang} dict={dict} title={dict.metadata.pdfToTxt.title} description={dict.metadata.pdfToTxt.description} howToSchema={howToSchema}>
   <Navbar client:load lang={lang} dict={dict} slot="navbar" />
-  <ComingSoon client:load title={dict.tools.pdfToTxt.title} description={dict.tools.pdfToTxt.description} lang={lang} />
+  <ComingSoon client:idle title={dict.tools.pdfToTxt.title} description={dict.tools.pdfToTxt.description} lang={lang} />
   <HowToSection client:visible slug="pdf-to-txt" lang={lang} />
   <UseCaseSection client:visible slug="pdf-to-txt" lang={lang} />
-  <CookieBanner client:load dict={dict} slot="cookie-banner" />
+  <CookieBanner client:idle dict={dict} slot="cookie-banner" />
 </Layout>

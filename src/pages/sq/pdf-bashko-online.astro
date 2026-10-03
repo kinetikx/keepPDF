@@ -1,4 +1,4 @@
----
+﻿---
 export const prerender = true;
 import Layout from '../../layouts/Layout.astro';
 import { getDictionary } from '../../i18n/dictionary';
@@ -196,5 +196,5 @@ const seoDescription = "PDF bashko online pa instalim dhe pa regjistrim. Ngarkon
         </div>
     </section>
 
-    <CookieBanner client:load dict={dict} slot="cookie-banner" />
+    <CookieBanner client:idle dict={dict} slot="cookie-banner" />
 </Layout>

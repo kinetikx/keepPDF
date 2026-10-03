@@ -1,0 +1,91 @@
+﻿---
+export const prerender = true;
+import Layout from '../../layouts/Layout.astro';
+import { getDictionary, locales } from '../../i18n/dictionary';
+import Navbar from '../../components/landing/Navbar';
+import CookieBanner from '../../components/landing/CookieBanner';
+
+export function getStaticPaths() {
+  return locales.map(lang => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params;
+const dict = getDictionary(lang);
+
+const titles = {
+  tr: "Gizlilik Politikası | KeepPDF",
+  en: "Privacy Policy | KeepPDF",
+  sq: "Politika e Privatësisë | KeepPDF",
+  et: "Privaatsuspoliitika | KeepPDF",
+  lv: "Privātuma politika | KeepPDF",
+};
+
+const descs = {
+  tr: "KeepPDF gizlilik politikası: Dosyalarınız sunucuya yüklenmez, %100 tarayıcınızda yerel olarak işlenir.",
+  en: "KeepPDF privacy policy: Your files are processed locally in your browser and never uploaded to any server.",
+  sq: "Politika e privatësisë KeepPDF: Skedarët tuaj përpunohen në shfletues dhe nuk ngarkohen në server.",
+  et: "KeepPDF privaatsuspoliitika: Teie faile töödeldakse brauseris ja neid ei laadita kunagi serverisse.",
+  lv: "KeepPDF privātuma politika: Jūsu faili tiek apstrādāti pārlūkā un netiek augšupielādēti serverī.",
+};
+
+const title = titles[lang] || titles.en;
+const description = descs[lang] || descs.en;
+---
+
+<Layout lang={lang} dict={dict} title={title} description={description}>
+  <Navbar client:load lang={lang} dict={dict} slot="navbar" />
+
+  <div class="max-w-4xl mx-auto px-4 py-16">
+    <h1 class="text-4xl font-extrabold text-slate-900 mb-6">{dict.footer?.links?.privacy || "Privacy Policy"}</h1>
+    
+    <div class="prose prose-slate max-w-none space-y-6 text-slate-600 leading-relaxed">
+      {lang === 'tr' ? (
+        <>
+          <p class="text-lg font-medium text-slate-800">
+            KeepPDF olarak kişisel gizliliğinize ve belge güvenliğinize en üst düzeyde önem veriyoruz.
+          </p>
+          <h2 class="text-2xl font-bold text-slate-900 mt-8 mb-4">1. Dosyaların İşlenmesi ve Saklanmaması</h2>
+          <p>
+            KeepPDF'in en temel prensibi <strong>"Gizlilik Odaklı İstemci Mimarisi"</strong>dir. PDF birleştirme, bölme, sıkıştırma ve dönüştürme işlemlerinin tamamı doğrudan web tarayıcınızda (client-side) gerçekleştirilir. Yüklediğiniz belgeler asla üçüncü taraf sunucularımıza veya herhangi bir uzak veritabanına aktarılmaz.
+          </p>
+          <h2 class="text-2xl font-bold text-slate-900 mt-8 mb-4">2. Toplanan Bilgiler</h2>
+          <p>
+            KeepPDF'i kullanmak için üyelik, kayıt veya e-posta adresi zorunluluğu yoktur. Kullanıcı deneyimini iyileştirmek ve anonim site trafiğini analiz etmek için yalnızca Google Analytics gibi standart anonim web analiz araçları kullanılmaktadır.
+          </p>
+          <h2 class="text-2xl font-bold text-slate-900 mt-8 mb-4">3. Çerezler (Cookies)</h2>
+          <p>
+            Sitemiz, tercih ettiğiniz dil seçeneğini hatırlamak ve temel analitik işlevleri yerine getirmek amacıyla minimum düzeyde çerez kullanmaktadır.
+          </p>
+          <h2 class="text-2xl font-bold text-slate-900 mt-8 mb-4">4. İletişim</h2>
+          <p>
+            Gizlilik politikamız ile ilgili her türlü soru ve geri bildiriminiz için bizimle iletişime geçebilirsiniz.
+          </p>
+        </>
+      ) : (
+        <>
+          <p class="text-lg font-medium text-slate-800">
+            At KeepPDF, we are committed to protecting your privacy and ensuring maximum security for your documents.
+          </p>
+          <h2 class="text-2xl font-bold text-slate-900 mt-8 mb-4">1. Local Processing & Zero File Storage</h2>
+          <p>
+            KeepPDF operates on a strict <strong>Client-Side Processing</strong> principle. All operations (merging, splitting, compressing, and converting) occur directly inside your browser. Your documents are never uploaded to our servers or stored in any remote database.
+          </p>
+          <h2 class="text-2xl font-bold text-slate-900 mt-8 mb-4">2. Information Collection</h2>
+          <p>
+            We do not require user registration, accounts, or personal information. Standard anonymous traffic analytics (such as Google Analytics) may be used solely to monitor site performance and improve user experience.
+          </p>
+          <h2 class="text-2xl font-bold text-slate-900 mt-8 mb-4">3. Cookies</h2>
+          <p>
+            We use minimal cookies strictly necessary to remember your language preferences and standard site performance metrics.
+          </p>
+          <h2 class="text-2xl font-bold text-slate-900 mt-8 mb-4">4. Contact Us</h2>
+          <p>
+            If you have any questions or feedback regarding our Privacy Policy, please feel free to reach out to us.
+          </p>
+        </>
+      )}
+    </div>
+  </div>
+
+  <CookieBanner client:idle dict={dict} slot="cookie-banner" />
+</Layout>

@@ -1,8 +1,8 @@
 ---
 const acceptLanguage = Astro.request.headers.get('accept-language') || '';
-const supportedLocales = ['en', 'tr', 'sq'];
+const supportedLocales = ['en', 'tr', 'sq', 'et', 'lv'];
 
-function getPreferredLocale(header) {
+function getPreferredLocale(header: string) {
   const languages = header
     .split(',')
     .map(lang => {
@@ -20,14 +20,88 @@ function getPreferredLocale(header) {
 }
 
 const lang = getPreferredLocale(acceptLanguage);
+
+const t = {
+  tr: {
+    title: 'Sayfa Bulunamadı',
+    desc: 'Aradığınız sayfa mevcut değil veya taşınmış. Sizi popüler PDF araçlarımıza geri götürelim.',
+    back: 'Ana Sayfaya Dön',
+    popularTitle: 'Popüler Araçlar',
+    tools: [
+      { name: 'PDF Birleştir', href: '/tr/pdf-birlestir-ucretsiz' },
+      { name: 'PDF Böl', href: '/tr/pdf-bol-ucretsiz' },
+      { name: 'PDF Sıkıştır', href: '/tr/pdf-sikistir-ucretsiz' },
+      { name: 'Görselden PDF’e', href: '/tr/image-to-pdf' },
+    ]
+  },
+  sq: {
+    title: 'Faqja nuk u gjet',
+    desc: 'Faqja që po kërkoni nuk ekziston ose është zhvendosur. Le t\'ju kthejmë te mjetet PDF.',
+    back: 'Kthehu te faqja kryesore',
+    popularTitle: 'Mjetet Popullore',
+    tools: [
+      { name: 'Bashko PDF', href: '/sq/bashko-pdf-falas' },
+      { name: 'Ndaj PDF', href: '/sq/ndaj-pdf-falas-online' },
+      { name: 'Kompriso PDF', href: '/sq/kompriso-pdf-pa-regjistrim' },
+      { name: 'Imazh në PDF', href: '/sq/image-to-pdf' },
+    ]
+  },
+  et: {
+    title: 'Lehekülge ei leitud',
+    desc: 'Otsitavat lehte pole olemas või see on teisaldatud. Viime teid tagasi PDF-tööriistade juurde.',
+    back: 'Tagasi avalehele',
+    popularTitle: 'Populaarsed tööriistad',
+    tools: [
+      { name: 'Ühenda PDF', href: '/et/uhenda-pdf-tasuta' },
+      { name: 'Tükelda PDF', href: '/et/tukkelda-pdf-tasuta' },
+      { name: 'Tihenda PDF', href: '/et/tihenda-pdf-tasuta' },
+      { name: 'Pilt PDF-iks', href: '/et/image-to-pdf' },
+    ]
+  },
+  lv: {
+    title: 'Lapa nav atrasta',
+    desc: 'Meklētā lapa nepastāv vai ir pārvietota. Atgriezīsimies pie PDF rīkiem.',
+    back: 'Atpakaļ uz sākumlapu',
+    popularTitle: 'Populāri rīki',
+    tools: [
+      { name: 'Apvienot PDF', href: '/lv/apvienot-pdf-bezmaksas' },
+      { name: 'Sadalīt PDF', href: '/lv/sadalit-pdf-bezmaksas' },
+      { name: 'Saspiest PDF', href: '/lv/saspiest-pdf-bezmaksas' },
+      { name: 'Attēls uz PDF', href: '/lv/image-to-pdf' },
+    ]
+  },
+  en: {
+    title: 'Page Not Found',
+    desc: "The page you're looking for doesn't exist or has been moved. Let's get you back to the PDF tools.",
+    back: 'Back to Home',
+    popularTitle: 'Popular Tools',
+    tools: [
+      { name: 'Merge PDF', href: '/en/merge-pdf' },
+      { name: 'Split PDF', href: '/en/split' },
+      { name: 'Compress PDF', href: '/en/compress' },
+      { name: 'Image to PDF', href: '/en/image-to-pdf' },
+    ]
+  }
+}[lang] || {
+  title: 'Page Not Found',
+  desc: "The page you're looking for doesn't exist or has been moved.",
+  back: 'Back to Home',
+  popularTitle: 'Popular Tools',
+  tools: [
+    { name: 'Merge PDF', href: '/en/merge-pdf' },
+    { name: 'Split PDF', href: '/en/split' },
+    { name: 'Compress PDF', href: '/en/compress' },
+    { name: 'Image to PDF', href: '/en/image-to-pdf' },
+  ]
+};
 ---
 <!DOCTYPE html>
 <html lang={lang} class="scroll-smooth">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>404 - Page Not Found | KeepPDF</title>
-    <link rel="icon" type="image/png" href="/icon.png" />
+    <title>404 - {t.title} | KeepPDF</title>
+    <link rel="icon" type="image/svg+xml" href="/brand-logo.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -44,23 +118,24 @@ const lang = getPreferredLocale(acceptLanguage);
       }
       .container {
         text-align: center;
-        padding: 2rem;
-        max-width: 480px;
+        padding: 2.5rem 1.5rem;
+        max-width: 520px;
+        width: 100%;
       }
       .icon-wrapper {
-        width: 96px;
-        height: 96px;
-        margin: 0 auto 2rem;
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 1.5rem;
         background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-        border-radius: 24px;
+        border-radius: 20px;
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 20px 40px -12px rgba(99, 102, 241, 0.3);
+        box-shadow: 0 16px 32px -8px rgba(99, 102, 241, 0.35);
       }
-      .icon-wrapper svg { width: 48px; height: 48px; color: white; }
+      .icon-wrapper svg { width: 40px; height: 40px; color: white; }
       .code {
-        font-size: 5rem;
+        font-size: 4.5rem;
         font-weight: 900;
         letter-spacing: -0.05em;
         background: linear-gradient(135deg, #6366f1, #4f46e5);
@@ -78,9 +153,9 @@ const lang = getPreferredLocale(acceptLanguage);
       }
       p {
         color: #64748b;
-        font-size: 1rem;
+        font-size: 0.95rem;
         line-height: 1.6;
-        margin-bottom: 2rem;
+        margin-bottom: 1.75rem;
       }
       .btn {
         display: inline-flex;
@@ -101,6 +176,45 @@ const lang = getPreferredLocale(acceptLanguage);
         box-shadow: 0 8px 20px -4px rgba(99, 102, 241, 0.5);
       }
       .btn svg { width: 18px; height: 18px; }
+      .popular-section {
+        margin-top: 2rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid #e2e8f0;
+      }
+      .popular-title {
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #94a3b8;
+        margin-bottom: 1rem;
+      }
+      .tool-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        justify-content: center;
+      }
+      .tool-chip {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.5rem 1rem;
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 9999px;
+        color: #334155;
+        font-size: 0.85rem;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.2s;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+      }
+      .tool-chip:hover {
+        border-color: #6366f1;
+        color: #4f46e5;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px -2px rgba(99, 102, 241, 0.15);
+      }
     </style>
 </head>
 <body>
@@ -114,14 +228,23 @@ const lang = getPreferredLocale(acceptLanguage);
       </svg>
     </div>
     <div class="code">404</div>
-    <h1>{lang === 'tr' ? 'Sayfa Bulunamadı' : lang === 'sq' ? 'Faqja nuk u gjet' : 'Page Not Found'}</h1>
-    <p>{lang === 'tr' ? 'Aradığınız sayfa mevcut değil veya taşınmış. Sizi PDF araçlarımıza geri götürelim.' : lang === 'sq' ? 'Faqja që po kërkoni nuk ekziston ose është zhvendosur. Le t\'ju kthejmë te mjetet PDF.' : "The page you're looking for doesn't exist or has been moved. Let's get you back to the PDF tools."}</p>
+    <h1>{t.title}</h1>
+    <p>{t.desc}</p>
     <a href={`/${lang}`} class="btn">
       <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
         <path d="m12 19-7-7 7-7"/><path d="M19 12H5"/>
       </svg>
-      {lang === 'tr' ? 'Ana Sayfaya Dön' : lang === 'sq' ? 'Kthehu te faqja kryesore' : 'Back to Home'}
+      {t.back}
     </a>
+
+    <div class="popular-section">
+      <div class="popular-title">{t.popularTitle}</div>
+      <div class="tool-chips">
+        {t.tools.map(tool => (
+          <a href={tool.href} class="tool-chip">{tool.name}</a>
+        ))}
+      </div>
+    </div>
   </div>
 </body>
 </html>

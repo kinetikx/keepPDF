@@ -41,6 +41,30 @@ export default defineConfig({
     ],
     vite: {
         plugins: [tailwindcss()],
+        build: {
+            chunkSizeWarningLimit: 1200,
+            rollupOptions: {
+                output: {
+                    manualChunks(id) {
+                        if (id.includes('node_modules/pdf-lib')) {
+                            return 'pdf-lib';
+                        }
+                        if (id.includes('node_modules/docx')) {
+                            return 'docx';
+                        }
+                        if (id.includes('node_modules/mammoth')) {
+                            return 'mammoth';
+                        }
+                        if (id.includes('node_modules/html2pdf.js')) {
+                            return 'html2pdf';
+                        }
+                        if (id.includes('node_modules/pdfjs-dist')) {
+                            return 'pdfjs-dist';
+                        }
+                    },
+                },
+            },
+        },
     },
     i18n: {
         defaultLocale: 'en',

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { FileText, Loader2, Download, AlertCircle } from "lucide-react";
-import mammoth from "mammoth";
 
 export default function WordToPdf({ dict }) {
     const [file, setFile] = useState(null);
@@ -10,8 +9,13 @@ export default function WordToPdf({ dict }) {
 
     const handleFileChange = (e) => {
         const selectedFile = e.target.files[0];
-        if (selectedFile && selectedFile.name.endsWith(".docx")) { setFile(selectedFile); setError(null); }
-        else { setError(dict?.tools?.wordToPdf?.editor?.error); }
+        if (selectedFile && selectedFile.name.toLowerCase().endsWith(".docx")) {
+            setFile(selectedFile);
+            setError(null);
+        } else if (selectedFile) {
+            setError(dict?.tools?.wordToPdf?.editor?.error);
+        }
+        e.target.value = "";
     };
 
     const convertToPdf = async () => {
@@ -19,10 +23,11 @@ export default function WordToPdf({ dict }) {
         setIsConverting(true); setError(null);
         try {
             const arrayBuffer = await file.arrayBuffer();
+            const mammoth = (await import("mammoth")).default;
             const result = await mammoth.convertToHtml({ arrayBuffer });
             const htmlContent = `<html><head><style>body{font-family:Arial,sans-serif;padding:20px;line-height:1.6}p{margin-bottom:1em}h1,h2,h3{margin-top:1.5em;margin-bottom:0.5em}table{border-collapse:collapse;width:100%;margin-bottom:1em}td,th{border:1px solid #ddd;padding:8px}</style></head><body>${result.value}</body></html>`;
             const html2pdf = (await import("html2pdf.js")).default;
-            await html2pdf().set({ margin: 10, filename: file.name.replace(".docx", ".pdf"), image: { type: "jpeg", quality: 0.98 }, html2canvas: { scale: 2 }, jsPDF: { unit: "mm", format: "a4", orientation: "portrait" } }).from(htmlContent).save();
+            await html2pdf().set({ margin: 10, filename: file.name.replace(/\.docx$/i, ".pdf"), image: { type: "jpeg", quality: 0.98 }, html2canvas: { scale: 2 }, jsPDF: { unit: "mm", format: "a4", orientation: "portrait" } }).from(htmlContent).save();
         } catch (err) { console.error("Conversion failed:", err); setError(dict?.tools?.wordToPdf?.editor?.conversionError); }
         finally { setIsConverting(false); }
     };

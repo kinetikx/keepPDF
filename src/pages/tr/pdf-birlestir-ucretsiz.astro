@@ -1,0 +1,220 @@
+﻿---
+export const prerender = true;
+import Layout from '../../layouts/Layout.astro';
+import { getDictionary } from '../../i18n/dictionary';
+import Navbar from '../../components/landing/Navbar';
+import CookieBanner from '../../components/landing/CookieBanner';
+import MergeClient from '../../components/tools/MergeClient';
+
+const lang = 'tr';
+const dict = getDictionary(lang);
+
+const seoTitle = "PDF Birleştir Ücretsiz — Sunucuya Yüklemeden PDF Dosyalarını Birleştir | KeepPDF";
+const seoDescription = "PDF birleştirme işlemini ücretsiz, hızlı ve güvenli yapın. Dosyalarınız sunucuya yüklenmeden, %100 tarayıcınızda birleştirilir. Kayıt ve kurulum gerekmez.";
+
+const howToSchema = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "PDF Dosyalarını Ücretsiz Birleştirmenin 3 Kolay Adımı",
+    "description": "KeepPDF ile PDF dosyalarını sunucuya yüklemeden tarayıcınızda ücretsiz birleştirin.",
+    "step": [
+        {
+            "@type": "HowToStep",
+            "position": 1,
+            "name": "PDF Dosyalarını Seçin",
+            "text": "Birleştirmek istediğiniz PDF dosyalarını seçin veya yükleme alanına sürükleyip bırakın."
+        },
+        {
+            "@type": "HowToStep",
+            "position": 2,
+            "name": "Sıralamayı Düzenleyin",
+            "text": "Dosyaları sürükleyerek istediğiniz sayfa sırasına göre yerleştirin."
+        },
+        {
+            "@type": "HowToStep",
+            "position": 3,
+            "name": "Birleştirin ve İndirin",
+            "text": "\"PDF'leri Birleştir\" butonuna tıklayın ve yeni PDF belgenizi anında indirin."
+        }
+    ]
+};
+
+const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "KeepPDF ile PDF birleştirmek gerçekten ücretsiz mi?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Evet! KeepPDF üzerinde tüm PDF birleştirme işlemleri tamamen ücretsizdir, herhangi bir ücret veya abonelik gerekmez."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Dosyalarım güvende mi, sunucuya yükleniyor mu?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Kesinlikle güvende. KeepPDF istemci taraflı (client-side) çalışır; dosyalarınız asla bir sunucuya yüklenmez, doğrudan kendi bilgisayarınızın tarayıcısında işlenir."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Kaç adet PDF dosyasını aynı anda birleştirebilirim?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Herhangi bir dosya adedi sınırı yoktur. Dilediğiniz kadar PDF dosyasını tek seferde ekleyip birleştirebilirsiniz."
+            }
+        }
+    ]
+};
+---
+
+<Layout lang={lang} dict={dict} title={seoTitle} description={seoDescription}>
+    <Navbar client:load lang={lang} dict={dict} slot="navbar" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden pt-24 pb-16" style="background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4338ca 100%);">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-20 left-10 w-72 h-72 bg-purple-400 rounded-full filter blur-3xl animate-pulse"></div>
+            <div class="absolute bottom-10 right-20 w-96 h-96 bg-indigo-400 rounded-full filter blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
+        </div>
+        <div class="container-custom max-w-4xl mx-auto relative z-10 text-center px-4">
+            <span class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white/90 text-sm font-medium px-4 py-2 rounded-full border border-white/20 mb-6">
+                🔒 %100 Gizli — Dosyalarınız asla tarayıcınızdan çıkmaz
+            </span>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-6" style="letter-spacing: -0.03em;">
+                PDF Birleştir Ücretsiz
+                <span class="block text-indigo-300 text-2xl md:text-3xl font-semibold mt-3">Sunucuya Yüklemeden — Anında ve Güvenli</span>
+            </h1>
+            <div class="flex flex-wrap justify-center gap-4 mb-8">
+                <div class="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-xl text-white/80 text-sm">
+                    <span class="text-green-400">✓</span> Her zaman ücretsiz
+                </div>
+                <div class="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-xl text-white/80 text-sm">
+                    <span class="text-green-400">✓</span> Kayıt gerekmez
+                </div>
+                <div class="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-xl text-white/80 text-sm">
+                    <span class="text-green-400">✓</span> Sunucu yüklemesi yok
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool -->
+    <section class="py-12 bg-slate-50">
+        <div class="container-custom max-w-4xl mx-auto px-4">
+            <MergeClient client:load dict={dict} />
+        </div>
+    </section>
+
+    <!-- How To Section -->
+    <section class="py-20 bg-white">
+        <div class="container-custom max-w-5xl mx-auto px-4">
+            <div class="text-center mb-14">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">PDF Nasıl Birleştirilir? 3 Basit Adım</h2>
+                <p class="text-lg text-slate-500 max-w-2xl mx-auto">KeepPDF ile belgelerinizi saniyeler içinde tek bir PDF'te toplayın.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="relative bg-gradient-to-br from-indigo-50 to-white rounded-2xl p-8 border border-indigo-100 shadow-sm hover:shadow-lg transition-shadow">
+                    <div class="absolute -top-4 -left-4 w-12 h-12 bg-indigo-600 text-white rounded-xl flex items-center justify-center text-lg font-bold shadow-lg">1</div>
+                    <div class="text-4xl mb-4 mt-2">📂</div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">PDF'leri Yükleyin</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">Birleştirmek istediğiniz PDF dosyalarını seçin veya sürükleyip bırakın.</p>
+                </div>
+                <div class="relative bg-gradient-to-br from-purple-50 to-white rounded-2xl p-8 border border-purple-100 shadow-sm hover:shadow-lg transition-shadow">
+                    <div class="absolute -top-4 -left-4 w-12 h-12 bg-purple-600 text-white rounded-xl flex items-center justify-center text-lg font-bold shadow-lg">2</div>
+                    <div class="text-4xl mb-4 mt-2">🔀</div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Sıralamayı Ayarlayın</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">Sürükle-bırak ile sayfaların ve belgelerin sırasını dilediğiniz gibi düzenleyin.</p>
+                </div>
+                <div class="relative bg-gradient-to-br from-emerald-50 to-white rounded-2xl p-8 border border-emerald-100 shadow-sm hover:shadow-lg transition-shadow">
+                    <div class="absolute -top-4 -left-4 w-12 h-12 bg-emerald-600 text-white rounded-xl flex items-center justify-center text-lg font-bold shadow-lg">3</div>
+                    <div class="text-4xl mb-4 mt-2">⬇️</div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">İndirin</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">"Birleştir" düğmesine tıklayın ve tek parça PDF belgenizi ücretsiz indirin!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Section -->
+    <section class="py-20 bg-slate-50 border-t border-slate-100">
+        <div class="container-custom max-w-5xl mx-auto px-4">
+            <div class="text-center mb-14">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Neden KeepPDF ile PDF Birleştirmelisiniz?</h2>
+                <p class="text-lg text-slate-500 max-w-2xl mx-auto">Güvenlik ve hız odaklı yeni nesil PDF birleştirme aracı.</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="text-3xl mb-3">🔒</div>
+                    <h3 class="font-bold text-slate-900 mb-2">%100 Gizli & Güvenli</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">Dosyalarınız hiçbir uzak sunucuya gitmez, tüm işlem tarayıcınızda biter.</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="text-3xl mb-3">⚡</div>
+                    <h3 class="font-bold text-slate-900 mb-2">Işık Hızında</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">Dosya yükleme ve indirme bekleme süresi olmadan saniyeler içinde sonuç alın.</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="text-3xl mb-3">💰</div>
+                    <h3 class="font-bold text-slate-900 mb-2">Tamamen Ücretsiz</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">Gizli ücret, abonelik veya sayfa başı kota yok. Sınırsız kullanım.</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="text-3xl mb-3">📱</div>
+                    <h3 class="font-bold text-slate-900 mb-2">Her Cihazda Çalışır</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">Windows, Mac, iPhone ve Android üzerinde sorunsuz çalışır.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-20 bg-white border-t border-slate-100">
+        <div class="container-custom max-w-3xl mx-auto px-4">
+            <div class="text-center mb-14">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Sıkça Sorulan Sorular</h2>
+                <p class="text-lg text-slate-500">PDF birleştirme hakkında merak edilenler</p>
+            </div>
+            <div class="space-y-4">
+                <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200">
+                    <h3 class="font-bold text-slate-900 mb-2">KeepPDF ile PDF birleştirmek gerçekten ücretsiz mi?</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">Evet! KeepPDF üzerinde tüm PDF birleştirme işlemleri tamamen ücretsizdir, herhangi bir ücret veya abonelik gerekmez.</p>
+                </div>
+                <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200">
+                    <h3 class="font-bold text-slate-900 mb-2">Dosyalarım güvende mi, sunucuya yükleniyor mu?</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">Kesinlikle güvende. KeepPDF istemci taraflı (client-side) çalışır; dosyalarınız asla bir sunucuya yüklenmez, doğrudan kendi bilgisayarınızın tarayıcısında işlenir.</p>
+                </div>
+                <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200">
+                    <h3 class="font-bold text-slate-900 mb-2">Kaç adet PDF dosyasını aynı anda birleştirebilirim?</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">Herhangi bir dosya adedi sınırı yoktur. Dilediğiniz kadar PDF dosyasını tek seferde ekleyip birleştirebilirsiniz.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Links -->
+    <section class="py-12 bg-slate-50 border-t border-slate-200">
+        <div class="container-custom max-w-4xl mx-auto px-4 text-center">
+            <h3 class="font-bold text-slate-700 mb-4 text-sm uppercase tracking-wider">Diğer Ücretsiz PDF Araçları</h3>
+            <div class="flex flex-wrap justify-center gap-3">
+                <a href="/tr/pdf-bol-ucretsiz" class="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-xl border border-slate-200 text-sm font-medium text-slate-700 hover:text-brand-600 hover:border-brand-200 transition-all shadow-sm">
+                    ✂️ PDF Böl
+                </a>
+                <a href="/tr/pdf-sikistir-ucretsiz" class="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-xl border border-slate-200 text-sm font-medium text-slate-700 hover:text-brand-600 hover:border-brand-200 transition-all shadow-sm">
+                    📦 PDF Sıkıştır
+                </a>
+                <a href="/tr/organize" class="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-xl border border-slate-200 text-sm font-medium text-slate-700 hover:text-brand-600 hover:border-brand-200 transition-all shadow-sm">
+                    📑 PDF Sayfa Düzenle
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <CookieBanner client:idle dict={dict} slot="cookie-banner" />
+</Layout>

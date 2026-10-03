@@ -7,7 +7,6 @@ import MergeInterface from '../../components/landing/MergeInterface';
 import FAQSection from '../../components/landing/FAQSection';
 import CookieBanner from '../../components/landing/CookieBanner';
 import TrustBanner from '../../components/landing/TrustBanner';
-import { Shield, Zap, Gift, FileText, Scissors, Minimize2, Image, FileType, PenTool, ScanLine, FileSpreadsheet, Files, ArrowRight } from 'lucide-react';
 import { getPagesByLang } from '../../data/keywordPages';
 
 export function getStaticPaths() {
@@ -67,7 +66,7 @@ const keywordPages = getPagesByLang(lang).filter(p => p.status === 'live');
     <MergeInterface client:load dict={dict} />
   </section>
 
-  <TrustBanner client:load dict={dict} />
+  <TrustBanner dict={dict} />
 
   <!-- Tools Grid -->
   <section class="py-20 bg-slate-50/50">
@@ -108,7 +107,7 @@ const keywordPages = getPagesByLang(lang).filter(p => p.status === 'live');
   </section>
 
   <!-- Why Section -->
-  <section class="py-20 bg-slate-50">
+  <section id="why" class="py-20 bg-slate-50">
     <div class="container-custom">
       <div class="text-center mb-16">
         <h2 class="text-3xl font-bold text-slate-900 sm:text-4xl mb-4">{dict.why.title}</h2>
@@ -137,10 +136,8 @@ const keywordPages = getPagesByLang(lang).filter(p => p.status === 'live');
     <section class="py-16 bg-white border-t border-slate-100">
       <div class="container-custom">
         <div class="flex flex-col md:flex-row items-center justify-between mb-8">
-          <div>
-            <h2 class="text-2xl font-bold text-slate-900 mb-2">Popular PDF Tools {lang === 'sq' ? 'në Shqip' : lang === 'et' ? 'Eestis' : lang === 'lv' ? 'Latvijā' : ''}</h2>
-            <p class="text-slate-500">Fast and free tools highly requested in your region.</p>
-          </div>
+            <h2 class="text-2xl font-bold text-slate-900 mb-2">{lang === 'tr' ? 'Popüler PDF Araçları' : `Popular PDF Tools ${lang === 'sq' ? 'në Shqip' : lang === 'et' ? 'Eestis' : lang === 'lv' ? 'Latvijā' : ''}`}</h2>
+            <p class="text-slate-500">{lang === 'tr' ? 'Bölgenizde en çok tercih edilen hızlı ve ücretsiz araçlar.' : 'Fast and free tools highly requested in your region.'}</p>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {keywordPages.map((page) => (
@@ -167,5 +164,5 @@ const keywordPages = getPagesByLang(lang).filter(p => p.status === 'live');
   <!-- FAQ Section -->
   <FAQSection client:visible dict={dict} />
 
-  <CookieBanner client:load dict={dict} slot="cookie-banner" />
+  <CookieBanner client:idle dict={dict} slot="cookie-banner" />
 </Layout>

@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import { PDFDocument } from "pdf-lib";
 import { motion } from "framer-motion";
 import { Check, Download, ArrowLeft, Loader2, Split } from "lucide-react";
 import { cn } from "../../lib/utils";
@@ -18,6 +17,7 @@ export default function SplitEditor({ file, onBack, dict }) {
     const [selectedPages, setSelectedPages] = useState(new Set());
     const [isProcessing, setIsProcessing] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [totalNumPages, setTotalNumPages] = useState(0);
     const isSelectionDragging = useRef(false);
     const selectionTargetState = useRef(true);
 
@@ -29,31 +29,49 @@ export default function SplitEditor({ file, onBack, dict }) {
 
     useEffect(() => {
         if (!file) return;
+        let isCancelled = false;
         const loadPDF = async () => {
             try {
                 setIsLoading(true);
+                setPages([]);
                 const pdfjs = await getPdfjs();
                 const arrayBuffer = await file.arrayBuffer();
                 const pdf = await pdfjs.getDocument(arrayBuffer).promise;
-                const pagePromises = [];
-                for (let i = 1; i <= pdf.numPages; i++) pagePromises.push(pdf.getPage(i));
-                const pdfPages = await Promise.all(pagePromises);
-                const renderedPages = await Promise.all(
-                    pdfPages.map(async (page, index) => {
-                        const viewport = page.getViewport({ scale: 0.5 });
-                        const canvas = document.createElement("canvas");
-                        const context = canvas.getContext("2d");
-                        canvas.height = viewport.height;
-                        canvas.width = viewport.width;
-                        await page.render({ canvasContext: context, viewport }).promise;
-                        return { id: index, image: canvas.toDataURL(), pageNumber: index + 1 };
-                    })
-                );
-                setPages(renderedPages);
-            } catch (error) { console.error("Error loading PDF:", error); }
-            finally { setIsLoading(false); }
+                if (isCancelled) return;
+                setTotalNumPages(pdf.numPages);
+
+                const canvas = document.createElement("canvas");
+                const context = canvas.getContext("2d", { alpha: false });
+                const renderedPages = [];
+
+                for (let i = 1; i <= pdf.numPages; i++) {
+                    if (isCancelled) return;
+                    const page = await pdf.getPage(i);
+                    const viewport = page.getViewport({ scale: 0.35 });
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
+                    await page.render({ canvasContext: context, viewport }).promise;
+
+                    renderedPages.push({
+                        id: i - 1,
+                        image: canvas.toDataURL("image/jpeg", 0.65),
+                        pageNumber: i
+                    });
+                    page.cleanup();
+
+                    if (i === 1 || i % 4 === 0 || i === pdf.numPages) {
+                        setPages([...renderedPages]);
+                        setIsLoading(false);
+                    }
+                }
+            } catch (error) {
+                console.error("Error loading PDF:", error);
+            } finally {
+                if (!isCancelled) setIsLoading(false);
+            }
         };
         loadPDF();
+        return () => { isCancelled = true; };
     }, [file]);
 
     const handleMouseDown = (id) => {
@@ -76,13 +94,14 @@ export default function SplitEditor({ file, onBack, dict }) {
         if (selectedPages.size === 0) return;
         setIsProcessing(true);
         try {
+            const { PDFDocument } = await import("pdf-lib");
             const arrayBuffer = await file.arrayBuffer();
             const srcDoc = await PDFDocument.load(arrayBuffer);
             const newDoc = await PDFDocument.create();
             const indices = Array.from(selectedPages).sort((a, b) => a - b);
             const copiedPages = await newDoc.copyPages(srcDoc, indices);
             copiedPages.forEach((page) => newDoc.addPage(page));
-            const pdfBytes = await newDoc.save();
+            const pdfBytes = await newDoc.save({ useObjectStreams: true });
             const blob = new Blob([pdfBytes], { type: "application/pdf" });
             const url = URL.createObjectURL(blob);
             const link = document.createElement("a");
@@ -91,6 +110,7 @@ export default function SplitEditor({ file, onBack, dict }) {
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
+            setTimeout(() => URL.revokeObjectURL(url), 10000);
         } catch (error) { console.error("Error splitting PDF:", error); }
         finally { setIsProcessing(false); }
     };
@@ -99,7 +119,7 @@ export default function SplitEditor({ file, onBack, dict }) {
         selectedPages.size === pages.length ? setSelectedPages(new Set()) : setSelectedPages(new Set(pages.map(p => p.id)));
     };
 
-    if (isLoading) {
+    if (isLoading && pages.length === 0) {
         return (
             <div className="flex flex-col items-center justify-center p-12 space-y-4">
                 <Loader2 className="w-8 h-8 animate-spin text-indigo-600" />
@@ -115,7 +135,11 @@ export default function SplitEditor({ file, onBack, dict }) {
                     <button onClick={onBack} className="p-2 hover:bg-slate-100 rounded-full transition-colors text-slate-600"><ArrowLeft size={20} /></button>
                     <div>
                         <h2 className="font-semibold text-slate-800">{file.name}</h2>
-                        <p className="text-sm text-slate-500">{(dict?.tools?.split?.editor?.pageCount || "{count} pages found").replace("{count}", pages.length)}</p>
+                        <p className="text-sm text-slate-500">
+                            {pages.length < totalNumPages
+                                ? `${pages.length} / ${totalNumPages} ${(dict?.tools?.split?.editor?.loading || "loading...")}`
+                                : (dict?.tools?.split?.editor?.pageCount || "{count} pages found").replace("{count}", pages.length)}
+                        </p>
                     </div>
                 </div>
                 <div className="flex items-center gap-3">

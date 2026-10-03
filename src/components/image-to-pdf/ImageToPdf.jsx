@@ -1,5 +1,4 @@
 import { useState, useCallback } from "react";
-import { PDFDocument } from "pdf-lib";
 import { DndContext, closestCenter, KeyboardSensor, TouchSensor, MouseSensor, useSensor, useSensors, DragOverlay } from "@dnd-kit/core";
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, rectSortingStrategy } from "@dnd-kit/sortable";
 import { AnimatePresence } from "framer-motion";
@@ -33,12 +32,28 @@ export default function ImageToPdf({ onBack, dict }) {
         if (active.id !== over.id) setImages((items) => { const oldIndex = items.findIndex((item) => item.id === active.id); const newIndex = items.findIndex((item) => item.id === over.id); return arrayMove(items, oldIndex, newIndex); });
         setActiveId(null);
     };
-    const handleDelete = (id) => setImages((prev) => prev.filter((img) => img.id !== id));
+    const handleDelete = (id) => setImages((prev) => {
+        const item = prev.find((img) => img.id === id);
+        if (item?.preview) URL.revokeObjectURL(item.preview);
+        return prev.filter((img) => img.id !== id);
+    });
+
+    const handleBackClick = () => {
+        if (images.length > 0) {
+            images.forEach((img) => {
+                if (img.preview) URL.revokeObjectURL(img.preview);
+            });
+            setImages([]);
+        } else if (onBack) {
+            onBack();
+        }
+    };
 
     const handleSave = async () => {
         if (images.length === 0) return;
         setIsProcessing(true);
         try {
+            const { PDFDocument } = await import("pdf-lib");
             const pdfDoc = await PDFDocument.create();
             for (const imgData of images) {
                 const imageBytes = await imgData.file.arrayBuffer();
@@ -48,19 +63,33 @@ export default function ImageToPdf({ onBack, dict }) {
                 else {
                     const bitmap = await createImageBitmap(imgData.file);
                     const canvas = document.createElement('canvas');
-                    canvas.width = bitmap.width; canvas.height = bitmap.height;
-                    const ctx = canvas.getContext('2d'); ctx.drawImage(bitmap, 0, 0);
-                    const jpgUrl = canvas.toDataURL('image/jpeg', 0.8);
-                    const jpgBytes = await fetch(jpgUrl).then((res) => res.arrayBuffer());
+                    canvas.width = bitmap.width;
+                    canvas.height = bitmap.height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(bitmap, 0, 0);
+                    if (bitmap.close) bitmap.close();
+                    const jpgBytes = await new Promise((resolve, reject) => {
+                        canvas.toBlob((blob) => {
+                            if (blob) {
+                                blob.arrayBuffer().then(resolve).catch(reject);
+                            } else {
+                                try {
+                                    const jpgUrl = canvas.toDataURL('image/jpeg', 0.85);
+                                    fetch(jpgUrl).then(res => res.arrayBuffer()).then(resolve).catch(reject);
+                                } catch (e) { reject(e); }
+                            }
+                        }, 'image/jpeg', 0.85);
+                    });
                     image = await pdfDoc.embedJpg(jpgBytes);
                 }
                 const page = pdfDoc.addPage([image.width, image.height]);
                 page.drawImage(image, { x: 0, y: 0, width: image.width, height: image.height });
             }
-            const pdfBytes = await pdfDoc.save();
+            const pdfBytes = await pdfDoc.save({ useObjectStreams: true });
             const blob = new Blob([pdfBytes], { type: "application/pdf" });
             const url = URL.createObjectURL(blob);
             const link = document.createElement("a"); link.href = url; link.download = "images.pdf"; document.body.appendChild(link); link.click(); document.body.removeChild(link);
+            setTimeout(() => URL.revokeObjectURL(url), 10000);
         } catch (error) { console.error("Error creating PDF:", error); alert("Failed to create PDF."); }
         finally { setIsProcessing(false); }
     };
@@ -69,7 +98,7 @@ export default function ImageToPdf({ onBack, dict }) {
         <div className="space-y-6">
             <div className="sticky top-0 z-40 bg-white/80 backdrop-blur-md p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-wrap items-center justify-between gap-4">
                 <div className="flex items-center gap-4">
-                    <button onClick={onBack} className="p-2 hover:bg-slate-100 rounded-full transition-colors text-slate-600"><ArrowLeft size={20} /></button>
+                    <button onClick={handleBackClick} className="p-2 hover:bg-slate-100 rounded-full transition-colors text-slate-600"><ArrowLeft size={20} /></button>
                     <div>
                         <h2 className="font-semibold text-slate-800">{dict?.tools?.imageToPdf?.title}</h2>
                         <p className="text-sm text-slate-500">{(dict?.common?.filesSelected || "{count} file(s) selected").replace("{count}", images.length)}</p>

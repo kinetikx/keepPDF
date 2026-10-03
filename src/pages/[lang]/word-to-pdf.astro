@@ -1,4 +1,4 @@
----
+﻿---
 export const prerender = true;
 import Layout from '../../layouts/Layout.astro';
 import { getDictionary, locales } from '../../i18n/dictionary';
@@ -23,5 +23,5 @@ const howToSchema = buildHowToSchema('word-to-pdf', lang);
   <WordToPdf client:load dict={dict} />
   <HowToSection client:visible slug="word-to-pdf" lang={lang} />
   <UseCaseSection client:visible slug="word-to-pdf" lang={lang} />
-  <CookieBanner client:load dict={dict} slot="cookie-banner" />
+  <CookieBanner client:idle dict={dict} slot="cookie-banner" />
 </Layout>

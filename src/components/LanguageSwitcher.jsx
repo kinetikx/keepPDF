@@ -1,6 +1,7 @@
 import { Globe, Check } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { languageRegistry } from "../i18n/dictionary";
+import { hreflangGroups } from "../data/localizedPages";
 
 export default function LanguageSwitcher({ lang }) {
     const [isOpen, setIsOpen] = useState(false);
@@ -18,13 +19,33 @@ export default function LanguageSwitcher({ lang }) {
             return;
         }
 
-        const pathname = window.location.pathname;
-        const segments = pathname.split("/");
-        // segments[0] is empty, segments[1] is currLang
-        segments[1] = newLang;
-        const newPath = segments.join("/");
+        const pathname = (typeof window !== "undefined" ? window.location.pathname.replace(/\/$/, '') : '') || '';
 
-        window.location.href = newPath;
+        // 1. Check if current pathname is in hreflangGroups
+        const matchedGroup = Object.values(hreflangGroups).find(group =>
+            Object.values(group).includes(pathname)
+        );
+        if (matchedGroup && matchedGroup[newLang]) {
+            window.location.href = matchedGroup[newLang];
+            setIsOpen(false);
+            return;
+        }
+
+        // 2. Blog post fallback: if specific slug translation isn't 1:1 mapped, route to blog index
+        if (pathname.includes('/blog/')) {
+            window.location.href = `/${newLang}/blog`;
+            setIsOpen(false);
+            return;
+        }
+
+        // 3. Standard localized pages (/tr/image-to-pdf -> /en/image-to-pdf)
+        const segments = pathname.split("/");
+        if (segments.length >= 2) {
+            segments[1] = newLang;
+            window.location.href = segments.join("/") || `/${newLang}`;
+        } else {
+            window.location.href = `/${newLang}`;
+        }
         setIsOpen(false);
     };
 

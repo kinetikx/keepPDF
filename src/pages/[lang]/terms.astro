@@ -1,0 +1,91 @@
+﻿---
+export const prerender = true;
+import Layout from '../../layouts/Layout.astro';
+import { getDictionary, locales } from '../../i18n/dictionary';
+import Navbar from '../../components/landing/Navbar';
+import CookieBanner from '../../components/landing/CookieBanner';
+
+export function getStaticPaths() {
+  return locales.map(lang => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params;
+const dict = getDictionary(lang);
+
+const titles = {
+  tr: "Kullanım Koşulları | KeepPDF",
+  en: "Terms of Service | KeepPDF",
+  sq: "Kushtet e Shërbimit | KeepPDF",
+  et: "Kasutustingimused | KeepPDF",
+  lv: "Lietošanas noteikumi | KeepPDF",
+};
+
+const descs = {
+  tr: "KeepPDF web sitesi ve PDF araçları kullanım koşulları ve yasal şartlar.",
+  en: "KeepPDF website and PDF tools terms of service and legal conditions.",
+  sq: "Kushtet e shërbimit dhe rregullat ligjore për përdorimin e KeepPDF.",
+  et: "KeepPDF veebisaidi ja PDF-tööriistade kasutustingimused.",
+  lv: "KeepPDF vietnes un PDF rīku lietošanas noteikumi.",
+};
+
+const title = titles[lang] || titles.en;
+const description = descs[lang] || descs.en;
+---
+
+<Layout lang={lang} dict={dict} title={title} description={description}>
+  <Navbar client:load lang={lang} dict={dict} slot="navbar" />
+
+  <div class="max-w-4xl mx-auto px-4 py-16">
+    <h1 class="text-4xl font-extrabold text-slate-900 mb-6">{dict.footer?.links?.terms || "Terms of Service"}</h1>
+    
+    <div class="prose prose-slate max-w-none space-y-6 text-slate-600 leading-relaxed">
+      {lang === 'tr' ? (
+        <>
+          <p class="text-lg font-medium text-slate-800">
+            KeepPDF web sitesini ziyaret ederek veya araçlarını kullanarak aşağıdaki kullanım koşullarını kabul etmiş sayılırsınız.
+          </p>
+          <h2 class="text-2xl font-bold text-slate-900 mt-8 mb-4">1. Hizmetin Niteliği</h2>
+          <p>
+            KeepPDF, kullanıcılara web tarayıcıları üzerinden ücretsiz PDF birleştirme, bölme, sıkıştırma ve dönüştürme araçları sunar. Hizmet "olduğu gibi" sağlanmakta olup, kesintisiz çalışma garantisi verilmez.
+          </p>
+          <h2 class="text-2xl font-bold text-slate-900 mt-8 mb-4">2. Kullanıcı Sorumlulukları</h2>
+          <p>
+            Kullanıcılar işledikleri belgelerin telif haklarına ve yasal geçerliliklerine sahip olduklarını kabul eder. Yasa dışı veya zararlı amaçlarla araçların kullanılması yasaktır.
+          </p>
+          <h2 class="text-2xl font-bold text-slate-900 mt-8 mb-4">3. Fikri Mülkiyet</h2>
+          <p>
+            KeepPDF arayüzü, logosu, marka kimliği ve kaynak kodları KeepPDF ekibine aittir. İşlediğiniz belgelerin mülkiyeti ise tamamen size aittir.
+          </p>
+          <h2 class="text-2xl font-bold text-slate-900 mt-8 mb-4">4. Değişiklik Hakkı</h2>
+          <p>
+            KeepPDF, kullanım koşullarını ve sunulan hizmetleri dilediği zaman güncelleme hakkını saklı tutar.
+          </p>
+        </>
+      ) : (
+        <>
+          <p class="text-lg font-medium text-slate-800">
+            By accessing or using KeepPDF, you agree to comply with and be bound by the following Terms of Service.
+          </p>
+          <h2 class="text-2xl font-bold text-slate-900 mt-8 mb-4">1. Nature of Service</h2>
+          <p>
+            KeepPDF provides free browser-based PDF tools including merging, splitting, compressing, and converting. The service is provided on an "as is" and "as available" basis without warranties of any kind.
+          </p>
+          <h2 class="text-2xl font-bold text-slate-900 mt-8 mb-4">2. User Responsibility</h2>
+          <p>
+            You are responsible for ensuring that you hold the legal rights to the documents you process. You agree not to use the service for any unlawful or unauthorized purpose.
+          </p>
+          <h2 class="text-2xl font-bold text-slate-900 mt-8 mb-4">3. Intellectual Property</h2>
+          <p>
+            The KeepPDF brand, logos, designs, and code are the property of KeepPDF. Your files and processed documents remain entirely your own property.
+          </p>
+          <h2 class="text-2xl font-bold text-slate-900 mt-8 mb-4">4. Modifications to Terms</h2>
+          <p>
+            We reserve the right to modify these terms at any time. Continued use of the website following any changes constitutes acceptance of those changes.
+          </p>
+        </>
+      )}
+    </div>
+  </div>
+
+  <CookieBanner client:idle dict={dict} slot="cookie-banner" />
+</Layout>

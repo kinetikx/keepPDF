@@ -1,4 +1,4 @@
----
+﻿---
 export const prerender = true;
 import BlogPostLayout from '../../../layouts/BlogPostLayout.astro';
 import { getDictionary, locales, languageRegistry } from '../../../i18n/dictionary';
@@ -200,5 +200,5 @@ const relatedPosts = allPosts
         </section>
     )}
 
-    <CookieBanner client:load dict={dict} slot="cookie-banner" />
+    <CookieBanner client:idle dict={dict} slot="cookie-banner" />
 </BlogPostLayout>

@@ -1,4 +1,4 @@
----
+﻿---
 export const prerender = true;
 import Layout from '../../layouts/Layout.astro';
 import { getDictionary } from '../../i18n/dictionary';
@@ -77,14 +77,7 @@ const faqSchema = {
     <script type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
     <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 
-    <!-- Hreflang -->
-    <link rel="alternate" hreflang="en" href={"https://keep-pdf.online/en/compress"} />
-    <link rel="alternate" hreflang="tr" href={"https://keep-pdf.online/tr/compress"} />
-    <link rel="alternate" hreflang="sq" href={"https://keep-pdf.online/sq/kompriso-pdf-pa-regjistrim"} />
-    <link rel="alternate" hreflang="et" href={"https://keep-pdf.online/et/tihenda-pdf-tasuta"} />
-    <link rel="alternate" hreflang="lv" href={"https://keep-pdf.online/lv/saspiest-pdf-bezmaksas"} />
-    <link rel="alternate" hreflang="x-default" href={"https://keep-pdf.online/en/compress"} />
-
+                        
     <!-- Hero Section -->
     <section class="relative overflow-hidden pt-24 pb-16" style="background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4338ca 100%);">
         <div class="absolute inset-0 opacity-10">
@@ -229,5 +222,5 @@ const faqSchema = {
         </div>
     </section>
 
-    <CookieBanner client:load dict={dict} slot="cookie-banner" />
+    <CookieBanner client:idle dict={dict} slot="cookie-banner" />
 </Layout>

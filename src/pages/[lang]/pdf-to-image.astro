@@ -1,4 +1,4 @@
----
+﻿---
 export const prerender = true;
 import Layout from '../../layouts/Layout.astro';
 import { getDictionary, locales } from '../../i18n/dictionary';
@@ -23,5 +23,5 @@ const howToSchema = buildHowToSchema('pdf-to-image', lang);
   <PdfToImageClient client:load dict={dict} />
   <HowToSection client:visible slug="pdf-to-image" lang={lang} />
   <UseCaseSection client:visible slug="pdf-to-image" lang={lang} />
-  <CookieBanner client:load dict={dict} slot="cookie-banner" />
+  <CookieBanner client:idle dict={dict} slot="cookie-banner" />
 </Layout>

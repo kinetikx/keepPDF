@@ -2,10 +2,48 @@
 import '../styles/globals.css';
 import Footer from '../components/layout/Footer.astro';
 import { locales, getOgLocale } from '../i18n/dictionary';
+import { hreflangGroups } from '../data/localizedPages';
 
-const { lang, dict } = Astro.props;
+const { lang, dict, customHreflangs, canonical } = Astro.props;
 const currentPath = Astro.url.pathname.replace(/\/$/, '') || ''; // normalize trailing slash
 const cleanPath = currentPath.replace(new RegExp(`^/${lang}`), '') || '';
+
+// Compute alternate hreflang links
+let alternateLinks = [];
+if (customHreflangs && typeof customHreflangs === 'object') {
+  alternateLinks = Object.entries(customHreflangs).map(([hreflang, href]) => ({ hreflang, href }));
+  if (!customHreflangs['x-default']) {
+    const xDef = customHreflangs['en'] || Object.values(customHreflangs)[0];
+    if (xDef) alternateLinks.push({ hreflang: 'x-default', href: xDef });
+  }
+} else {
+  // Check if currentPath is in hreflangGroups
+  const matchedGroup = Object.values(hreflangGroups).find(group => 
+    Object.values(group).includes(currentPath)
+  );
+
+  if (matchedGroup) {
+    alternateLinks = Object.entries(matchedGroup).map(([hLang, path]) => ({
+      hreflang: hLang,
+      href: `https://keep-pdf.online${path}`
+    }));
+    const xDefault = matchedGroup['en'] || Object.values(matchedGroup)[0];
+    alternateLinks.push({
+      hreflang: 'x-default',
+      href: `https://keep-pdf.online${xDefault}`
+    });
+  } else {
+    alternateLinks = locales.map(loc => ({
+      hreflang: loc,
+      href: `https://keep-pdf.online/${loc}${cleanPath}`
+    }));
+    alternateLinks.push({
+      hreflang: 'x-default',
+      href: `https://keep-pdf.online/en${cleanPath}`
+    });
+  }
+}
+const canonicalUrl = canonical || `https://keep-pdf.online${currentPath}`;
 
 // Breadcrumb JSON-LD
 const pathSegments = currentPath.split('/').filter(Boolean);
@@ -72,12 +110,26 @@ const jsonLd = [
 const title = Astro.props.title || dict.metadata.title;
 const description = Astro.props.description || dict.metadata.description;
 const howToSchema = Astro.props.howToSchema;
+const isHomePage = currentPath === `/${lang}` || currentPath === '';
+const faqSchema = Astro.props.faqSchema || (isHomePage && dict?.faq?.questions?.length > 0 ? {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": dict.faq.questions.map(q => ({
+    "@type": "Question",
+    "name": q.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": q.answer
+    }
+  }))
+} : null);
 ---
 
 <html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#4f46e5" />
     <meta name="google-site-verification" content="Dtk44oghP1kgx1BgnOr6z8L03e43sO5T7ID9k1ZvUAE" />
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -85,16 +137,16 @@ const howToSchema = Astro.props.howToSchema;
     <meta name="author" content="KeepPDF Team" />
     <link rel="icon" href="/brand-logo.svg" />
     <link rel="apple-touch-icon" href="/brand-logo.svg" />
-    <link rel="canonical" href={`https://keep-pdf.online${currentPath}`} />
-    {locales.map(loc => (
-      <link rel="alternate" hreflang={loc} href={`https://keep-pdf.online/${loc}${cleanPath}`} />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="canonical" href={canonicalUrl} />
+    {alternateLinks.map(link => (
+      <link rel="alternate" hreflang={link.hreflang} href={link.href} />
     ))}
-    <link rel="alternate" hreflang="x-default" href={`https://keep-pdf.online/en${cleanPath}`} />
     
     <!-- Open Graph -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={`https://keep-pdf.online/${lang}${cleanPath}`} />
+    <meta property="og:url" content={canonicalUrl} />
     <meta property="og:site_name" content="KeepPDF" />
     <meta property="og:locale" content={getOgLocale(lang)} />
     <meta property="og:type" content="website" />
@@ -129,6 +181,9 @@ const howToSchema = Astro.props.howToSchema;
     <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
     {howToSchema && (
       <script type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
+    )}
+    {faqSchema && (
+      <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
     )}
   </head>
   <body class="antialiased min-h-screen flex flex-col font-sans text-slate-900 bg-white">

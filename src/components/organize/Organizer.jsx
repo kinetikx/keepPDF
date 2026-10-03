@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { PDFDocument, degrees } from "pdf-lib";
 import { DndContext, closestCenter, KeyboardSensor, TouchSensor, MouseSensor, useSensor, useSensors, DragOverlay } from "@dnd-kit/core";
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, rectSortingStrategy } from "@dnd-kit/sortable";
 import { AnimatePresence } from "framer-motion";
@@ -20,6 +19,7 @@ async function getPdfjs() {
 export default function Organizer({ file, onBack, dict }) {
     const [pages, setPages] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [loadProgress, setLoadProgress] = useState({ current: 0, total: 0 });
     const [isSaving, setIsSaving] = useState(false);
     const [zoom, setZoom] = useState(5);
     const [activeId, setActiveId] = useState(null);
@@ -32,31 +32,49 @@ export default function Organizer({ file, onBack, dict }) {
 
     useEffect(() => {
         if (!file) return;
+        let isCancelled = false;
         const loadPDF = async () => {
             try {
                 setIsLoading(true);
                 const pdfjs = await getPdfjs();
                 const arrayBuffer = await file.arrayBuffer();
                 const pdf = await pdfjs.getDocument(arrayBuffer).promise;
-                const pagePromises = [];
-                for (let i = 1; i <= pdf.numPages; i++) pagePromises.push(pdf.getPage(i));
-                const pdfPages = await Promise.all(pagePromises);
-                const renderedPages = await Promise.all(
-                    pdfPages.map(async (page, index) => {
-                        const viewport = page.getViewport({ scale: 0.5 });
-                        const canvas = document.createElement("canvas");
-                        const context = canvas.getContext("2d");
-                        canvas.height = viewport.height;
-                        canvas.width = viewport.width;
-                        await page.render({ canvasContext: context, viewport }).promise;
-                        return { id: `page-${index}`, originalIndex: index, image: canvas.toDataURL(), pageNumber: index + 1, rotation: 0 };
-                    })
-                );
-                setPages(renderedPages);
-            } catch (error) { console.error("Error loading PDF:", error); }
-            finally { setIsLoading(false); }
+                if (isCancelled) return;
+                setLoadProgress({ current: 0, total: pdf.numPages });
+
+                const canvas = document.createElement("canvas");
+                const context = canvas.getContext("2d", { alpha: false });
+                const renderedPages = [];
+
+                for (let i = 1; i <= pdf.numPages; i++) {
+                    if (isCancelled) return;
+                    const page = await pdf.getPage(i);
+                    const viewport = page.getViewport({ scale: 0.35 });
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
+                    await page.render({ canvasContext: context, viewport }).promise;
+
+                    renderedPages.push({
+                        id: `page-${i - 1}`,
+                        originalIndex: i - 1,
+                        image: canvas.toDataURL("image/jpeg", 0.65),
+                        pageNumber: i,
+                        rotation: 0
+                    });
+                    page.cleanup();
+                    setLoadProgress({ current: i, total: pdf.numPages });
+                }
+                if (!isCancelled) {
+                    setPages(renderedPages);
+                }
+            } catch (error) {
+                console.error("Error loading PDF:", error);
+            } finally {
+                if (!isCancelled) setIsLoading(false);
+            }
         };
         loadPDF();
+        return () => { isCancelled = true; };
     }, [file]);
 
     const handleDragStart = (event) => setActiveId(event.active.id);
@@ -79,6 +97,7 @@ export default function Organizer({ file, onBack, dict }) {
     const handleSave = async () => {
         setIsSaving(true);
         try {
+            const { PDFDocument, degrees } = await import("pdf-lib");
             const arrayBuffer = await file.arrayBuffer();
             const srcDoc = await PDFDocument.load(arrayBuffer);
             const newDoc = await PDFDocument.create();
@@ -88,7 +107,7 @@ export default function Organizer({ file, onBack, dict }) {
                 copiedPage.setRotation(degrees(existingRotation + page.rotation));
                 newDoc.addPage(copiedPage);
             }
-            const pdfBytes = await newDoc.save();
+            const pdfBytes = await newDoc.save({ useObjectStreams: true });
             const blob = new Blob([pdfBytes], { type: "application/pdf" });
             const url = URL.createObjectURL(blob);
             const link = document.createElement("a");
@@ -97,15 +116,39 @@ export default function Organizer({ file, onBack, dict }) {
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
+            setTimeout(() => URL.revokeObjectURL(url), 10000);
         } catch (error) { console.error("Error saving PDF:", error); }
         finally { setIsSaving(false); }
     };
 
     if (isLoading) {
-        return (<div className="flex flex-col items-center justify-center p-12 space-y-4 min-h-[50vh]"><Loader2 className="w-8 h-8 animate-spin text-indigo-600" /><p className="text-slate-500">{dict?.tools?.organize?.editor?.loading}</p></div>);
+        return (
+            <div className="flex flex-col items-center justify-center p-12 space-y-4 min-h-[50vh]">
+                <Loader2 className="w-8 h-8 animate-spin text-indigo-600" />
+                <p className="text-slate-500 font-medium">
+                    {dict?.tools?.organize?.editor?.loading || "Loading pages..."}
+                    {loadProgress.total > 0 && ` (${loadProgress.current}/${loadProgress.total})`}
+                </p>
+                {loadProgress.total > 0 && (
+                    <div className="w-48 bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                        <div
+                            className="bg-indigo-600 h-full transition-all duration-150"
+                            style={{ width: `${(loadProgress.current / loadProgress.total) * 100}%` }}
+                        />
+                    </div>
+                )}
+            </div>
+        );
     }
 
-    const gridCols = { 3: "grid-cols-3", 4: "grid-cols-4", 5: "grid-cols-5", 6: "grid-cols-6", 7: "grid-cols-7", 8: "grid-cols-8" }[zoom] || "grid-cols-5";
+    const gridCols = {
+        3: "grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3",
+        4: "grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4",
+        5: "grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5",
+        6: "grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6",
+        7: "grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-7",
+        8: "grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8",
+    }[zoom] || "grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5";
 
     return (
         <div className="space-y-6">
@@ -136,7 +179,7 @@ export default function Organizer({ file, onBack, dict }) {
             </div>
             <DndContext sensors={sensors} collisionDetection={closestCenter} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
                 <SortableContext items={pages.map(p => p.id)} strategy={rectSortingStrategy}>
-                    <div className={cn("grid gap-4 md:gap-6 p-4 min-h-[500px]", gridCols, "grid-cols-2 md:grid-cols-3 lg:grid-cols-5")}>
+                    <div className={cn("grid gap-4 md:gap-6 p-4 min-h-[500px]", gridCols)}>
                         <AnimatePresence>
                             {pages.map((page) => (<SortablePage key={page.id} id={page.id} page={page} onRotate={handleRotate} onDelete={handleDelete} dict={dict} />))}
                         </AnimatePresence>
