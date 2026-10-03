@@ -15,7 +15,7 @@ export default function TrustBanner({ dict }) {
                             <ShieldCheck size={24} strokeWidth={2.5} />
                         </div>
                         <div>
-                            <h4 className="text-slate-900 font-bold text-sm tracking-wide uppercase mb-0.5">{dict?.hero?.trustBanner?.secureTitle || "100% Private"}</h4>
+                            <div className="text-slate-900 font-bold text-sm tracking-wide uppercase mb-0.5">{dict?.hero?.trustBanner?.secureTitle || "100% Private"}</div>
                             <p className="text-slate-500 text-sm">{dict?.hero?.trustBanner?.secureDesc || "Files never leave your browser"}</p>
                         </div>
                     </div>
@@ -27,7 +27,7 @@ export default function TrustBanner({ dict }) {
                             <Zap size={24} strokeWidth={2.5} />
                         </div>
                         <div>
-                            <h4 className="text-slate-900 font-bold text-sm tracking-wide uppercase mb-0.5">{dict?.hero?.trustBanner?.fastTitle || "Instant Speed"}</h4>
+                            <div className="text-slate-900 font-bold text-sm tracking-wide uppercase mb-0.5">{dict?.hero?.trustBanner?.fastTitle || "Instant Speed"}</div>
                             <p className="text-slate-500 text-sm">{dict?.hero?.trustBanner?.fastDesc || "No server uploads required"}</p>
                         </div>
                     </div>
@@ -39,7 +39,7 @@ export default function TrustBanner({ dict }) {
                             <HeartHandshake size={24} strokeWidth={2.5} />
                         </div>
                         <div>
-                            <h4 className="text-slate-900 font-bold text-sm tracking-wide uppercase mb-0.5">{dict?.hero?.trustBanner?.freeTitle || "No Limits"}</h4>
+                            <div className="text-slate-900 font-bold text-sm tracking-wide uppercase mb-0.5">{dict?.hero?.trustBanner?.freeTitle || "No Limits"}</div>
                             <p className="text-slate-500 text-sm">{dict?.hero?.trustBanner?.freeDesc || "Completely free, forever"}</p>
                         </div>
                     </div>

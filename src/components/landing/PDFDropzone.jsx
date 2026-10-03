@@ -160,7 +160,7 @@ export default function PDFDropzone({ onFileSelect, ...props }) {
                 </div>
 
                 {/* Text & Primary Call to Action */}
-                <h3
+                <h2
                     className={cn(
                         "text-2xl font-extrabold transition-colors mb-2 tracking-tight text-center z-20",
                         isDragging ? "text-indigo-600" : "text-slate-900"
@@ -169,7 +169,7 @@ export default function PDFDropzone({ onFileSelect, ...props }) {
                     {isDragging
                         ? (props.dropTitle || "Drop files here to upload!")
                         : (props.title || "Click to upload or drag & drop")}
-                </h3>
+                </h2>
 
                 <p className="text-sm text-slate-500 font-medium tracking-wide text-center max-w-sm z-20">
                     {props.limit || "PDF files up to 50MB"}

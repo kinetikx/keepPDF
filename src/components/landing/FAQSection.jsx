@@ -20,7 +20,7 @@ export default function FAQSection({ dict }) {
                         {dict.faq.questions.map((q, i) => (
                             <AccordionItem key={i} value={`item-${i}`}>
                                 <AccordionTrigger className="text-left text-lg font-medium text-slate-900">
-                                    <h3 className="text-lg font-medium">{q.question}</h3>
+                                    <span className="text-lg font-medium">{q.question}</span>
                                 </AccordionTrigger>
                                 <AccordionContent className="text-slate-500 text-base leading-relaxed">
                                     {q.answer}

@@ -66,7 +66,11 @@ export default function Navbar({ lang, dict }) {
                             onMouseEnter={() => setHoveredMenu(menu.title)}
                             onMouseLeave={() => setHoveredMenu(null)}
                         >
-                            <button className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-slate-50 rounded-full transition-all">
+                            <button
+                                aria-label={menu.title}
+                                aria-expanded={hoveredMenu === menu.title}
+                                className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-slate-50 rounded-full transition-all"
+                            >
                                 {menu.title}
                                 <ChevronDown
                                     size={14}
@@ -105,7 +109,7 @@ export default function Navbar({ lang, dict }) {
                                                                 </span>
                                                             )}
                                                         </div>
-                                                        <p className="text-xs text-slate-400 font-medium line-clamp-1">
+                                                        <p className="text-xs text-slate-500 font-medium line-clamp-1">
                                                             {item.desc}
                                                         </p>
                                                     </div>
@@ -139,6 +143,7 @@ export default function Navbar({ lang, dict }) {
                 <button
                     className="lg:hidden p-2 text-slate-600"
                     onClick={() => setIsOpen(!isOpen)}
+                    aria-label="Toggle navigation menu"
                 >
                     {isOpen ? <X /> : <Menu />}
                 </button>
@@ -156,9 +161,9 @@ export default function Navbar({ lang, dict }) {
                         <div className="container-custom py-6 flex flex-col gap-6">
                             {navMenus.map((menu) => (
                                 <div key={menu.title} className="space-y-3">
-                                    <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider px-2">
+                                    <div className="text-xs font-bold text-slate-500 uppercase tracking-wider px-2">
                                         {menu.title}
-                                    </h3>
+                                    </div>
                                     <div className="grid grid-cols-1 gap-1">
                                         {menu.items.map((item) => (
                                             <a
@@ -167,7 +172,7 @@ export default function Navbar({ lang, dict }) {
                                                 onClick={() => setIsOpen(false)}
                                                 className="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-50 active:bg-slate-100"
                                             >
-                                                <div className="text-slate-400">
+                                                <div className="text-slate-500">
                                                     <item.icon size={18} />
                                                 </div>
                                                 <span className="text-sm font-medium text-slate-700">

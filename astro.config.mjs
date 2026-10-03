@@ -43,6 +43,11 @@ export default defineConfig({
         plugins: [tailwindcss()],
         build: {
             chunkSizeWarningLimit: 1200,
+            modulePreload: {
+                resolveDependencies(url, deps) {
+                    return deps.filter(dep => !dep.includes('pdf-lib') && !dep.includes('docx') && !dep.includes('mammoth') && !dep.includes('pdfjs-dist') && !dep.includes('html2pdf'));
+                }
+            },
             rollupOptions: {
                 output: {
                     manualChunks(id) {

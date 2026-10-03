@@ -47,7 +47,7 @@ const keywordPages = getPagesByLang(lang).filter(p => p.status === 'live');
   title={dict.metadata.title} 
   description={dict.metadata.description}
 >
-  <Navbar client:load lang={lang} dict={dict} slot="navbar" />
+  <Navbar client:idle lang={lang} dict={dict} slot="navbar" />
   
   <!-- Hero Section -->
   <section class="relative py-20 bg-gradient-to-b from-white via-indigo-50/30 to-white overflow-hidden">
@@ -63,7 +63,7 @@ const keywordPages = getPagesByLang(lang).filter(p => p.status === 'live');
         {dict.hero.description}
       </p>
     </div>
-    <MergeInterface client:load dict={dict} />
+    <MergeInterface client:idle dict={dict} />
   </section>
 
   <TrustBanner dict={dict} />
@@ -71,6 +71,14 @@ const keywordPages = getPagesByLang(lang).filter(p => p.status === 'live');
   <!-- Tools Grid -->
   <section class="py-20 bg-slate-50/50">
     <div class="container-custom">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-slate-900 sm:text-4xl mb-4">
+          {dict.tools?.allToolsTitle || (lang === 'tr' ? 'Tüm PDF Araçları' : 'Explore All PDF Tools')}
+        </h2>
+        <p class="text-slate-500 text-lg max-w-2xl mx-auto">
+          {dict.tools?.allToolsDesc || (lang === 'tr' ? 'İhtiyacınız olan tüm PDF işlemlerini saniyeler içinde tarayıcınızda ücretsiz yapın.' : 'Everything you need to manage, edit and convert PDF files directly in your browser.')}
+        </p>
+      </div>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {tools.map((tool) => (
           <a href={tool.href} class={`group relative bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-xl hover:shadow-brand-500/5 hover:-translate-y-1 transition-all duration-300 cursor-pointer ${tool.comingSoon ? 'opacity-80' : ''}`}>
@@ -96,7 +104,7 @@ const keywordPages = getPagesByLang(lang).filter(p => p.status === 'live');
               {tool.title}
             </h3>
             <p class="text-sm text-slate-500 mb-4 leading-relaxed line-clamp-2">{tool.desc}</p>
-            <div class="flex items-center text-sm font-medium text-slate-400 group-hover:text-brand-600 transition-colors">
+            <div class="flex items-center text-sm font-medium text-slate-600 group-hover:text-brand-600 transition-colors">
               {tool.comingSoon ? dict.common.comingSoon : tool.title}
               <svg class="w-3.5 h-3.5 ml-1 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
             </div>
@@ -151,7 +159,7 @@ const keywordPages = getPagesByLang(lang).filter(p => p.status === 'live');
                 </svg>
               </div>
               <div class="flex-grow">
-                <h4 class="font-bold text-slate-900 group-hover:text-brand-600 transition-colors mb-1 text-sm line-clamp-1">{page.title.split('—')[0].trim()}</h4>
+                <h3 class="font-bold text-slate-900 group-hover:text-brand-600 transition-colors mb-1 text-sm line-clamp-1">{page.title.split('—')[0].trim()}</h3>
                 <p class="text-xs text-slate-500 line-clamp-2">{page.description}</p>
               </div>
             </a>

@@ -128,9 +128,9 @@ export default function MergeInterface({ children, dict }) {
                                                     <FileText size={24} />
                                                 </div>
                                                 <div className="flex-1 min-w-0 text-left">
-                                                    <h4 className="font-medium text-slate-900 truncate" title={fileItem.file.name}>
+                                                    <div className="font-medium text-slate-900 truncate" title={fileItem.file.name}>
                                                         {fileItem.file.name}
-                                                    </h4>
+                                                    </div>
                                                     <p className="text-sm text-slate-500">
                                                         {(fileItem.file.size / 1024 / 1024).toFixed(2)} MB
                                                     </p>
@@ -139,7 +139,7 @@ export default function MergeInterface({ children, dict }) {
                                                     variant="ghost"
                                                     size="icon"
                                                     onClick={() => removeFile(fileItem.id)}
-                                                    className="opacity-0 group-hover:opacity-100 text-slate-400 hover:text-red-500 transition-opacity"
+                                                    className="opacity-0 group-hover:opacity-100 text-slate-500 hover:text-red-500 transition-opacity"
                                                     aria-label="Remove file"
                                                 >
                                                     <X size={18} />
