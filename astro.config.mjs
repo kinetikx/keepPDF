@@ -35,6 +35,9 @@ export default defineConfig({
                     return undefined;
                 }
 
+                // Add lastmod date (ISO string formatted as YYYY-MM-DD)
+                item.lastmod = new Date();
+
                 return item;
             }
         })
