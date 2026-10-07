@@ -31,25 +31,17 @@ export const GET: APIRoute = async () => {
     const urls = posts
         .map((post) => {
             const lastmod = (post.updated_at || post.created_at || '').split('T')[0];
-            return `
-  <url>
-    <loc>${SITE}/${post.lang}/blog/${post.slug}</loc>
-    ${lastmod ? `<lastmod>${lastmod}</lastmod>` : ''}
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>`;
+            return `<url><loc>${SITE}/${post.lang}/blog/${post.slug}</loc>${lastmod ? `<lastmod>${lastmod}</lastmod>` : ''}<changefreq>weekly</changefreq><priority>0.7</priority></url>`;
         })
         .join('');
 
-    const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls}
-</urlset>`;
+    const xml = `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls}</urlset>`.trim();
 
     return new Response(xml, {
         headers: {
             'Content-Type': 'application/xml; charset=utf-8',
-            'Cache-Control': 's-maxage=3600, stale-while-revalidate',
+            'X-Robots-Tag': 'noindex',
+            'Cache-Control': 'public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400',
         },
     });
 };
