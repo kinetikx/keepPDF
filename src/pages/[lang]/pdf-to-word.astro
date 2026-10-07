@@ -1,4 +1,4 @@
-﻿---
+---
 export const prerender = true;
 import Layout from '../../layouts/Layout.astro';
 import { getDictionary, locales } from '../../i18n/dictionary';
@@ -8,6 +8,8 @@ import PdfToWord from '../../components/pdf-to-word/PdfToWord';
 import HowToSection from "../../components/tools/HowToSection";
 import { buildHowToSchema } from '../../data/howTo';
 import UseCaseSection from '../../components/tools/UseCaseSection';
+import ToolFaqSection from '../../components/tools/ToolFaqSection';
+import { buildToolFaqSchema } from '../../data/toolFaqs';
 
 export function getStaticPaths() {
   return locales.map(lang => ({ params: { lang } }));
@@ -16,13 +18,15 @@ export function getStaticPaths() {
 const { lang } = Astro.params;
 const dict = getDictionary(lang);
 const howToSchema = buildHowToSchema('pdf-to-word', lang);
+const faqSchema = buildToolFaqSchema('pdf-to-word', lang);
 ---
 
-<Layout lang={lang} dict={dict} title={dict.metadata.pdfToWord.title} description={dict.metadata.pdfToWord.description} howToSchema={howToSchema}>
+<Layout lang={lang} dict={dict} title={dict.metadata.pdfToWord.title} description={dict.metadata.pdfToWord.description} howToSchema={howToSchema} faqSchema={faqSchema}>
   <Navbar client:load lang={lang} dict={dict} slot="navbar" />
   <PdfToWord client:load dict={dict} />
   <HowToSection client:visible slug="pdf-to-word" lang={lang} />
   <UseCaseSection client:visible slug="pdf-to-word" lang={lang} />
+  <ToolFaqSection client:visible slug="pdf-to-word" lang={lang} />
   <CookieBanner client:idle dict={dict} slot="cookie-banner" />
 </Layout>
 
